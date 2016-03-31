@@ -1,0 +1,30 @@
+//
+//  NNMallCell.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/4.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMallCell.h"
+
+@interface NNMallCell ()
+
+@end
+
+@implementation NNMallCell
+@synthesize p_goodsImageView = m_goodsImageView;
+@synthesize p_goodsNameLbl = m_goodsNameLbl;
+@synthesize p_goodsPriceLbl = m_goodsPriceLbl;
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

@@ -1,0 +1,25 @@
+//
+//  SizeModel.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/17.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBasicModel.h"
+
+@interface SizeModel : NNBasicModel
+{
+    NSString *m_sizeId;     //尺寸id
+    NSString *m_specColor;  //颜色
+    NSString *m_specSize;   //尺码
+    NSString *m_specPrice;  //价格
+}
+@property (nonatomic,strong) NSString *m_sizeId;
+@property (nonatomic,strong) NSString *m_specColor;
+@property (nonatomic,strong) NSString *m_specSize;
+@property (nonatomic,strong) NSString *m_specPrice;
+
+-(id)parseFromDic:(NSDictionary *)dic;
+
+@end

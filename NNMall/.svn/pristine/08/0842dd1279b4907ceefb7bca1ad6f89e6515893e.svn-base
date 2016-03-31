@@ -1,0 +1,66 @@
+//
+//  NNSearchResultView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchResultView.h"
+@interface NNSearchResultView()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* m_tableView;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@end
+@implementation NNSearchResultView
+@synthesize p_tableView = m_tableView;
+@synthesize p_searchResultViewDelegate = m_searchResultViewDelegate;
+
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+-(void)refreshSearchResultView
+{
+    [self.p_tableView reloadData];
+}
+
+#pragma - mark - tableviewDelegate
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* Celled = @"Celled";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:Celled];
+    if (cell==nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Celled];
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+@end

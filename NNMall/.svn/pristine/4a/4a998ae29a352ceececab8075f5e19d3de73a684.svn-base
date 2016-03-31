@@ -1,0 +1,1291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5318F64D1BF588A7002E8C3A /* AdreessModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F64C1BF588A7002E8C3A /* AdreessModel.m */; };
+		5318F6541BF58EE5002E8C3A /* NNOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6511BF58EE5002E8C3A /* NNOrderViewController.m */; };
+		5318F6551BF58EE5002E8C3A /* NNShopCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6531BF58EE5002E8C3A /* NNShopCartViewController.m */; };
+		5318F66E1BF58EEF002E8C3A /* NNAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F65A1BF58EEF002E8C3A /* NNAddressCell.m */; };
+		5318F66F1BF58EEF002E8C3A /* NNOrderProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F65D1BF58EEF002E8C3A /* NNOrderProductCell.m */; };
+		5318F6701BF58EEF002E8C3A /* NNOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6601BF58EEF002E8C3A /* NNOrderView.m */; };
+		5318F6711BF58EEF002E8C3A /* NNLikeCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6641BF58EEF002E8C3A /* NNLikeCollect.m */; };
+		5318F6721BF58EEF002E8C3A /* NNShopCartCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6671BF58EEF002E8C3A /* NNShopCartCollect.m */; };
+		5318F6731BF58EEF002E8C3A /* CollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F66A1BF58EEF002E8C3A /* CollectionReusableView.m */; };
+		5318F6741BF58EEF002E8C3A /* NNShopCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F66D1BF58EEF002E8C3A /* NNShopCartView.m */; };
+		5318F6801BF5D00F002E8C3A /* NNModifyAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F67F1BF5D00F002E8C3A /* NNModifyAccountView.m */; };
+		5318F6841BF5D023002E8C3A /* NNModifyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318F6831BF5D023002E8C3A /* NNModifyAccountViewController.m */; };
+		531C8D9E1BF3472C00660278 /* NNMeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C8D9D1BF3472C00660278 /* NNMeButton.m */; };
+		531C8DA91BF435E000660278 /* NNMeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C8DA81BF435DF00660278 /* NNMeViewCell.m */; };
+		531C8DAD1BF483BB00660278 /* NNAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C8DAC1BF483BB00660278 /* NNAccountView.m */; };
+		531C8DB11BF486EB00660278 /* NNAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C8DB01BF486EB00660278 /* NNAccountViewController.m */; };
+		531C8DB51BF4884E00660278 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531C8DB41BF4884E00660278 /* UserModel.m */; };
+		53349B1C1BF1BE2C00B92C5C /* NNSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53349B1B1BF1BE2C00B92C5C /* NNSearchResultViewController.m */; };
+		53349B201BF1E1D500B92C5C /* NNSearchResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53349B1F1BF1E1D500B92C5C /* NNSearchResultView.m */; };
+		53349B271BF1EEF400B92C5C /* NNSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53349B261BF1EEF400B92C5C /* NNSearchResultCell.m */; };
+		535A8E431BF967AF000EA78D /* NNAppManage.m in Sources */ = {isa = PBXBuildFile; fileRef = 535A8E421BF967AF000EA78D /* NNAppManage.m */; };
+		A319F3F321FACE09F9280EE8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F539092C850326C039F3349 /* libPods.a */; };
+		AC0C52A71BF96F1700A21E0E /* HJCAdjustNumButton.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AC0C52A41BF96F1700A21E0E /* HJCAdjustNumButton.bundle */; };
+		AC0C52A81BF96F1700A21E0E /* HJCAjustNumButton.m in Sources */ = {isa = PBXBuildFile; fileRef = AC0C52A61BF96F1700A21E0E /* HJCAjustNumButton.m */; };
+		AC5463191BF4896100DA1830 /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC5463181BF4896100DA1830 /* OrderModel.m */; };
+		AC85FDC51BE896730026E505 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDC41BE896730026E505 /* main.m */; };
+		AC85FDC81BE896730026E505 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDC71BE896730026E505 /* AppDelegate.m */; };
+		AC85FDCE1BE896730026E505 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC85FDCC1BE896730026E505 /* Main.storyboard */; };
+		AC85FDD01BE896730026E505 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC85FDCF1BE896730026E505 /* Assets.xcassets */; };
+		AC85FDD31BE896730026E505 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC85FDD11BE896730026E505 /* LaunchScreen.storyboard */; };
+		AC85FDE41BE898350026E505 /* NNCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDE31BE898350026E505 /* NNCommon.m */; };
+		AC85FDE81BE89A8E0026E505 /* NNCommonDeal.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDE71BE89A8E0026E505 /* NNCommonDeal.m */; };
+		AC85FDEE1BE8A25A0026E505 /* NNBasicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDED1BE8A25A0026E505 /* NNBasicModel.m */; };
+		AC85FDF21BE8A27C0026E505 /* NNErrorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDF11BE8A27C0026E505 /* NNErrorModel.m */; };
+		AC85FDF51BE8A4190026E505 /* NNBaseHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDF41BE8A4190026E505 /* NNBaseHttpRequest.m */; };
+		AC85FDF91BE8A49F0026E505 /* NNHttpRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FDF81BE8A49F0026E505 /* NNHttpRequest.m */; };
+		AC85FDFB1BE8A9C80026E505 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FDFA1BE8A9C80026E505 /* CoreTelephony.framework */; };
+		AC85FDFD1BE8ADB30026E505 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FDFC1BE8ADB30026E505 /* Security.framework */; };
+		AC85FDFF1BE8ADBE0026E505 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FDFE1BE8ADBE0026E505 /* SystemConfiguration.framework */; };
+		AC85FE011BE8ADC60026E505 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FE001BE8ADC60026E505 /* CoreGraphics.framework */; };
+		AC85FE031BE8ADDA0026E505 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FE021BE8ADDA0026E505 /* libiconv.tbd */; };
+		AC85FE051BE8ADE80026E505 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FE041BE8ADE80026E505 /* libsqlite3.tbd */; };
+		AC85FE071BE8AE080026E505 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FE061BE8AE080026E505 /* libstdc++.tbd */; };
+		AC85FE091BE8AE0F0026E505 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AC85FE081BE8AE0F0026E505 /* libz.tbd */; };
+		AC85FE101BE8B72B0026E505 /* NNShare.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE0F1BE8B72B0026E505 /* NNShare.m */; };
+		AC85FE141BE8B95E0026E505 /* NNTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE131BE8B95E0026E505 /* NNTabbarViewController.m */; };
+		AC85FE191BE8BBFF0026E505 /* NNMainMallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE181BE8BBFF0026E505 /* NNMainMallViewController.m */; };
+		AC85FE1D1BE8BC250026E505 /* NNSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE1C1BE8BC250026E505 /* NNSearchViewController.m */; };
+		AC85FE251BE8BC6E0026E505 /* NNMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE241BE8BC6E0026E505 /* NNMeViewController.m */; };
+		AC85FE2D1BE8BD020026E505 /* NNMainMallView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE2C1BE8BD020026E505 /* NNMainMallView.m */; };
+		AC85FE311BE8BD1E0026E505 /* NNSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE301BE8BD1E0026E505 /* NNSearchView.m */; };
+		AC85FE3A1BE8BD5F0026E505 /* NNMeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC85FE391BE8BD5F0026E505 /* NNMeView.m */; };
+		AC92D7931BEB442D00BA1E77 /* NNProductInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC92D7921BEB442D00BA1E77 /* NNProductInfoViewController.m */; };
+		AC92D79A1BEB450500BA1E77 /* ProductModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC92D7991BEB450500BA1E77 /* ProductModel.m */; };
+		AC92D7A21BEB4A1D00BA1E77 /* NNProductDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC92D7A11BEB4A1D00BA1E77 /* NNProductDetailView.m */; };
+		AC92D7A81BEB4DA400BA1E77 /* NNProductInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC92D7A71BEB4DA400BA1E77 /* NNProductInfoView.m */; };
+		AC9AA8DF1BE9F27E002FAB5A /* NNRecommendDailyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9AA8DE1BE9F27E002FAB5A /* NNRecommendDailyViewController.m */; };
+		AC9AA8E31BE9F2C6002FAB5A /* NNRecommendDailyView.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9AA8E21BE9F2C6002FAB5A /* NNRecommendDailyView.m */; };
+		AC9EBC611BF575E9008AB4C3 /* ShippingAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = AC9EBC601BF575E9008AB4C3 /* ShippingAddressModel.m */; };
+		ACCC645D1BF18C87005CFD04 /* NNBaseApply.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC645C1BF18C87005CFD04 /* NNBaseApply.m */; };
+		ACCC64611BF18CB5005CFD04 /* NNProductApply.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC64601BF18CB5005CFD04 /* NNProductApply.m */; };
+		ACCC64671BF1908A005CFD04 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC64641BF1908A005CFD04 /* MBProgressHUD.m */; };
+		ACCC64681BF1908A005CFD04 /* YBProgressShow.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC64661BF1908A005CFD04 /* YBProgressShow.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ACCC646C1BF1B624005CFD04 /* MallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC646B1BF1B624005CFD04 /* MallModel.m */; };
+		ACCC64781BF1EF4D005CFD04 /* NNUserApply.m in Sources */ = {isa = PBXBuildFile; fileRef = ACCC64771BF1EF4D005CFD04 /* NNUserApply.m */; };
+		ACD8338B1BF4307800928712 /* NNDailyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD833801BF4307800928712 /* NNDailyCell.m */; };
+		ACD8338C1BF4307800928712 /* NNMallCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD833831BF4307800928712 /* NNMallCell.m */; };
+		ACD8338D1BF4307800928712 /* NNMallCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD833861BF4307800928712 /* NNMallCollect.m */; };
+		ACD8338E1BF4307800928712 /* NNProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD833891BF4307800928712 /* NNProductCell.m */; };
+		ACD833921BF4314600928712 /* NNCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD833911BF4314600928712 /* NNCartView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5318F64B1BF588A7002E8C3A /* AdreessModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdreessModel.h; sourceTree = "<group>"; };
+		5318F64C1BF588A7002E8C3A /* AdreessModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdreessModel.m; sourceTree = "<group>"; };
+		5318F6501BF58EE5002E8C3A /* NNOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNOrderViewController.h; sourceTree = "<group>"; };
+		5318F6511BF58EE5002E8C3A /* NNOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNOrderViewController.m; sourceTree = "<group>"; };
+		5318F6521BF58EE5002E8C3A /* NNShopCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNShopCartViewController.h; sourceTree = "<group>"; };
+		5318F6531BF58EE5002E8C3A /* NNShopCartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNShopCartViewController.m; sourceTree = "<group>"; };
+		5318F6591BF58EEF002E8C3A /* NNAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNAddressCell.h; sourceTree = "<group>"; };
+		5318F65A1BF58EEF002E8C3A /* NNAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNAddressCell.m; sourceTree = "<group>"; };
+		5318F65C1BF58EEF002E8C3A /* NNOrderProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNOrderProductCell.h; sourceTree = "<group>"; };
+		5318F65D1BF58EEF002E8C3A /* NNOrderProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNOrderProductCell.m; sourceTree = "<group>"; };
+		5318F65F1BF58EEF002E8C3A /* NNOrderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNOrderView.h; sourceTree = "<group>"; };
+		5318F6601BF58EEF002E8C3A /* NNOrderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNOrderView.m; sourceTree = "<group>"; };
+		5318F6631BF58EEF002E8C3A /* NNLikeCollect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNLikeCollect.h; sourceTree = "<group>"; };
+		5318F6641BF58EEF002E8C3A /* NNLikeCollect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNLikeCollect.m; sourceTree = "<group>"; };
+		5318F6661BF58EEF002E8C3A /* NNShopCartCollect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNShopCartCollect.h; sourceTree = "<group>"; };
+		5318F6671BF58EEF002E8C3A /* NNShopCartCollect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNShopCartCollect.m; sourceTree = "<group>"; };
+		5318F6691BF58EEF002E8C3A /* CollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionReusableView.h; sourceTree = "<group>"; };
+		5318F66A1BF58EEF002E8C3A /* CollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionReusableView.m; sourceTree = "<group>"; };
+		5318F66C1BF58EEF002E8C3A /* NNShopCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNShopCartView.h; sourceTree = "<group>"; };
+		5318F66D1BF58EEF002E8C3A /* NNShopCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNShopCartView.m; sourceTree = "<group>"; };
+		5318F67E1BF5D00F002E8C3A /* NNModifyAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNModifyAccountView.h; sourceTree = "<group>"; };
+		5318F67F1BF5D00F002E8C3A /* NNModifyAccountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNModifyAccountView.m; sourceTree = "<group>"; };
+		5318F6821BF5D023002E8C3A /* NNModifyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNModifyAccountViewController.h; sourceTree = "<group>"; };
+		5318F6831BF5D023002E8C3A /* NNModifyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNModifyAccountViewController.m; sourceTree = "<group>"; };
+		531C8D9C1BF3472C00660278 /* NNMeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMeButton.h; sourceTree = "<group>"; };
+		531C8D9D1BF3472C00660278 /* NNMeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMeButton.m; sourceTree = "<group>"; };
+		531C8DA71BF435DF00660278 /* NNMeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMeViewCell.h; sourceTree = "<group>"; };
+		531C8DA81BF435DF00660278 /* NNMeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMeViewCell.m; sourceTree = "<group>"; };
+		531C8DAB1BF483BB00660278 /* NNAccountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNAccountView.h; sourceTree = "<group>"; };
+		531C8DAC1BF483BB00660278 /* NNAccountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNAccountView.m; sourceTree = "<group>"; };
+		531C8DAF1BF486EB00660278 /* NNAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNAccountViewController.h; sourceTree = "<group>"; };
+		531C8DB01BF486EB00660278 /* NNAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNAccountViewController.m; sourceTree = "<group>"; };
+		531C8DB31BF4884E00660278 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		531C8DB41BF4884E00660278 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		53349B1A1BF1BE2C00B92C5C /* NNSearchResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSearchResultViewController.h; sourceTree = "<group>"; };
+		53349B1B1BF1BE2C00B92C5C /* NNSearchResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSearchResultViewController.m; sourceTree = "<group>"; };
+		53349B1E1BF1E1D500B92C5C /* NNSearchResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSearchResultView.h; sourceTree = "<group>"; };
+		53349B1F1BF1E1D500B92C5C /* NNSearchResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSearchResultView.m; sourceTree = "<group>"; };
+		53349B251BF1EEF400B92C5C /* NNSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSearchResultCell.h; sourceTree = "<group>"; };
+		53349B261BF1EEF400B92C5C /* NNSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSearchResultCell.m; sourceTree = "<group>"; };
+		535A8E411BF967AF000EA78D /* NNAppManage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNAppManage.h; sourceTree = "<group>"; };
+		535A8E421BF967AF000EA78D /* NNAppManage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNAppManage.m; sourceTree = "<group>"; };
+		7D53313F74FDAF078FB00D73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7F539092C850326C039F3349 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		812DF74FC9CFBC9077370BE4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		AC0C52A41BF96F1700A21E0E /* HJCAdjustNumButton.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HJCAdjustNumButton.bundle; sourceTree = "<group>"; };
+		AC0C52A51BF96F1700A21E0E /* HJCAjustNumButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJCAjustNumButton.h; sourceTree = "<group>"; };
+		AC0C52A61BF96F1700A21E0E /* HJCAjustNumButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJCAjustNumButton.m; sourceTree = "<group>"; };
+		AC5463171BF4896100DA1830 /* OrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderModel.h; sourceTree = "<group>"; };
+		AC5463181BF4896100DA1830 /* OrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
+		AC85FDC01BE896730026E505 /* NNMall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NNMall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC85FDC41BE896730026E505 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		AC85FDC61BE896730026E505 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		AC85FDC71BE896730026E505 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		AC85FDCD1BE896730026E505 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AC85FDCF1BE896730026E505 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AC85FDD21BE896730026E505 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		AC85FDD41BE896730026E505 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC85FDE21BE898350026E505 /* NNCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCommon.h; sourceTree = "<group>"; };
+		AC85FDE31BE898350026E505 /* NNCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCommon.m; sourceTree = "<group>"; };
+		AC85FDE61BE89A8E0026E505 /* NNCommonDeal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCommonDeal.h; sourceTree = "<group>"; };
+		AC85FDE71BE89A8E0026E505 /* NNCommonDeal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCommonDeal.m; sourceTree = "<group>"; };
+		AC85FDEB1BE89CDC0026E505 /* NNMall-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NNMall-Prefix.pch"; sourceTree = "<group>"; };
+		AC85FDEC1BE8A25A0026E505 /* NNBasicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNBasicModel.h; sourceTree = "<group>"; };
+		AC85FDED1BE8A25A0026E505 /* NNBasicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNBasicModel.m; sourceTree = "<group>"; };
+		AC85FDF01BE8A27C0026E505 /* NNErrorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNErrorModel.h; sourceTree = "<group>"; };
+		AC85FDF11BE8A27C0026E505 /* NNErrorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNErrorModel.m; sourceTree = "<group>"; };
+		AC85FDF31BE8A4190026E505 /* NNBaseHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNBaseHttpRequest.h; sourceTree = "<group>"; };
+		AC85FDF41BE8A4190026E505 /* NNBaseHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNBaseHttpRequest.m; sourceTree = "<group>"; };
+		AC85FDF71BE8A49F0026E505 /* NNHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNHttpRequest.h; sourceTree = "<group>"; };
+		AC85FDF81BE8A49F0026E505 /* NNHttpRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNHttpRequest.m; sourceTree = "<group>"; };
+		AC85FDFA1BE8A9C80026E505 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		AC85FDFC1BE8ADB30026E505 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		AC85FDFE1BE8ADBE0026E505 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		AC85FE001BE8ADC60026E505 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AC85FE021BE8ADDA0026E505 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		AC85FE041BE8ADE80026E505 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AC85FE061BE8AE080026E505 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		AC85FE081BE8AE0F0026E505 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		AC85FE0E1BE8B72B0026E505 /* NNShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNShare.h; sourceTree = "<group>"; };
+		AC85FE0F1BE8B72B0026E505 /* NNShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNShare.m; sourceTree = "<group>"; };
+		AC85FE121BE8B95E0026E505 /* NNTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNTabbarViewController.h; sourceTree = "<group>"; };
+		AC85FE131BE8B95E0026E505 /* NNTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNTabbarViewController.m; sourceTree = "<group>"; };
+		AC85FE171BE8BBFF0026E505 /* NNMainMallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMainMallViewController.h; sourceTree = "<group>"; };
+		AC85FE181BE8BBFF0026E505 /* NNMainMallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMainMallViewController.m; sourceTree = "<group>"; };
+		AC85FE1B1BE8BC250026E505 /* NNSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSearchViewController.h; sourceTree = "<group>"; };
+		AC85FE1C1BE8BC250026E505 /* NNSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSearchViewController.m; sourceTree = "<group>"; };
+		AC85FE231BE8BC6E0026E505 /* NNMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMeViewController.h; sourceTree = "<group>"; };
+		AC85FE241BE8BC6E0026E505 /* NNMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMeViewController.m; sourceTree = "<group>"; };
+		AC85FE2B1BE8BD020026E505 /* NNMainMallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMainMallView.h; sourceTree = "<group>"; };
+		AC85FE2C1BE8BD020026E505 /* NNMainMallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMainMallView.m; sourceTree = "<group>"; };
+		AC85FE2F1BE8BD1E0026E505 /* NNSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNSearchView.h; sourceTree = "<group>"; };
+		AC85FE301BE8BD1E0026E505 /* NNSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNSearchView.m; sourceTree = "<group>"; };
+		AC85FE381BE8BD5F0026E505 /* NNMeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMeView.h; sourceTree = "<group>"; };
+		AC85FE391BE8BD5F0026E505 /* NNMeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMeView.m; sourceTree = "<group>"; };
+		AC92D7911BEB442D00BA1E77 /* NNProductInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNProductInfoViewController.h; sourceTree = "<group>"; };
+		AC92D7921BEB442D00BA1E77 /* NNProductInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNProductInfoViewController.m; sourceTree = "<group>"; };
+		AC92D7981BEB450500BA1E77 /* ProductModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductModel.h; sourceTree = "<group>"; };
+		AC92D7991BEB450500BA1E77 /* ProductModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductModel.m; sourceTree = "<group>"; };
+		AC92D7A01BEB4A1D00BA1E77 /* NNProductDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNProductDetailView.h; sourceTree = "<group>"; };
+		AC92D7A11BEB4A1D00BA1E77 /* NNProductDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNProductDetailView.m; sourceTree = "<group>"; };
+		AC92D7A61BEB4DA400BA1E77 /* NNProductInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNProductInfoView.h; sourceTree = "<group>"; };
+		AC92D7A71BEB4DA400BA1E77 /* NNProductInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNProductInfoView.m; sourceTree = "<group>"; };
+		AC9AA8DD1BE9F27E002FAB5A /* NNRecommendDailyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNRecommendDailyViewController.h; sourceTree = "<group>"; };
+		AC9AA8DE1BE9F27E002FAB5A /* NNRecommendDailyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNRecommendDailyViewController.m; sourceTree = "<group>"; };
+		AC9AA8E11BE9F2C6002FAB5A /* NNRecommendDailyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNRecommendDailyView.h; sourceTree = "<group>"; };
+		AC9AA8E21BE9F2C6002FAB5A /* NNRecommendDailyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNRecommendDailyView.m; sourceTree = "<group>"; };
+		AC9EBC5F1BF575E9008AB4C3 /* ShippingAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShippingAddressModel.h; sourceTree = "<group>"; };
+		AC9EBC601BF575E9008AB4C3 /* ShippingAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShippingAddressModel.m; sourceTree = "<group>"; };
+		ACCC645B1BF18C87005CFD04 /* NNBaseApply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNBaseApply.h; sourceTree = "<group>"; };
+		ACCC645C1BF18C87005CFD04 /* NNBaseApply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNBaseApply.m; sourceTree = "<group>"; };
+		ACCC645F1BF18CB5005CFD04 /* NNProductApply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNProductApply.h; sourceTree = "<group>"; };
+		ACCC64601BF18CB5005CFD04 /* NNProductApply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNProductApply.m; sourceTree = "<group>"; };
+		ACCC64631BF1908A005CFD04 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		ACCC64641BF1908A005CFD04 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		ACCC64651BF1908A005CFD04 /* YBProgressShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBProgressShow.h; sourceTree = "<group>"; };
+		ACCC64661BF1908A005CFD04 /* YBProgressShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBProgressShow.m; sourceTree = "<group>"; };
+		ACCC646A1BF1B624005CFD04 /* MallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MallModel.h; sourceTree = "<group>"; };
+		ACCC646B1BF1B624005CFD04 /* MallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MallModel.m; sourceTree = "<group>"; };
+		ACCC64761BF1EF4D005CFD04 /* NNUserApply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNUserApply.h; sourceTree = "<group>"; };
+		ACCC64771BF1EF4D005CFD04 /* NNUserApply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNUserApply.m; sourceTree = "<group>"; };
+		ACD8337F1BF4307800928712 /* NNDailyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNDailyCell.h; sourceTree = "<group>"; };
+		ACD833801BF4307800928712 /* NNDailyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNDailyCell.m; sourceTree = "<group>"; };
+		ACD833821BF4307800928712 /* NNMallCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMallCell.h; sourceTree = "<group>"; };
+		ACD833831BF4307800928712 /* NNMallCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMallCell.m; sourceTree = "<group>"; };
+		ACD833851BF4307800928712 /* NNMallCollect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNMallCollect.h; sourceTree = "<group>"; };
+		ACD833861BF4307800928712 /* NNMallCollect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNMallCollect.m; sourceTree = "<group>"; };
+		ACD833881BF4307800928712 /* NNProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNProductCell.h; sourceTree = "<group>"; };
+		ACD833891BF4307800928712 /* NNProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNProductCell.m; sourceTree = "<group>"; };
+		ACD833901BF4314600928712 /* NNCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NNCartView.h; sourceTree = "<group>"; };
+		ACD833911BF4314600928712 /* NNCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NNCartView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AC85FDBD1BE896720026E505 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC85FE091BE8AE0F0026E505 /* libz.tbd in Frameworks */,
+				AC85FE071BE8AE080026E505 /* libstdc++.tbd in Frameworks */,
+				AC85FE051BE8ADE80026E505 /* libsqlite3.tbd in Frameworks */,
+				AC85FE031BE8ADDA0026E505 /* libiconv.tbd in Frameworks */,
+				AC85FDFB1BE8A9C80026E505 /* CoreTelephony.framework in Frameworks */,
+				AC85FE011BE8ADC60026E505 /* CoreGraphics.framework in Frameworks */,
+				AC85FDFF1BE8ADBE0026E505 /* SystemConfiguration.framework in Frameworks */,
+				AC85FDFD1BE8ADB30026E505 /* Security.framework in Frameworks */,
+				A319F3F321FACE09F9280EE8 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5318F64A1BF588A7002E8C3A /* AdreessModel */ = {
+			isa = PBXGroup;
+			children = (
+				5318F64B1BF588A7002E8C3A /* AdreessModel.h */,
+				5318F64C1BF588A7002E8C3A /* AdreessModel.m */,
+			);
+			path = AdreessModel;
+			sourceTree = "<group>";
+		};
+		5318F64E1BF58EE5002E8C3A /* NNShopCart */ = {
+			isa = PBXGroup;
+			children = (
+				5318F64F1BF58EE5002E8C3A /* NNOrder */,
+				5318F6521BF58EE5002E8C3A /* NNShopCartViewController.h */,
+				5318F6531BF58EE5002E8C3A /* NNShopCartViewController.m */,
+			);
+			path = NNShopCart;
+			sourceTree = "<group>";
+		};
+		5318F64F1BF58EE5002E8C3A /* NNOrder */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6501BF58EE5002E8C3A /* NNOrderViewController.h */,
+				5318F6511BF58EE5002E8C3A /* NNOrderViewController.m */,
+			);
+			path = NNOrder;
+			sourceTree = "<group>";
+		};
+		5318F6561BF58EEF002E8C3A /* NNShopCart */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6571BF58EEF002E8C3A /* NNOrderCells */,
+				5318F65E1BF58EEF002E8C3A /* NNOrderView */,
+				5318F6611BF58EEF002E8C3A /* NNShopCartCells */,
+				5318F66B1BF58EEF002E8C3A /* NNShopCartView */,
+			);
+			path = NNShopCart;
+			sourceTree = "<group>";
+		};
+		5318F6571BF58EEF002E8C3A /* NNOrderCells */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6581BF58EEF002E8C3A /* NNAddressCell */,
+				5318F65B1BF58EEF002E8C3A /* NNOrderProductCell */,
+			);
+			path = NNOrderCells;
+			sourceTree = "<group>";
+		};
+		5318F6581BF58EEF002E8C3A /* NNAddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6591BF58EEF002E8C3A /* NNAddressCell.h */,
+				5318F65A1BF58EEF002E8C3A /* NNAddressCell.m */,
+			);
+			path = NNAddressCell;
+			sourceTree = "<group>";
+		};
+		5318F65B1BF58EEF002E8C3A /* NNOrderProductCell */ = {
+			isa = PBXGroup;
+			children = (
+				5318F65C1BF58EEF002E8C3A /* NNOrderProductCell.h */,
+				5318F65D1BF58EEF002E8C3A /* NNOrderProductCell.m */,
+			);
+			path = NNOrderProductCell;
+			sourceTree = "<group>";
+		};
+		5318F65E1BF58EEF002E8C3A /* NNOrderView */ = {
+			isa = PBXGroup;
+			children = (
+				5318F65F1BF58EEF002E8C3A /* NNOrderView.h */,
+				5318F6601BF58EEF002E8C3A /* NNOrderView.m */,
+			);
+			path = NNOrderView;
+			sourceTree = "<group>";
+		};
+		5318F6611BF58EEF002E8C3A /* NNShopCartCells */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6621BF58EEF002E8C3A /* NNLikeCollect */,
+				5318F6651BF58EEF002E8C3A /* NNShopCartCollect */,
+				5318F6681BF58EEF002E8C3A /* NNShopCartCollectFooterView */,
+			);
+			path = NNShopCartCells;
+			sourceTree = "<group>";
+		};
+		5318F6621BF58EEF002E8C3A /* NNLikeCollect */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6631BF58EEF002E8C3A /* NNLikeCollect.h */,
+				5318F6641BF58EEF002E8C3A /* NNLikeCollect.m */,
+			);
+			path = NNLikeCollect;
+			sourceTree = "<group>";
+		};
+		5318F6651BF58EEF002E8C3A /* NNShopCartCollect */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6661BF58EEF002E8C3A /* NNShopCartCollect.h */,
+				5318F6671BF58EEF002E8C3A /* NNShopCartCollect.m */,
+			);
+			path = NNShopCartCollect;
+			sourceTree = "<group>";
+		};
+		5318F6681BF58EEF002E8C3A /* NNShopCartCollectFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6691BF58EEF002E8C3A /* CollectionReusableView.h */,
+				5318F66A1BF58EEF002E8C3A /* CollectionReusableView.m */,
+			);
+			path = NNShopCartCollectFooterView;
+			sourceTree = "<group>";
+		};
+		5318F66B1BF58EEF002E8C3A /* NNShopCartView */ = {
+			isa = PBXGroup;
+			children = (
+				5318F66C1BF58EEF002E8C3A /* NNShopCartView.h */,
+				5318F66D1BF58EEF002E8C3A /* NNShopCartView.m */,
+			);
+			path = NNShopCartView;
+			sourceTree = "<group>";
+		};
+		5318F67D1BF5D003002E8C3A /* NNModifyAccountView */ = {
+			isa = PBXGroup;
+			children = (
+				5318F67E1BF5D00F002E8C3A /* NNModifyAccountView.h */,
+				5318F67F1BF5D00F002E8C3A /* NNModifyAccountView.m */,
+			);
+			path = NNModifyAccountView;
+			sourceTree = "<group>";
+		};
+		5318F6811BF5D019002E8C3A /* NNModifyAccount */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6821BF5D023002E8C3A /* NNModifyAccountViewController.h */,
+				5318F6831BF5D023002E8C3A /* NNModifyAccountViewController.m */,
+			);
+			path = NNModifyAccount;
+			sourceTree = "<group>";
+		};
+		531C8D9B1BF3471C00660278 /* NNMeButton */ = {
+			isa = PBXGroup;
+			children = (
+				531C8D9C1BF3472C00660278 /* NNMeButton.h */,
+				531C8D9D1BF3472C00660278 /* NNMeButton.m */,
+			);
+			path = NNMeButton;
+			sourceTree = "<group>";
+		};
+		531C8DA61BF435DF00660278 /* NNMeCell */ = {
+			isa = PBXGroup;
+			children = (
+				531C8DA71BF435DF00660278 /* NNMeViewCell.h */,
+				531C8DA81BF435DF00660278 /* NNMeViewCell.m */,
+			);
+			path = NNMeCell;
+			sourceTree = "<group>";
+		};
+		531C8DAA1BF483AC00660278 /* NNAccountView */ = {
+			isa = PBXGroup;
+			children = (
+				5318F67D1BF5D003002E8C3A /* NNModifyAccountView */,
+				531C8DAB1BF483BB00660278 /* NNAccountView.h */,
+				531C8DAC1BF483BB00660278 /* NNAccountView.m */,
+			);
+			path = NNAccountView;
+			sourceTree = "<group>";
+		};
+		531C8DAE1BF486DC00660278 /* NNAccount */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6811BF5D019002E8C3A /* NNModifyAccount */,
+				531C8DAF1BF486EB00660278 /* NNAccountViewController.h */,
+				531C8DB01BF486EB00660278 /* NNAccountViewController.m */,
+			);
+			path = NNAccount;
+			sourceTree = "<group>";
+		};
+		531C8DB21BF4883A00660278 /* UserModel */ = {
+			isa = PBXGroup;
+			children = (
+				531C8DB31BF4884E00660278 /* UserModel.h */,
+				531C8DB41BF4884E00660278 /* UserModel.m */,
+			);
+			path = UserModel;
+			sourceTree = "<group>";
+		};
+		53349B161BF1BDE000B92C5C /* NNSearchResultViewController */ = {
+			isa = PBXGroup;
+			children = (
+				53349B1A1BF1BE2C00B92C5C /* NNSearchResultViewController.h */,
+				53349B1B1BF1BE2C00B92C5C /* NNSearchResultViewController.m */,
+			);
+			name = NNSearchResultViewController;
+			path = NNSrarchResultViewController;
+			sourceTree = "<group>";
+		};
+		53349B1D1BF1E1C000B92C5C /* NNSearchResultView */ = {
+			isa = PBXGroup;
+			children = (
+				53349B211BF1EECB00B92C5C /* NNSearchResultCell */,
+				53349B1E1BF1E1D500B92C5C /* NNSearchResultView.h */,
+				53349B1F1BF1E1D500B92C5C /* NNSearchResultView.m */,
+			);
+			path = NNSearchResultView;
+			sourceTree = "<group>";
+		};
+		53349B211BF1EECB00B92C5C /* NNSearchResultCell */ = {
+			isa = PBXGroup;
+			children = (
+				53349B251BF1EEF400B92C5C /* NNSearchResultCell.h */,
+				53349B261BF1EEF400B92C5C /* NNSearchResultCell.m */,
+			);
+			path = NNSearchResultCell;
+			sourceTree = "<group>";
+		};
+		535A8E401BF96780000EA78D /* NNAppManage */ = {
+			isa = PBXGroup;
+			children = (
+				535A8E411BF967AF000EA78D /* NNAppManage.h */,
+				535A8E421BF967AF000EA78D /* NNAppManage.m */,
+			);
+			path = NNAppManage;
+			sourceTree = "<group>";
+		};
+		AC0C52A31BF96F1700A21E0E /* HJCAdjustNumButton */ = {
+			isa = PBXGroup;
+			children = (
+				AC0C52A41BF96F1700A21E0E /* HJCAdjustNumButton.bundle */,
+				AC0C52A51BF96F1700A21E0E /* HJCAjustNumButton.h */,
+				AC0C52A61BF96F1700A21E0E /* HJCAjustNumButton.m */,
+			);
+			path = HJCAdjustNumButton;
+			sourceTree = "<group>";
+		};
+		AC5463161BF4895300DA1830 /* OrderModel */ = {
+			isa = PBXGroup;
+			children = (
+				AC5463171BF4896100DA1830 /* OrderModel.h */,
+				AC5463181BF4896100DA1830 /* OrderModel.m */,
+			);
+			path = OrderModel;
+			sourceTree = "<group>";
+		};
+		AC85FDB71BE896720026E505 = {
+			isa = PBXGroup;
+			children = (
+				AC85FDDC1BE8972A0026E505 /* NNCommon */,
+				AC85FDDB1BE8970F0026E505 /* NNClasses */,
+				AC85FDDA1BE896FE0026E505 /* NNVender */,
+				AC85FDC21BE896730026E505 /* NNMall */,
+				AC85FDEA1BE89B810026E505 /* Frameworks */,
+				AC85FDC11BE896730026E505 /* Products */,
+				F63F0D4627609F8359E2E269 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		AC85FDC11BE896730026E505 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDC01BE896730026E505 /* NNMall.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AC85FDC21BE896730026E505 /* NNMall */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDC61BE896730026E505 /* AppDelegate.h */,
+				AC85FDC71BE896730026E505 /* AppDelegate.m */,
+				AC85FDCC1BE896730026E505 /* Main.storyboard */,
+				AC85FDCF1BE896730026E505 /* Assets.xcassets */,
+				AC85FDD11BE896730026E505 /* LaunchScreen.storyboard */,
+				AC85FDD41BE896730026E505 /* Info.plist */,
+				AC85FDC31BE896730026E505 /* Supporting Files */,
+			);
+			path = NNMall;
+			sourceTree = "<group>";
+		};
+		AC85FDC31BE896730026E505 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDC41BE896730026E505 /* main.m */,
+				AC85FDEB1BE89CDC0026E505 /* NNMall-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AC85FDDA1BE896FE0026E505 /* NNVender */ = {
+			isa = PBXGroup;
+			children = (
+				AC0C52A31BF96F1700A21E0E /* HJCAdjustNumButton */,
+			);
+			path = NNVender;
+			sourceTree = "<group>";
+		};
+		AC85FDDB1BE8970F0026E505 /* NNClasses */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDE11BE8980C0026E505 /* NNModels */,
+				AC85FDE01BE898020026E505 /* NNViews */,
+				AC85FDDF1BE897F70026E505 /* NNControls */,
+				AC85FDDE1BE897E40026E505 /* NNServices */,
+				AC85FDDD1BE897D90026E505 /* NNManagerments */,
+			);
+			path = NNClasses;
+			sourceTree = "<group>";
+		};
+		AC85FDDC1BE8972A0026E505 /* NNCommon */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC64621BF1908A005CFD04 /* MBProgress */,
+				AC85FE0A1BE8B69D0026E505 /* NNShare */,
+				AC85FDE51BE89A840026E505 /* NNCommonDeal */,
+				AC85FDE21BE898350026E505 /* NNCommon.h */,
+				AC85FDE31BE898350026E505 /* NNCommon.m */,
+			);
+			path = NNCommon;
+			sourceTree = "<group>";
+		};
+		AC85FDDD1BE897D90026E505 /* NNManagerments */ = {
+			isa = PBXGroup;
+			children = (
+				535A8E401BF96780000EA78D /* NNAppManage */,
+				ACCC645A1BF18C73005CFD04 /* NNApply */,
+			);
+			path = NNManagerments;
+			sourceTree = "<group>";
+		};
+		AC85FDDE1BE897E40026E505 /* NNServices */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDF61BE8A4920026E505 /* NNHttpRequest */,
+				AC85FDF31BE8A4190026E505 /* NNBaseHttpRequest.h */,
+				AC85FDF41BE8A4190026E505 /* NNBaseHttpRequest.m */,
+			);
+			path = NNServices;
+			sourceTree = "<group>";
+		};
+		AC85FDDF1BE897F70026E505 /* NNControls */ = {
+			isa = PBXGroup;
+			children = (
+				5318F64E1BF58EE5002E8C3A /* NNShopCart */,
+				AC85FE221BE8BC640026E505 /* NNMe */,
+				AC85FE1A1BE8BC190026E505 /* NNSearch */,
+				AC85FE161BE8BBF10026E505 /* NNMainMall */,
+				AC85FE111BE8B9490026E505 /* NNTabbar */,
+			);
+			path = NNControls;
+			sourceTree = "<group>";
+		};
+		AC85FDE01BE898020026E505 /* NNViews */ = {
+			isa = PBXGroup;
+			children = (
+				5318F6561BF58EEF002E8C3A /* NNShopCart */,
+				AC85FE291BE8BCE70026E505 /* NNMe */,
+				AC85FE271BE8BCD40026E505 /* NNSearch */,
+				AC85FE261BE8BCC70026E505 /* NNMainMall */,
+			);
+			path = NNViews;
+			sourceTree = "<group>";
+		};
+		AC85FDE11BE8980C0026E505 /* NNModels */ = {
+			isa = PBXGroup;
+			children = (
+				5318F64A1BF588A7002E8C3A /* AdreessModel */,
+				AC9EBC5E1BF575DA008AB4C3 /* ShippingAddressModel */,
+				AC5463161BF4895300DA1830 /* OrderModel */,
+				531C8DB21BF4883A00660278 /* UserModel */,
+				ACCC64691BF1B617005CFD04 /* MallModel */,
+				AC92D7971BEB44F600BA1E77 /* ProductModel */,
+				AC85FDEF1BE8A2700026E505 /* NNErrorModel */,
+				AC85FDEC1BE8A25A0026E505 /* NNBasicModel.h */,
+				AC85FDED1BE8A25A0026E505 /* NNBasicModel.m */,
+			);
+			path = NNModels;
+			sourceTree = "<group>";
+		};
+		AC85FDE51BE89A840026E505 /* NNCommonDeal */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDE61BE89A8E0026E505 /* NNCommonDeal.h */,
+				AC85FDE71BE89A8E0026E505 /* NNCommonDeal.m */,
+			);
+			path = NNCommonDeal;
+			sourceTree = "<group>";
+		};
+		AC85FDEA1BE89B810026E505 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FE081BE8AE0F0026E505 /* libz.tbd */,
+				AC85FE061BE8AE080026E505 /* libstdc++.tbd */,
+				AC85FE041BE8ADE80026E505 /* libsqlite3.tbd */,
+				AC85FE021BE8ADDA0026E505 /* libiconv.tbd */,
+				AC85FE001BE8ADC60026E505 /* CoreGraphics.framework */,
+				AC85FDFE1BE8ADBE0026E505 /* SystemConfiguration.framework */,
+				AC85FDFC1BE8ADB30026E505 /* Security.framework */,
+				AC85FDFA1BE8A9C80026E505 /* CoreTelephony.framework */,
+				7F539092C850326C039F3349 /* libPods.a */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		AC85FDEF1BE8A2700026E505 /* NNErrorModel */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDF01BE8A27C0026E505 /* NNErrorModel.h */,
+				AC85FDF11BE8A27C0026E505 /* NNErrorModel.m */,
+			);
+			path = NNErrorModel;
+			sourceTree = "<group>";
+		};
+		AC85FDF61BE8A4920026E505 /* NNHttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FDF71BE8A49F0026E505 /* NNHttpRequest.h */,
+				AC85FDF81BE8A49F0026E505 /* NNHttpRequest.m */,
+			);
+			path = NNHttpRequest;
+			sourceTree = "<group>";
+		};
+		AC85FE0A1BE8B69D0026E505 /* NNShare */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FE0E1BE8B72B0026E505 /* NNShare.h */,
+				AC85FE0F1BE8B72B0026E505 /* NNShare.m */,
+			);
+			path = NNShare;
+			sourceTree = "<group>";
+		};
+		AC85FE111BE8B9490026E505 /* NNTabbar */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FE121BE8B95E0026E505 /* NNTabbarViewController.h */,
+				AC85FE131BE8B95E0026E505 /* NNTabbarViewController.m */,
+			);
+			path = NNTabbar;
+			sourceTree = "<group>";
+		};
+		AC85FE161BE8BBF10026E505 /* NNMainMall */ = {
+			isa = PBXGroup;
+			children = (
+				AC92D7901BEB442000BA1E77 /* NNProductInfo */,
+				AC9AA8DC1BE9F272002FAB5A /* NNRecommendDaily */,
+				AC85FE171BE8BBFF0026E505 /* NNMainMallViewController.h */,
+				AC85FE181BE8BBFF0026E505 /* NNMainMallViewController.m */,
+			);
+			path = NNMainMall;
+			sourceTree = "<group>";
+		};
+		AC85FE1A1BE8BC190026E505 /* NNSearch */ = {
+			isa = PBXGroup;
+			children = (
+				53349B161BF1BDE000B92C5C /* NNSearchResultViewController */,
+				AC85FE1B1BE8BC250026E505 /* NNSearchViewController.h */,
+				AC85FE1C1BE8BC250026E505 /* NNSearchViewController.m */,
+			);
+			path = NNSearch;
+			sourceTree = "<group>";
+		};
+		AC85FE221BE8BC640026E505 /* NNMe */ = {
+			isa = PBXGroup;
+			children = (
+				531C8DAE1BF486DC00660278 /* NNAccount */,
+				AC85FE231BE8BC6E0026E505 /* NNMeViewController.h */,
+				AC85FE241BE8BC6E0026E505 /* NNMeViewController.m */,
+			);
+			path = NNMe;
+			sourceTree = "<group>";
+		};
+		AC85FE261BE8BCC70026E505 /* NNMainMall */ = {
+			isa = PBXGroup;
+			children = (
+				ACD8338F1BF4313B00928712 /* NNCartView */,
+				ACD8337D1BF4305700928712 /* NNMainCells */,
+				AC92D79F1BEB4A1300BA1E77 /* NNProductDetailView */,
+				AC9AA8E01BE9F2BB002FAB5A /* NNRecommendDailyView */,
+				AC92D78B1BEB43EB00BA1E77 /* NNProductInfoView */,
+				AC85FE2A1BE8BCF60026E505 /* NNMainMallView */,
+			);
+			path = NNMainMall;
+			sourceTree = "<group>";
+		};
+		AC85FE271BE8BCD40026E505 /* NNSearch */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FE2E1BE8BD170026E505 /* NNSearchView */,
+			);
+			path = NNSearch;
+			sourceTree = "<group>";
+		};
+		AC85FE291BE8BCE70026E505 /* NNMe */ = {
+			isa = PBXGroup;
+			children = (
+				531C8DAA1BF483AC00660278 /* NNAccountView */,
+				AC85FE371BE8BD570026E505 /* NNMeView */,
+			);
+			path = NNMe;
+			sourceTree = "<group>";
+		};
+		AC85FE2A1BE8BCF60026E505 /* NNMainMallView */ = {
+			isa = PBXGroup;
+			children = (
+				AC85FE2B1BE8BD020026E505 /* NNMainMallView.h */,
+				AC85FE2C1BE8BD020026E505 /* NNMainMallView.m */,
+			);
+			path = NNMainMallView;
+			sourceTree = "<group>";
+		};
+		AC85FE2E1BE8BD170026E505 /* NNSearchView */ = {
+			isa = PBXGroup;
+			children = (
+				53349B1D1BF1E1C000B92C5C /* NNSearchResultView */,
+				AC85FE2F1BE8BD1E0026E505 /* NNSearchView.h */,
+				AC85FE301BE8BD1E0026E505 /* NNSearchView.m */,
+			);
+			path = NNSearchView;
+			sourceTree = "<group>";
+		};
+		AC85FE371BE8BD570026E505 /* NNMeView */ = {
+			isa = PBXGroup;
+			children = (
+				531C8DA61BF435DF00660278 /* NNMeCell */,
+				531C8D9B1BF3471C00660278 /* NNMeButton */,
+				AC85FE381BE8BD5F0026E505 /* NNMeView.h */,
+				AC85FE391BE8BD5F0026E505 /* NNMeView.m */,
+			);
+			path = NNMeView;
+			sourceTree = "<group>";
+		};
+		AC92D78B1BEB43EB00BA1E77 /* NNProductInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				AC92D7A61BEB4DA400BA1E77 /* NNProductInfoView.h */,
+				AC92D7A71BEB4DA400BA1E77 /* NNProductInfoView.m */,
+			);
+			path = NNProductInfoView;
+			sourceTree = "<group>";
+		};
+		AC92D7901BEB442000BA1E77 /* NNProductInfo */ = {
+			isa = PBXGroup;
+			children = (
+				AC92D7911BEB442D00BA1E77 /* NNProductInfoViewController.h */,
+				AC92D7921BEB442D00BA1E77 /* NNProductInfoViewController.m */,
+			);
+			path = NNProductInfo;
+			sourceTree = "<group>";
+		};
+		AC92D7971BEB44F600BA1E77 /* ProductModel */ = {
+			isa = PBXGroup;
+			children = (
+				AC92D7981BEB450500BA1E77 /* ProductModel.h */,
+				AC92D7991BEB450500BA1E77 /* ProductModel.m */,
+			);
+			path = ProductModel;
+			sourceTree = "<group>";
+		};
+		AC92D79F1BEB4A1300BA1E77 /* NNProductDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				AC92D7A01BEB4A1D00BA1E77 /* NNProductDetailView.h */,
+				AC92D7A11BEB4A1D00BA1E77 /* NNProductDetailView.m */,
+			);
+			path = NNProductDetailView;
+			sourceTree = "<group>";
+		};
+		AC9AA8DC1BE9F272002FAB5A /* NNRecommendDaily */ = {
+			isa = PBXGroup;
+			children = (
+				AC9AA8DD1BE9F27E002FAB5A /* NNRecommendDailyViewController.h */,
+				AC9AA8DE1BE9F27E002FAB5A /* NNRecommendDailyViewController.m */,
+			);
+			path = NNRecommendDaily;
+			sourceTree = "<group>";
+		};
+		AC9AA8E01BE9F2BB002FAB5A /* NNRecommendDailyView */ = {
+			isa = PBXGroup;
+			children = (
+				AC9AA8E11BE9F2C6002FAB5A /* NNRecommendDailyView.h */,
+				AC9AA8E21BE9F2C6002FAB5A /* NNRecommendDailyView.m */,
+			);
+			path = NNRecommendDailyView;
+			sourceTree = "<group>";
+		};
+		AC9EBC5E1BF575DA008AB4C3 /* ShippingAddressModel */ = {
+			isa = PBXGroup;
+			children = (
+				AC9EBC5F1BF575E9008AB4C3 /* ShippingAddressModel.h */,
+				AC9EBC601BF575E9008AB4C3 /* ShippingAddressModel.m */,
+			);
+			path = ShippingAddressModel;
+			sourceTree = "<group>";
+		};
+		ACCC645A1BF18C73005CFD04 /* NNApply */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC64751BF1EF46005CFD04 /* NNUserApply */,
+				ACCC645E1BF18CA6005CFD04 /* NNProductApply */,
+				ACCC645B1BF18C87005CFD04 /* NNBaseApply.h */,
+				ACCC645C1BF18C87005CFD04 /* NNBaseApply.m */,
+			);
+			path = NNApply;
+			sourceTree = "<group>";
+		};
+		ACCC645E1BF18CA6005CFD04 /* NNProductApply */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC645F1BF18CB5005CFD04 /* NNProductApply.h */,
+				ACCC64601BF18CB5005CFD04 /* NNProductApply.m */,
+			);
+			path = NNProductApply;
+			sourceTree = "<group>";
+		};
+		ACCC64621BF1908A005CFD04 /* MBProgress */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC64631BF1908A005CFD04 /* MBProgressHUD.h */,
+				ACCC64641BF1908A005CFD04 /* MBProgressHUD.m */,
+				ACCC64651BF1908A005CFD04 /* YBProgressShow.h */,
+				ACCC64661BF1908A005CFD04 /* YBProgressShow.m */,
+			);
+			path = MBProgress;
+			sourceTree = "<group>";
+		};
+		ACCC64691BF1B617005CFD04 /* MallModel */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC646A1BF1B624005CFD04 /* MallModel.h */,
+				ACCC646B1BF1B624005CFD04 /* MallModel.m */,
+			);
+			path = MallModel;
+			sourceTree = "<group>";
+		};
+		ACCC64751BF1EF46005CFD04 /* NNUserApply */ = {
+			isa = PBXGroup;
+			children = (
+				ACCC64761BF1EF4D005CFD04 /* NNUserApply.h */,
+				ACCC64771BF1EF4D005CFD04 /* NNUserApply.m */,
+			);
+			path = NNUserApply;
+			sourceTree = "<group>";
+		};
+		ACD8337D1BF4305700928712 /* NNMainCells */ = {
+			isa = PBXGroup;
+			children = (
+				ACD8337E1BF4307800928712 /* NNDailyCell */,
+				ACD833811BF4307800928712 /* NNMallCell */,
+				ACD833841BF4307800928712 /* NNMallCollect */,
+				ACD833871BF4307800928712 /* NNProductCell */,
+				ACD8338A1BF4307800928712 /* NNWebCell */,
+			);
+			path = NNMainCells;
+			sourceTree = "<group>";
+		};
+		ACD8337E1BF4307800928712 /* NNDailyCell */ = {
+			isa = PBXGroup;
+			children = (
+				ACD8337F1BF4307800928712 /* NNDailyCell.h */,
+				ACD833801BF4307800928712 /* NNDailyCell.m */,
+			);
+			path = NNDailyCell;
+			sourceTree = "<group>";
+		};
+		ACD833811BF4307800928712 /* NNMallCell */ = {
+			isa = PBXGroup;
+			children = (
+				ACD833821BF4307800928712 /* NNMallCell.h */,
+				ACD833831BF4307800928712 /* NNMallCell.m */,
+			);
+			path = NNMallCell;
+			sourceTree = "<group>";
+		};
+		ACD833841BF4307800928712 /* NNMallCollect */ = {
+			isa = PBXGroup;
+			children = (
+				ACD833851BF4307800928712 /* NNMallCollect.h */,
+				ACD833861BF4307800928712 /* NNMallCollect.m */,
+			);
+			path = NNMallCollect;
+			sourceTree = "<group>";
+		};
+		ACD833871BF4307800928712 /* NNProductCell */ = {
+			isa = PBXGroup;
+			children = (
+				ACD833881BF4307800928712 /* NNProductCell.h */,
+				ACD833891BF4307800928712 /* NNProductCell.m */,
+			);
+			path = NNProductCell;
+			sourceTree = "<group>";
+		};
+		ACD8338A1BF4307800928712 /* NNWebCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NNWebCell;
+			sourceTree = "<group>";
+		};
+		ACD8338F1BF4313B00928712 /* NNCartView */ = {
+			isa = PBXGroup;
+			children = (
+				ACD833901BF4314600928712 /* NNCartView.h */,
+				ACD833911BF4314600928712 /* NNCartView.m */,
+			);
+			path = NNCartView;
+			sourceTree = "<group>";
+		};
+		F63F0D4627609F8359E2E269 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				812DF74FC9CFBC9077370BE4 /* Pods.debug.xcconfig */,
+				7D53313F74FDAF078FB00D73 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AC85FDBF1BE896720026E505 /* NNMall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC85FDD71BE896730026E505 /* Build configuration list for PBXNativeTarget "NNMall" */;
+			buildPhases = (
+				364E55D5D7983B099386E571 /* Check Pods Manifest.lock */,
+				AC85FDBC1BE896720026E505 /* Sources */,
+				AC85FDBD1BE896720026E505 /* Frameworks */,
+				AC85FDBE1BE896720026E505 /* Resources */,
+				0803F9B81E89A78D49C4B569 /* Embed Pods Frameworks */,
+				87665BD26F6FB2BFC2A78A79 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NNMall;
+			productName = NNMall;
+			productReference = AC85FDC01BE896730026E505 /* NNMall.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AC85FDB81BE896720026E505 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = shaoxu;
+				TargetAttributes = {
+					AC85FDBF1BE896720026E505 = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = WEAA4M37A8;
+					};
+				};
+			};
+			buildConfigurationList = AC85FDBB1BE896720026E505 /* Build configuration list for PBXProject "NNMall" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AC85FDB71BE896720026E505;
+			productRefGroup = AC85FDC11BE896730026E505 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AC85FDBF1BE896720026E505 /* NNMall */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AC85FDBE1BE896720026E505 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC85FDD31BE896730026E505 /* LaunchScreen.storyboard in Resources */,
+				AC0C52A71BF96F1700A21E0E /* HJCAdjustNumButton.bundle in Resources */,
+				AC85FDD01BE896730026E505 /* Assets.xcassets in Resources */,
+				AC85FDCE1BE896730026E505 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0803F9B81E89A78D49C4B569 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		364E55D5D7983B099386E571 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		87665BD26F6FB2BFC2A78A79 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AC85FDBC1BE896720026E505 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC85FE191BE8BBFF0026E505 /* NNMainMallViewController.m in Sources */,
+				ACD833921BF4314600928712 /* NNCartView.m in Sources */,
+				5318F6801BF5D00F002E8C3A /* NNModifyAccountView.m in Sources */,
+				5318F64D1BF588A7002E8C3A /* AdreessModel.m in Sources */,
+				AC92D7A21BEB4A1D00BA1E77 /* NNProductDetailView.m in Sources */,
+				AC0C52A81BF96F1700A21E0E /* HJCAjustNumButton.m in Sources */,
+				ACCC64681BF1908A005CFD04 /* YBProgressShow.m in Sources */,
+				AC85FDF21BE8A27C0026E505 /* NNErrorModel.m in Sources */,
+				5318F66E1BF58EEF002E8C3A /* NNAddressCell.m in Sources */,
+				AC92D7931BEB442D00BA1E77 /* NNProductInfoViewController.m in Sources */,
+				AC85FDE81BE89A8E0026E505 /* NNCommonDeal.m in Sources */,
+				5318F6711BF58EEF002E8C3A /* NNLikeCollect.m in Sources */,
+				AC9EBC611BF575E9008AB4C3 /* ShippingAddressModel.m in Sources */,
+				AC85FE2D1BE8BD020026E505 /* NNMainMallView.m in Sources */,
+				5318F6551BF58EE5002E8C3A /* NNShopCartViewController.m in Sources */,
+				AC85FDE41BE898350026E505 /* NNCommon.m in Sources */,
+				ACD8338B1BF4307800928712 /* NNDailyCell.m in Sources */,
+				531C8DB51BF4884E00660278 /* UserModel.m in Sources */,
+				ACD8338D1BF4307800928712 /* NNMallCollect.m in Sources */,
+				53349B1C1BF1BE2C00B92C5C /* NNSearchResultViewController.m in Sources */,
+				ACCC64671BF1908A005CFD04 /* MBProgressHUD.m in Sources */,
+				ACCC64611BF18CB5005CFD04 /* NNProductApply.m in Sources */,
+				531C8DB11BF486EB00660278 /* NNAccountViewController.m in Sources */,
+				535A8E431BF967AF000EA78D /* NNAppManage.m in Sources */,
+				5318F6731BF58EEF002E8C3A /* CollectionReusableView.m in Sources */,
+				AC85FE3A1BE8BD5F0026E505 /* NNMeView.m in Sources */,
+				AC5463191BF4896100DA1830 /* OrderModel.m in Sources */,
+				AC92D79A1BEB450500BA1E77 /* ProductModel.m in Sources */,
+				AC85FE311BE8BD1E0026E505 /* NNSearchView.m in Sources */,
+				AC85FE1D1BE8BC250026E505 /* NNSearchViewController.m in Sources */,
+				5318F6741BF58EEF002E8C3A /* NNShopCartView.m in Sources */,
+				ACCC64781BF1EF4D005CFD04 /* NNUserApply.m in Sources */,
+				AC9AA8E31BE9F2C6002FAB5A /* NNRecommendDailyView.m in Sources */,
+				AC85FDC81BE896730026E505 /* AppDelegate.m in Sources */,
+				531C8DA91BF435E000660278 /* NNMeViewCell.m in Sources */,
+				531C8DAD1BF483BB00660278 /* NNAccountView.m in Sources */,
+				AC92D7A81BEB4DA400BA1E77 /* NNProductInfoView.m in Sources */,
+				AC85FDEE1BE8A25A0026E505 /* NNBasicModel.m in Sources */,
+				5318F6701BF58EEF002E8C3A /* NNOrderView.m in Sources */,
+				AC9AA8DF1BE9F27E002FAB5A /* NNRecommendDailyViewController.m in Sources */,
+				ACCC646C1BF1B624005CFD04 /* MallModel.m in Sources */,
+				5318F6541BF58EE5002E8C3A /* NNOrderViewController.m in Sources */,
+				AC85FE101BE8B72B0026E505 /* NNShare.m in Sources */,
+				531C8D9E1BF3472C00660278 /* NNMeButton.m in Sources */,
+				5318F6721BF58EEF002E8C3A /* NNShopCartCollect.m in Sources */,
+				AC85FDF51BE8A4190026E505 /* NNBaseHttpRequest.m in Sources */,
+				ACCC645D1BF18C87005CFD04 /* NNBaseApply.m in Sources */,
+				AC85FE251BE8BC6E0026E505 /* NNMeViewController.m in Sources */,
+				5318F66F1BF58EEF002E8C3A /* NNOrderProductCell.m in Sources */,
+				53349B201BF1E1D500B92C5C /* NNSearchResultView.m in Sources */,
+				53349B271BF1EEF400B92C5C /* NNSearchResultCell.m in Sources */,
+				AC85FDC51BE896730026E505 /* main.m in Sources */,
+				ACD8338C1BF4307800928712 /* NNMallCell.m in Sources */,
+				AC85FE141BE8B95E0026E505 /* NNTabbarViewController.m in Sources */,
+				5318F6841BF5D023002E8C3A /* NNModifyAccountViewController.m in Sources */,
+				AC85FDF91BE8A49F0026E505 /* NNHttpRequest.m in Sources */,
+				ACD8338E1BF4307800928712 /* NNProductCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		AC85FDCC1BE896730026E505 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC85FDCD1BE896730026E505 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		AC85FDD11BE896730026E505 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AC85FDD21BE896730026E505 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		AC85FDD51BE896730026E505 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AC85FDD61BE896730026E505 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AC85FDD81BE896730026E505 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 812DF74FC9CFBC9077370BE4 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/NNMall/NNMall-Prefix.pch";
+				INFOPLIST_FILE = NNMall/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nuannuan.NNMall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AC85FDD91BE896730026E505 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D53313F74FDAF078FB00D73 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/NNMall/NNMall-Prefix.pch";
+				INFOPLIST_FILE = NNMall/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nuannuan.NNMall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AC85FDBB1BE896720026E505 /* Build configuration list for PBXProject "NNMall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC85FDD51BE896730026E505 /* Debug */,
+				AC85FDD61BE896730026E505 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC85FDD71BE896730026E505 /* Build configuration list for PBXNativeTarget "NNMall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC85FDD81BE896730026E505 /* Debug */,
+				AC85FDD91BE896730026E505 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AC85FDB81BE896720026E505 /* Project object */;
+}

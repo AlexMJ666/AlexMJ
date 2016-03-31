@@ -1,0 +1,62 @@
+//
+//  NNLoginView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/18.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNLoginView.h"
+
+@interface NNLoginView()<UITextFieldDelegate>
+{
+    UITextField* m_textField;
+    NSString* code;
+}
+@property(nonatomic,strong) IBOutlet UITextField* p_textField;
+@property(nonatomic,strong) NSString* code;
+-(IBAction)login:(id)sender;
+-(IBAction)sender:(id)sender;
+@end
+@implementation NNLoginView
+@synthesize p_NNLoginViewDelegate = m_NNLoginViewDelegate;
+@synthesize p_textField = m_textField;
+@synthesize code;
+-(void)dealloc
+{}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+    }
+    return self;
+}
+
+-(void)refreshLoginView
+{
+}
+
+-(IBAction)login:(id)sender
+{
+    [m_NNLoginViewDelegate loginDelegate:@"18268304329" andPassW:m_textField.text];
+}
+
+-(IBAction)sender:(id)sender
+{
+    [m_NNLoginViewDelegate sender:@"18268304329"];
+}
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    code = textField.text;
+    return YES;
+}
+@end

@@ -1,0 +1,56 @@
+//
+//  OrderModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "OrderModel.h"
+
+@implementation OrderModel
+@synthesize m_orderCost;
+@synthesize m_orderCoupons;
+@synthesize m_orderId;
+@synthesize m_orderPrice;
+@synthesize m_orderProArray;
+@synthesize m_orderUserM;
+@synthesize m_shipAddModel;
+@synthesize m_orderFM;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_orderId  = @"";
+        m_orderPrice = @"";
+        m_orderCost  = @"";
+        m_orderCoupons  = @"";
+        
+        m_orderProArray = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"id"]]) {
+            self.m_orderId = @"";
+        }else{
+            self.m_orderId = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"id"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"amount"]]) {
+            self.m_orderPrice = @"";
+        }else{
+            self.m_orderPrice = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"amount"]];
+        }
+
+    }
+    return self;
+}
+
+
+@end

@@ -1,0 +1,87 @@
+//
+//  NNMainMallViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMainMallViewController.h"
+#import "NNMainMallView.h"
+#import "ProductModel.h"
+#import "NNProductInfoViewController.h"
+#import "NNProductApply.h"
+@interface NNMainMallViewController ()<NNMainMallDelegate>
+{
+    NNMainMallView *m_nnMainMallView;
+}
+@property (nonatomic,strong) IBOutlet NNMainMallView *p_nnMainMallView;
+@end
+
+@implementation NNMainMallViewController
+@synthesize p_nnMainMallView = m_nnMainMallView;
+
+-(void)dealloc
+{
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_nnMainMallView.p_nnMainMallDelegate = self;
+//    [self getProductList];
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    for (int i=0; i<10; i++) {
+        ProductModel *goodM = [[ProductModel alloc]init];
+        goodM.m_productId = [NSString stringWithFormat:@"%d",i];
+        goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+        goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+        goodM.m_productPrice = @"900";
+        goodM.m_productCost = @"666";
+        [arr addObject:goodM];
+    }
+    [m_nnMainMallView refreshMainMallData:arr];
+
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)getProductList
+{
+    [[NNProductApply shareInstanceManager] requestProductList:^(id content) {
+        
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        [[YBProgressShow defaultProgress] showText:errorM.m_message
+                                            InMode:MBProgressHUDModeText
+                             OriginViewEnableTouch:NO
+                                HideAfterDelayTime:1.0f];
+    }];
+}
+
+#pragma mark - NNMainMallDelegate
+-(void)productDetail:(ProductModel *)productM
+{
+    [self performSegueWithIdentifier:@"ProductInfoSegue" sender:productM];
+}
+
+-(void)showMoreDailyProduct:(id)sender
+{
+    [self performSegueWithIdentifier:@"RecommandProductSegue" sender:nil];
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ProductInfoSegue"])
+    {
+        ProductModel *productM = (ProductModel *)sender;
+        NNProductInfoViewController *productInfoVC = segue.destinationViewController;
+        productInfoVC.p_productModel = productM;
+    }
+}
+
+@end

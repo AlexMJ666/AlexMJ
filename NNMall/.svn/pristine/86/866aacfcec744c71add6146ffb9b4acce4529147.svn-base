@@ -1,0 +1,84 @@
+//
+//  NNSearchResultView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchResultView.h"
+@interface NNSearchResultView()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* m_tableView;
+    NSMutableArray* m_cacheArr;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@property(nonatomic,strong) NSMutableArray* p_cacheArr;
+@end
+@implementation NNSearchResultView
+@synthesize p_tableView = m_tableView;
+@synthesize p_searchResultViewDelegate = m_searchResultViewDelegate;
+@synthesize p_cacheArr = m_cacheArr;
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+-(void)refreshSearchResultView
+{
+    //将上述数据全部存储到NSUserDefaults中
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //读取数组NSArray类型的数据
+    NSArray *cacheArr = [userDefaults arrayForKey:@"cacheArr"];
+    self.p_cacheArr = (NSMutableArray*)cacheArr;
+    [self.p_tableView reloadData];
+}
+
+#pragma - mark - tableviewDelegate
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return m_cacheArr.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* Celled = @"Celled";
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:Celled];
+    if (cell==nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Celled];
+    }
+    cell.textLabel.text = [m_cacheArr objectAtIndex:indexPath.row];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (m_searchResultViewDelegate && [m_searchResultViewDelegate respondsToSelector:@selector(touchTheTable)]) {
+        [m_searchResultViewDelegate touchTheTable];
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
+@end

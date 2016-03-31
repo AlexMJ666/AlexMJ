@@ -1,0 +1,33 @@
+//
+//  NNCommentApply.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/20.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBaseApply.h"
+
+@interface NNCommentApply : NNBaseApply
+
+/*!单例模式获取NNCommentApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNCommentApply对象
+ */
++ (NNCommentApply *)shareInstanceManager;
+
+/*! 释放取NNCommentApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNCommentApply对象
+ */
+- (void)dismissCommentApply;
+
+/*! 生成订单
+ *\param    param:          productId(商品id)
+ *\returns  returns:        返回NNUserApply对象
+ */
+- (void)requestCommentList:(NSString *)productId
+              andSucReturn:(ReturnBlockContent)returnBlock_
+            andFaildReturn:(FaildReturnBlock)returnFaild_;
+
+@end

@@ -1,0 +1,36 @@
+//
+//  ShippingAddressModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "ShippingAddressModel.h"
+
+@implementation ShippingAddressModel
+@synthesize m_shippingAddress;
+@synthesize m_shippingName;
+@synthesize m_shippingPhone;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_shippingAddress  = @"";
+        m_shippingName  = @"";
+        m_shippingPhone = @"";
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+
+    }
+    return self;
+}
+
+
+@end

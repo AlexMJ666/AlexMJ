@@ -1,0 +1,135 @@
+//
+//  NNRecommendDailyView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/4.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNRecommendDailyView.h"
+#import "NNMallCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MJRefresh.h>
+@interface NNRecommendDailyView ()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView *m_recommandTableView;
+    NSMutableArray *m_recommandArray;
+}
+@property (nonatomic,strong) IBOutlet UITableView *p_recommandTableView;
+@property (nonatomic,strong) NSMutableArray *p_recommandArray;
+@end
+
+@implementation NNRecommendDailyView
+@synthesize p_recommandTableView = m_recommandTableView;
+@synthesize p_recommandArray = m_recommandArray;
+@synthesize p_nnRecommandDailyDelegate = m_nnRecommandDailyDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+#pragma mark - MJRefresh
+-(void)initMJRefreshView
+{
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        if (m_nnRecommandDailyDelegate && [m_nnRecommandDailyDelegate respondsToSelector:@selector(refreshRecommandGoods:andFaild:)]) {
+            [m_nnRecommandDailyDelegate refreshRecommandGoods:^(id content) {
+                [self.p_recommandTableView.header endRefreshing];
+                [self refreshRecommandDailyData:(NSMutableArray *)content];
+            } andFaild:^(id content) {
+                [self.p_recommandTableView.header endRefreshing];
+            }];
+        }
+    }];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    self.p_recommandTableView.header = header;
+    
+    self.p_recommandTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if (m_nnRecommandDailyDelegate && [m_nnRecommandDailyDelegate respondsToSelector:@selector(loadMoreRecommandGoods:andFaild:)]) {
+            [m_nnRecommandDailyDelegate loadMoreRecommandGoods:^(id content) {
+                [self.p_recommandTableView.footer endRefreshing];
+                if (content) {
+                    NSMutableArray *tempArr = (NSMutableArray *)content;
+                    [self refreshRecommandDailyData:tempArr];
+                }
+                else{
+                    [self.p_recommandTableView.footer endRefreshingWithNoMoreData];
+                }
+                
+            } andFaild:^(id content) {
+                [self.p_recommandTableView.footer endRefreshing];
+            }];
+        }
+    }];
+    [self.p_recommandTableView.header beginRefreshing];
+}
+
+
+-(void)refreshRecommandDailyData:(NSMutableArray *)recommandArray
+{
+    self.p_recommandArray = recommandArray;
+    [m_recommandTableView reloadData];
+}
+
+#pragma mark - WareDetail TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return m_recommandArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 115.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *MallDaily = @"MallDailyCell";
+    NNMallCell *cell = (NNMallCell *)[tableView dequeueReusableCellWithIdentifier:MallDaily forIndexPath:indexPath];
+    
+    if (!cell) {
+        cell = [[NNMallCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MallDaily];
+    }
+    ProductModel *productM = [m_recommandArray objectAtIndex:indexPath.row];
+    [cell.p_goodsImageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl]
+                             placeholderImage:nil];
+    cell.p_goodsNameLbl.text = productM.m_productName;
+    cell.p_goodsPriceLbl.attributedText = [NNCommonDeal getOldPrice:productM.m_productPrice andNewPrice:productM.m_productCost andOldFontSize:16.0f andNewFontSize:30.0f];
+    return cell;
+
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProductModel *productM = [m_recommandArray objectAtIndex:indexPath.row];
+    if (m_nnRecommandDailyDelegate && [m_nnRecommandDailyDelegate respondsToSelector:@selector(productInfoFromRecommand:)]) {
+        [m_nnRecommandDailyDelegate productInfoFromRecommand:productM];
+    }
+}
+@end

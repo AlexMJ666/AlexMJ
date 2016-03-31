@@ -1,0 +1,84 @@
+//
+//  NNAdreessView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/16.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNAdreessView.h"
+
+@interface NNAdreessView()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* m_tableView;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tabelView;
+@end
+@implementation NNAdreessView
+@synthesize p_NNAdreessViewDelegate = m_NNAdreessViewDelegate;
+@synthesize p_tabelView = m_tableView;
+-(void)dealloc
+{}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+    }
+    
+    return self;
+}
+
+
+-(void)refreshNNAdreessView
+{
+}
+
+#pragma mark - Adreess TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return 2;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    return 44.0f;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *Me = @"accountCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Me];
+    
+    if (!cell) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Me];
+    }else{
+        while ([cell.contentView.subviews lastObject] != nil) {
+            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+        }
+    }
+    
+    return cell;
+}
+@end

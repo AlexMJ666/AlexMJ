@@ -1,0 +1,26 @@
+//
+//  NNChooseSizeView.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/21.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "ProductModel.h"
+
+@protocol NNChooseSizeDelegate <NSObject>
+
+-(void)chooseProductSize:(ProductModel *)productM;
+
+@end
+
+@interface NNChooseSizeView : UIView
+{
+    __weak id<NNChooseSizeDelegate> m_nnChooseSizeDelegate;
+}
+@property (nonatomic,weak) id<NNChooseSizeDelegate> p_nnChooseSizeDelegate;
+
+-(void)refreshSizeData:(ProductModel *)productM;
+
+@end

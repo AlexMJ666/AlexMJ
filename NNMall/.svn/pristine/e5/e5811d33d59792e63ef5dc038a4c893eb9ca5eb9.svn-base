@@ -1,0 +1,35 @@
+//
+//  NNOrderApply.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/19.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBaseApply.h"
+
+@interface NNOrderApply : NNBaseApply
+/*!单例模式获取NNOrderApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNOrderApply对象
+ */
++ (NNOrderApply *)shareInstanceManager;
+
+/*! 释放取NNOrderApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNOrderApply对象
+ */
+- (void)dismissOrderApply;
+
+/*! 生成订单
+ *\param    param:          selectAddressID(地址id)
+ *\param    param:          otherRequirement(备注)
+ *\param    param:          products(商品ids字符串)
+ *\returns  returns:        返回NNUserApply对象
+ */
+- (void)requestSubmitOrder:(NSString *)addressId
+             andProdcutIds:(NSString *)ids
+            andRequirement:(NSString *)requirement
+              andSucReturn:(ReturnBlockContent)returnBlock_
+            andFaildReturn:(FaildReturnBlock)returnFaild_;
+@end

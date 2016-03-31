@@ -1,0 +1,26 @@
+//
+//  NNMyOrderCell.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/17.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMyOrderCell.h"
+
+@implementation NNMyOrderCell
+@synthesize p_NNMyOrderCellDelegate = m_NNMyOrderCellDelegate;
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(void)refreshMyOrderCell:(OrderModel *)orderM
+{
+}
+@end

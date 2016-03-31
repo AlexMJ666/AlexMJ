@@ -1,0 +1,20 @@
+//
+//  NNProductCell.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/6.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface NNProductCell : UITableViewCell
+{
+    UILabel *m_proName;
+    UILabel *m_proPrice;
+    UILabel *m_proSaleStatus;
+    
+}
+
+
+@end

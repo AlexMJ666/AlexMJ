@@ -1,0 +1,104 @@
+//
+//  NNShopCartViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartViewController.h"
+#import "NNShopCartView.h"
+#import "NNProductInfoViewController.h"
+#import "NNOrderViewController.h"
+#import "ProductModel.h"
+#import "OrderModel.h"
+
+@interface NNShopCartViewController ()<NNShopCartDelegate>
+{
+    NNShopCartView *m_nnShopCartView;
+}
+@property (nonatomic,strong) IBOutlet NNShopCartView *p_nnShopCartView;
+@end
+
+@implementation NNShopCartViewController
+@synthesize p_nnShopCartView = m_nnShopCartView;
+
+-(void)dealloc
+{
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_nnShopCartView.p_nnShopCartDelegate = self;
+    [m_nnShopCartView layoutShopCartView];
+    [self queryShoppingCartList];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Redcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Navcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)queryShoppingCartList
+{
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    ProductModel *goodM = [[ProductModel alloc]init];
+    goodM.m_productId = [NSString stringWithFormat:@"%d",1];
+    goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+    goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+    goodM.m_productPrice = @"900";
+    goodM.m_productCost = @"666";
+    goodM.m_currentBuyCount = 1;
+    [arr addObject:goodM];
+    [m_nnShopCartView refrshShoppingCartData:arr andLike:arr];
+}
+
+#pragma mark - NNShopCartDelegate
+-(void)selectProduct:(ProductModel *)productM
+{
+    [self performSegueWithIdentifier:@"ProductFormCartSegue" sender:productM];
+}
+
+-(void)gotoOrder:(OrderModel *)orderM
+{
+    [self performSegueWithIdentifier:@"OrderFromCartSegue" sender:orderM];
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"ProductFormCartSegue"])
+    {
+        ProductModel *productM = (ProductModel *)sender;
+        NNProductInfoViewController *productInfoVC = segue.destinationViewController;
+        productInfoVC.p_productModel = productM;
+    }
+    if([segue.identifier isEqualToString:@"OrderFromCartSegue"])
+    {
+        OrderModel *orderM = (OrderModel *)sender;
+        NNOrderViewController *orderVC = segue.destinationViewController;
+        orderVC.p_orderModel = orderM;
+    }
+}
+
+@end

@@ -1,0 +1,100 @@
+//
+//  NNModifyAccountView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNModifyAccountView.h"
+
+@interface NNModifyAccountView()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* m_tableView;
+    NSString* m_modifyContent;
+    NSInteger m_modifyType;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@property(nonatomic,strong) NSString* p_modifyContent;
+@end
+@implementation NNModifyAccountView
+@synthesize p_NNModifyAccountViewDelegate = m_NNModifyAccountViewDelegate;
+@synthesize p_tableView = m_tableView;
+@synthesize p_modifyContent = m_modifyContent;
+-(void)dealloc
+{}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+    }
+    return self;
+}
+
+-(void)refreshNNModifyAccountView:(NSIndexPath *)chooseRow
+{
+    m_modifyType =chooseRow.row;
+    switch (m_modifyType) {
+        case 2:
+            m_modifyContent = AppManage.p_currentUserM.m_uName;
+            break;
+        case 3:
+            m_modifyContent = AppManage.p_currentUserM.m_uSex;
+            break;
+        default:
+            break;
+    }
+    NSLog(@"%@",m_modifyContent);
+    [self.p_tableView reloadData];
+}
+
+#pragma mark - Me TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (m_modifyType == 2) {
+        return 1;
+    }
+    return 3;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    return 44.0f;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *Me = @"accountCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Me];
+    
+    if (!cell) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Me];
+    }else{
+        while ([cell.contentView.subviews lastObject] != nil) {
+            [(UIView*)[cell.contentView.subviews lastObject] removeFromSuperview];
+        }
+    }
+
+    return cell;
+}
+@end

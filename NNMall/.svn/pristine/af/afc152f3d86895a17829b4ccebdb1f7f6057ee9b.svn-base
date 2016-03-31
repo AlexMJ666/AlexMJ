@@ -1,0 +1,35 @@
+//
+//  AdreessDetailCell.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/16.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "AdreessDetailCell.h"
+
+@implementation AdreessDetailCell
+@synthesize p_detailAdreess = m_detailAdreess;
+@synthesize p_name = m_name;
+@synthesize p_AdreessDetailCellDelegate = m_AdreessDetailCellDelegate;
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(IBAction)modifyAdreess:(id)sender
+{
+    
+}
+
+-(void)refreshAdreessDetailCell:(AdreessModel *)adreessM
+{
+    m_name.text = [NSString stringWithFormat:@"收货人: %@    联系电话: %@",adreessM.m_name,adreessM.m_contact];
+    m_detailAdreess.text = [NSString stringWithFormat:@"详细地址: %@",adreessM.m_detailAdreess];
+}
+@end

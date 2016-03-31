@@ -1,0 +1,40 @@
+//
+//  NNAccountViewController.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNAccountViewController.h"
+#import "NNAccountView.h"
+@interface NNAccountViewController ()
+{
+    NNAccountView* m_accountView;
+}
+@property(nonatomic,strong) IBOutlet NNAccountView* p_accountView;
+@end
+
+@implementation NNAccountViewController
+@synthesize p_accountView = m_accountView;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

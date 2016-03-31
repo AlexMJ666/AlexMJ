@@ -1,0 +1,327 @@
+//
+//  NNShopCartView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartView.h"
+#import "CollectionReusableView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "NNAppManage.h"
+#import "NNShopCartCell.h"
+#import <MJRefresh.h>
+@interface NNShopCartView ()<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *m_shopCartTableView;
+    UIButton    *m_selectAllBtn;
+    UIButton    *m_payBtn;
+    UILabel     *m_costLbl;
+    UILabel     *m_allcostLbl;
+    NSMutableArray *m_cartListArray;
+    
+    NSMutableArray *m_selectListArray;
+    
+}
+@property (nonatomic,strong) IBOutlet UITableView *p_shopCartTableView;
+@property (nonatomic,strong) IBOutlet UIButton    *p_selectAllBtn;
+@property (nonatomic,strong) IBOutlet UIButton    *p_payBtn;
+@property (nonatomic,strong) IBOutlet UILabel     *p_costLbl;
+@property (nonatomic,strong) IBOutlet UILabel     *p_allcostLbl;
+@property (nonatomic,strong) NSMutableArray *p_cartListArray;
+@property (nonatomic,strong) NSMutableArray *p_selectListArray;
+@end
+
+@implementation NNShopCartView
+@synthesize p_shopCartTableView = m_shopCartTableView;
+@synthesize p_selectAllBtn = m_selectAllBtn;
+@synthesize p_payBtn = m_payBtn;
+@synthesize p_costLbl = m_costLbl;
+@synthesize p_allcostLbl = m_allcostLbl;
+@synthesize p_cartListArray = m_cartListArray;
+@synthesize p_selectListArray = m_selectListArray;
+@synthesize p_nnShopCartDelegate = m_nnShopCartDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.p_selectListArray = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(void)layoutShopCartView
+{
+    m_payBtn.layer.masksToBounds = YES;
+    m_payBtn.layer.cornerRadius  = 5;
+    MJRefreshStateHeader *header = [MJRefreshStateHeader headerWithRefreshingBlock:^{
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(reloadShoppingCartData:andFailed:)]) {
+            [m_nnShopCartDelegate reloadShoppingCartData:^(id sucBack) {
+                NSMutableArray *arr = (NSMutableArray *)sucBack;
+                [self refrshShoppingCartData:arr andLike:nil];
+                [m_shopCartTableView.header endRefreshing];
+            } andFailed:^(id failedBack) {
+                [m_shopCartTableView.header endRefreshing];
+            }];
+        }
+    }];
+    [header setTitle:@"下拉刷新" forState:MJRefreshStateIdle];
+    [header setTitle:@"松开立即刷新" forState:MJRefreshStatePulling];
+    [header setTitle:@"正在刷新" forState:MJRefreshStateRefreshing];
+    header.stateLabel.font = [NNCommonDeal getFont:12];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    m_shopCartTableView.header = header;
+}
+
+-(void)refrshShoppingCartData:(NSMutableArray *)cartList
+                      andLike:(NSMutableArray *)likeList
+{
+    self.p_cartListArray = cartList;
+    [m_shopCartTableView reloadData];
+}
+
+-(void)editModel:(BOOL)isEdit
+{
+    if (isEdit) {
+        [m_payBtn setTitle:@"删除" forState:UIControlStateNormal];
+        m_costLbl.hidden = YES;
+        m_allcostLbl.hidden = YES;
+    }
+    else{
+        [m_payBtn setTitle:@"去结算" forState:UIControlStateNormal];
+        m_costLbl.hidden = NO;
+        m_allcostLbl.hidden = NO;
+    }
+}
+
+#pragma mark - Private methods
+
+-(IBAction)selectAllBtnClick:(id)sender
+{
+    if ([AppManage isLogin]) {
+        if (!m_cartListArray) {
+            [[YBProgressShow defaultProgress] showText:@"购物车还是空的哦"
+                                                InMode:MBProgressHUDModeText
+                                 OriginViewEnableTouch:NO
+                                    HideAfterDelayTime:1.0f];
+            return;
+        }
+        
+        UIButton *btn = (UIButton *)sender;
+        btn.selected = !btn.selected;
+        if (btn.selected) {
+            [m_selectListArray removeAllObjects];
+        }
+        
+        for (ProductModel *productM in m_cartListArray) {
+            if (btn.selected) {
+                [m_selectListArray addObject:productM];
+            }
+            else{
+                [m_selectListArray removeObject:productM];
+            }
+            productM.m_currentSelect = btn.selected;
+        }
+        //计算当前价格
+        [self calculatePrice];
+        [m_shopCartTableView reloadData];
+    }
+    else{
+        //跳入登录页面
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(gotoLoginView:)]) {
+            [m_nnShopCartDelegate gotoLoginView:nil];
+        }
+    }
+}
+
+-(IBAction)payBtnClick:(id)sender
+{
+    if ([AppManage isLogin]) {
+        //生成临时订单，用于填写订单信息确认
+        //0.判断是否有选中商品，若无return并提示
+        if (m_selectListArray.count == 0) {
+            [[YBProgressShow defaultProgress] showText:@"您还没有选择商品"
+                                                InMode:MBProgressHUDModeText
+                                 OriginViewEnableTouch:NO
+                                    HideAfterDelayTime:1.0f];
+            return;
+        }
+        //1.确认选中的商品，获取单价和数量，计算总价TODO
+        OrderModel *orderM = [[OrderModel alloc]init];
+        orderM.m_orderId = @"1";
+        orderM.m_orderFast = @"10";
+        double price = 0.0;
+        for (ProductModel *pro in m_selectListArray) {
+            [orderM.m_orderProArray addObject:pro];
+            price = pro.m_productCost.doubleValue*pro.m_currentBuyCount + price;
+        }
+        orderM.m_orderPrice = [NSString stringWithFormat:@"%.1f",price];
+        
+        AdreessModel *shipAddModel = [[AdreessModel alloc]init];
+        orderM.m_shipAddModel = shipAddModel;
+        
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(gotoOrder:)]) {
+            [m_nnShopCartDelegate gotoOrder:orderM];
+        }
+    }
+    else{
+        //跳入登录页面
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(gotoLoginView:)]) {
+            [m_nnShopCartDelegate gotoLoginView:nil];
+        }
+    }
+}
+
+-(HJCAjustNumButton *)addAjustButton:(ProductModel *)productM andTag:(NSInteger)tag
+{
+    HJCAjustNumButton *btn = [[HJCAjustNumButton alloc] init];
+    btn.frame = CGRectMake(0, 0, 118 , 34);
+    btn.lineColor = Linecolor;
+    btn.tag = tag;
+    btn.callBack = ^(NSString *currentNum){
+        NSLog(@"%@", currentNum);
+        if (currentNum.integerValue > productM.m_currentBuyCount) {
+            productM.m_currentBuyCount++;
+        }
+        else if (currentNum.integerValue < productM.m_currentBuyCount){
+            productM.m_currentBuyCount--;
+        }
+        //计算当前价格
+        [self calculatePrice];
+    };
+    if (productM.m_buyCount.length>0 && productM.m_currentBuyCount<productM.m_buyCount.integerValue) {
+        productM.m_currentBuyCount = productM.m_buyCount.integerValue;
+    }
+
+    btn.currentNum = [NSString stringWithFormat:@"%ld",(long)productM.m_currentBuyCount];
+    return btn;
+}
+
+#pragma mark - Price
+-(void)calculatePrice
+{
+    //计算当前价格
+    double price = 0.0;
+    for (ProductModel *product in m_selectListArray) {
+        price = product.m_productCost.doubleValue*product.m_currentBuyCount + price;
+    }
+    m_costLbl.text = [NSString stringWithFormat:@"合计：¥%.1f",price];
+    m_allcostLbl.text = [NSString stringWithFormat:@"总额：¥%.1f",price];
+    //判断是否全选
+    if (m_selectListArray.count == m_cartListArray.count) {
+        m_selectAllBtn.selected = YES;
+    }
+    else{
+        m_selectAllBtn.selected = NO;
+    }
+}
+
+#pragma mark - Private methods
+
+-(NSMutableAttributedString *)getProductText:(NSString *)nameText andSizeText:(NSDictionary *)sizeDic
+{
+    NSUInteger length = nameText.length;
+    NSString *text = [NSString stringWithFormat:@"%@\n%@",nameText,[NNCommonDeal getSizeFromCartProduct:sizeDic]];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:text];
+    [attr addAttribute:NSFontAttributeName value:[NNCommonDeal getFont:13] range:NSMakeRange(length, text.length-length)];
+    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(length, text.length-length)];
+    [attr addAttribute:NSFontAttributeName value:[NNCommonDeal getFont:13] range:NSMakeRange(0, length)];
+    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, length)];
+    return attr;
+}
+
+#pragma mark - WareDetail TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return m_cartListArray.count;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 154;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ShopCart = @"ShopCartCell";
+    NNShopCartCell *cell = (NNShopCartCell *)[tableView dequeueReusableCellWithIdentifier:ShopCart forIndexPath:indexPath];
+    
+    if (!cell) {
+        cell = [[NNShopCartCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ShopCart];
+    }
+    ProductModel *productM = [m_cartListArray objectAtIndex:indexPath.section];
+    if (productM.m_currentSelect) {
+        cell.p_selectIco.image = [UIImage imageNamed:@"seleted.png"];
+    }
+    else{
+        cell.p_selectIco.image = [UIImage imageNamed:@"unseleted.png"];
+    }
+
+    [cell.p_imageBtn.imageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl] placeholderImage:[AppManage getDefaultImage:@"100"]];
+    cell.p_nameTextView.attributedText = [self getProductText:productM.m_productName andSizeText:productM.m_specInfo];
+    cell.p_priceLbl.text = [NSString stringWithFormat:@"小计：¥%@",productM.m_productCost];
+    [cell.p_adjustBtn addSubview:[self addAjustButton:productM andTag:indexPath.section]];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ProductModel *productM = [m_cartListArray objectAtIndex:indexPath.section];
+    NNShopCartCell *cell = (NNShopCartCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self productSelect:productM andTableCell:cell];
+}
+
+-(void)productSelect:(ProductModel *)productM andTableCell:(NNShopCartCell *)cell
+{
+    productM.m_currentSelect = !productM.m_currentSelect;
+    if (productM.m_currentSelect) {
+        [m_selectListArray addObject:productM];
+        cell.p_selectIco.image = [UIImage imageNamed:@"seleted.png"];
+    }
+    else{
+        [m_selectListArray removeObject:productM];
+        cell.p_selectIco.image = [UIImage imageNamed:@"unseleted.png"];
+    }
+    //计算当前价格
+    [self calculatePrice];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(deleteProduct:)]) {
+            ProductModel *productM = [m_cartListArray objectAtIndex:indexPath.section];
+            [m_nnShopCartDelegate deleteProduct:productM];
+        }
+    }
+}
+
+@end

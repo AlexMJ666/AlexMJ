@@ -1,0 +1,99 @@
+//
+//  NNOrderViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNOrderViewController.h"
+#import "NNOrderView.h"
+#import "NNOrderApply.h"
+#import "NNMallPayViewController.h"
+@interface NNOrderViewController ()<NNOrderDelegate>
+{
+    NNOrderView *m_orderView;
+}
+@property (nonatomic,strong) IBOutlet NNOrderView *p_orderView;
+@end
+
+@implementation NNOrderViewController
+@synthesize p_orderModel = m_orderModel;
+@synthesize p_orderView = m_orderView;
+
+-(void)dealloc
+{
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_orderView.p_orderDelegate = self;
+    [m_orderView refreshOrderData:m_orderModel];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - NNOrderDelegate
+-(void)submitOrder:(id)sender
+{
+    NSMutableArray *idArr = [[NSMutableArray alloc]init];
+    for (ProductModel *productM in m_orderModel.m_orderProArray) {
+        [idArr addObject:productM.m_productId];
+    }
+    NSString *productIds = [idArr componentsJoinedByString:@","];
+    [[NNOrderApply shareInstanceManager] requestSubmitOrder:@"1" andProdcutIds:productIds andRequirement:@"" andSucReturn:^(id content) {
+        [self performSegueWithIdentifier:@"SubmitFromOrderSegue" sender:m_orderModel];
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        [[YBProgressShow defaultProgress] showText:errorM.m_message
+                                            InMode:MBProgressHUDModeText
+                             OriginViewEnableTouch:NO
+                                HideAfterDelayTime:1.0f];
+    }];
+}
+
+-(void)orderSelectRowAt:(NSInteger)index
+{
+    switch (index) {
+        case 0:{
+            //连接到我的地址
+            [self performSegueWithIdentifier:@"ShippingAddressSegue" sender:nil];
+            break;
+        }
+        case 1:{
+            //连接到我的优惠券
+//            [self performSegueWithIdentifier:@"OrderCouponsSegue" sender:nil];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"ShippingAddressSegue"])
+    {
+
+    }
+    if([segue.identifier isEqualToString:@"OrderCouponsSegue"])
+    {
+        
+    }
+    if([segue.identifier isEqualToString:@"SubmitFromOrderSegue"])
+    {
+        OrderModel *orderM = (OrderModel *)sender;
+        NNMallPayViewController *mallPayVC = segue.destinationViewController;
+        mallPayVC.p_payOrderM = orderM;
+    }
+}
+
+@end

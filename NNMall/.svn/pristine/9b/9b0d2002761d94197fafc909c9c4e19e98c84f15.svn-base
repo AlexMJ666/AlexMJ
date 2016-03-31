@@ -1,0 +1,35 @@
+//
+//  AdreessModel.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "AdreessModel.h"
+
+@implementation AdreessModel
+@synthesize m_name;               //姓名
+@synthesize m_contact;            //联系方式
+
+@synthesize m_detailAdreess;      //详细地址
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_name  = @"马家军";
+        m_contact  = @"18268304329";
+        m_detailAdreess  = @"杭州市余杭区仓前街道文一西路998号海创园16幢5楼";
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+    }
+    return self;
+}
+
+@end

@@ -1,0 +1,95 @@
+//
+//  NNMainMallViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMainMallViewController.h"
+#import "NNMainMallView.h"
+#import "ProductModel.h"
+#import "NNProductInfoViewController.h"
+#import "NNProductApply.h"
+@interface NNMainMallViewController ()<NNMainMallDelegate>
+{
+    NNMainMallView *m_nnMainMallView;
+}
+@property (nonatomic,strong) IBOutlet NNMainMallView *p_nnMainMallView;
+@end
+
+@implementation NNMainMallViewController
+@synthesize p_nnMainMallView = m_nnMainMallView;
+
+-(void)dealloc
+{
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_nnMainMallView.p_nnMainMallDelegate = self;
+    [self getProductList];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Redcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Navcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)getProductList
+{
+    [[YBProgressShow defaultProgress] showYBProgress];
+    [[NNProductApply shareInstanceManager] requestProductList:^(id content) {
+        [m_nnMainMallView refreshMainMallData:(NSMutableArray *)content];
+        [[YBProgressShow defaultProgress] hideYBProgress];
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        [[YBProgressShow defaultProgress] showText:errorM.m_message
+                                            InMode:MBProgressHUDModeText
+                             OriginViewEnableTouch:NO
+                                HideAfterDelayTime:1.0f];
+    }];
+}
+
+#pragma mark - NNMainMallDelegate
+-(void)productDetail:(ProductModel *)productM
+{
+    [self performSegueWithIdentifier:@"ProductInfoSegue" sender:productM];
+}
+
+-(void)showMoreDailyProduct:(id)sender
+{
+    [self performSegueWithIdentifier:@"RecommandProductSegue" sender:nil];
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ProductInfoSegue"])
+    {
+        ProductModel *productM = (ProductModel *)sender;
+        NNProductInfoViewController *productInfoVC = segue.destinationViewController;
+        productInfoVC.p_productModel = productM;
+    }
+}
+
+@end

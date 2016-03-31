@@ -1,0 +1,110 @@
+//
+//  NNRootViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/20.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNRootViewController.h"
+#import "NNMainMallViewController.h"
+#import "NNShopCartViewController.h"
+#import "NNSearchViewController.h"
+#import "NNMeViewController.h"
+#import "NNProductInfoViewController.h"
+#import <JYSlideSegmentController.h>
+@interface NNRootViewController ()<UINavigationControllerDelegate>
+
+@end
+
+@implementation NNRootViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.navigationController.delegate = self;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)popFromChild:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (![self isKindOfClass:[NNShopCartViewController class]]) {
+        if (self.navigationController.viewControllers.count>1) {
+            UIBarButtonItem *backBar = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"back-p.png"] style:UIBarButtonItemStylePlain target:self action:@selector(popFromChild:)];
+            backBar.imageInsets = UIEdgeInsetsMake(3, 0, 3, 6);
+            backBar.tintColor = NavRedcolor;
+            self.navigationItem.leftBarButtonItem = backBar;
+        }
+        else{
+            self.navigationItem.leftBarButtonItem = nil;
+        }
+    }
+
+    if ([self isKindOfClass:[NNMeViewController class]]) {
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
+    }
+    else if ([self isKindOfClass:[NNProductInfoViewController class]]) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:[NNMainMallViewController class]]) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //设置NavigationBar背景颜色]
+        [self.navigationController.navigationBar setBarTintColor:Redcolor];
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    }
+    else if ([viewController isKindOfClass:[NNShopCartViewController class]]) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //设置NavigationBar背景颜色
+        [self.navigationController.navigationBar setBarTintColor:Redcolor];
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    }
+    else if ([viewController isKindOfClass:[NNSearchViewController class]]) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        //设置NavigationBar背景颜色
+        [self.navigationController.navigationBar setBarTintColor:Redcolor];
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    }
+    else if ([viewController isKindOfClass:[NNMeViewController class]]) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    else{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+        //设置NavigationBar背景颜色
+        [self.navigationController.navigationBar setBarTintColor:Navcolor];
+        [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:NavRedcolor}];
+    }
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

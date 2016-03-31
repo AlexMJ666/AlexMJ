@@ -1,0 +1,24 @@
+//
+//  NNSearchView.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol NNSearchViewDelegate <NSObject>
+-(void)tagPressDelegate:(NSString*)searchKey;
+
+@end
+
+@interface NNSearchView : UIView
+{
+    __weak id<NNSearchViewDelegate> m_NNSearchViewDelegate;
+}
+
+@property(nonatomic,weak) id<NNSearchViewDelegate> p_NNSearchViewDelegate;
+
+-(void)refreshNNSearchView;
+@end

@@ -1,0 +1,36 @@
+//
+//  MySearchBar.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "MySearchBar.h"
+
+@implementation MySearchBar
+@synthesize p_mySearchBarDelegate = m_mySearchBarDelegate;
+@synthesize p_searchButton = m_searchButton;
+@synthesize p_searchTextFiled = m_searchTextFiled;
+@synthesize p_searchImgView = m_searchImgView;
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self) {
+        self = [super initWithCoder:aDecoder];
+    }
+    return self;
+}
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+@end

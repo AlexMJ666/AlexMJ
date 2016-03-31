@@ -1,0 +1,174 @@
+//
+//  NNShopCartViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartViewController.h"
+#import "NNShopCartView.h"
+#import "NNProductInfoViewController.h"
+#import "NNOrderViewController.h"
+#import "ProductModel.h"
+#import "OrderModel.h"
+#import "NNSizeView.h"
+@interface NNShopCartViewController ()<NNShopCartDelegate,NNSizeDelegate>
+{
+    NNShopCartView *m_nnShopCartView;
+    BOOL    m_isEditing;
+    NSMutableArray *m_shopArray;
+    NNSizeView *m_sizeView;
+}
+@property (nonatomic,strong) IBOutlet NNShopCartView *p_nnShopCartView;
+@property (nonatomic,assign) BOOL    p_isEditing;
+@property (nonatomic,strong) NSMutableArray *p_shopArray;
+@property (nonatomic,strong) NNSizeView *p_sizeView;
+@end
+
+@implementation NNShopCartViewController
+@synthesize p_nnShopCartView = m_nnShopCartView;
+@synthesize p_isEditing = m_isEditing;
+@synthesize p_shopArray = m_shopArray;
+@synthesize p_sizeView = m_sizeView;
+
+-(void)dealloc
+{
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_nnShopCartView.p_nnShopCartDelegate = self;
+    [m_nnShopCartView layoutShopCartView];
+    [self queryShoppingCartList];
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Redcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    //设置NavigationBar背景颜色
+    [self.navigationController.navigationBar setBarTintColor:Navcolor];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]}];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)queryShoppingCartList
+{
+    self.p_shopArray = [[NSMutableArray alloc]init];
+//    ProductModel *goodM = [[ProductModel alloc]init];
+//    goodM.m_productId = [NSString stringWithFormat:@"%d",1];
+//    goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+//    goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+//    goodM.m_productPrice = @"1000";
+//    goodM.m_productCost = @"800";
+//    goodM.m_currentBuyCount = 1;
+//    [m_shopArray addObject:goodM];
+
+    [m_nnShopCartView refrshShoppingCartData:m_shopArray andLike:nil];
+}
+
+-(IBAction)editModelClick:(id)sender
+{
+    UIBarButtonItem *bar = (UIBarButtonItem *)sender;
+    m_isEditing = !m_isEditing;
+    if (m_isEditing) {
+        bar.title = @"完成";
+    }else{
+        bar.title = @"编辑";
+    }
+    [m_nnShopCartView editModel:m_isEditing];
+}
+
+#pragma mark - NNSizeDelegate
+-(void)chooseProductSize:(ProductModel *)productM
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        m_sizeView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        m_sizeView.hidden = NO;
+    }];
+    //2.刷新主视图
+    [m_nnShopCartView refrshShoppingCartData:m_shopArray andLike:nil];
+}
+
+-(void)hideSize:(id)sender
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        m_sizeView.alpha = 0.0f;
+    } completion:^(BOOL finished) {
+        m_sizeView.hidden = NO;
+    }];
+}
+
+#pragma mark - NNShopCartDelegate
+-(void)selectProduct:(ProductModel *)productM
+{
+    if (m_isEditing) {
+        if (!self.p_sizeView) {
+            self.p_sizeView = [[NNSizeView alloc]initWithFrame:kMainScreen_Bounds];
+            m_sizeView.p_nnSizeDelegate = self;
+            m_sizeView.alpha = 0.0f;
+            m_sizeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+            [[[[UIApplication sharedApplication]delegate]window] addSubview:m_sizeView];
+        }
+        [m_sizeView refreshSizeData:productM];
+        [UIView animateWithDuration:0.2f animations:^{
+            m_sizeView.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+            m_sizeView.hidden = NO;
+        }];
+        
+    }
+    else{
+        [self performSegueWithIdentifier:@"ProductFormCartSegue" sender:productM];
+    }
+}
+
+-(void)gotoOrder:(OrderModel *)orderM
+{
+    if (m_isEditing) {
+        //TODO 删除购物车商品刷新视图
+
+    }
+    else{
+        [self performSegueWithIdentifier:@"OrderFromCartSegue" sender:orderM];
+    }
+}
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.identifier isEqualToString:@"ProductFormCartSegue"])
+    {
+        ProductModel *productM = (ProductModel *)sender;
+        NNProductInfoViewController *productInfoVC = segue.destinationViewController;
+        productInfoVC.p_productModel = productM;
+        productInfoVC.p_isFromProduct = NO;
+    }
+    if([segue.identifier isEqualToString:@"OrderFromCartSegue"])
+    {
+        OrderModel *orderM = (OrderModel *)sender;
+        NNOrderViewController *orderVC = segue.destinationViewController;
+        orderVC.p_orderModel = orderM;
+    }
+}
+
+@end

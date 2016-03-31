@@ -1,0 +1,28 @@
+//
+//  NNMeViewCell.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol NNMeCellDelegate <NSObject>
+-(void)goToBillDelegate:(UIButton*)sender;
+-(void)goToYHDelegate:(UIButton*)sender;
+-(void)goToAccountDelegate:(UIButton*)sender;
+
+@end
+@interface NNMeViewCell : UITableViewCell
+{
+    UIButton* m_billBtn;
+    UIButton* m_YHBtn;
+    UIButton* m_accountBtn;
+}
+@property (nonatomic, strong) IBOutlet UIButton* p_billBtn;
+@property (nonatomic, strong) IBOutlet UIButton* p_YHBtn;
+@property (nonatomic, strong) IBOutlet UIButton* p_accountBtn;
+
+-(void)refreshMeCell:(NSIndexPath*)indexPath;
+@end

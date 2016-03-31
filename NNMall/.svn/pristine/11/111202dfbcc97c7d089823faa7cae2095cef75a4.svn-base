@@ -1,0 +1,123 @@
+//
+//  NNSearchView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchView.h"
+#import <SKTagView/SKTagView.h>
+#import <SKTag.h>
+#import <SKTagButton.h>
+#import <Masonry.h>
+
+#define lineW           10
+@interface NNSearchView()
+{
+    UITableView* m_tableView;
+    SKTagView* m_tagView;
+    UIView* m_tagSuperView;
+}
+@property(nonatomic,strong) UITableView* p_tableView;
+@property(nonatomic,strong) SKTagView* p_tagView;
+@property(nonatomic,strong) UIView* p_tagSuperView;
+
+@end
+@implementation NNSearchView
+@synthesize p_tableView = m_tableView;
+@synthesize p_NNSearchViewDelegate = m_NNSearchViewDelegate;
+@synthesize p_tagView = m_tagView;
+@synthesize p_tagSuperView = m_tagSuperView;
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self) {
+        self = [super initWithCoder:aDecoder];
+        self.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1];
+    }
+    return self;
+}
+
+-(void)refreshNNSearchView
+{
+    [self setupTagView];
+
+}
+
+- (void)setupTagView
+{
+    NSArray* arr = [NSArray arrayWithObjects:@"衣服啊", @"鞋子你早么", @"袜子按时发生", @"内裤", @"你他妈的",@"哈哈哈", @"卧槽", nil];
+   
+    for (int i = 0; i < arr.count; i++) {
+        UIButton* tagBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        tagBtn.frame = CGRectMake((lineW*(i%2+1))+(i%2*(kMainScreen_Width-30)/2), 74+lineW*((int)i/2)+60*((int)i/2), (kMainScreen_Width-30)/2, 60);
+        NSLog(@"tagBtn.x = %f，tagBtn.y = %f，tagBtn.W = %f，tagBtn.H = %f",tagBtn.frame.origin.x,tagBtn.frame.origin.y,tagBtn.frame.size.width,tagBtn.frame.size.height);
+        [self addSubview:tagBtn];
+        [tagBtn setTitle:[arr objectAtIndex:i] forState:UIControlStateNormal];
+        [tagBtn setTitleColor:[UIColor colorWithRed:96.0f/255.0f green:95.0f/255.0f blue:95.0f/255.0f alpha:1] forState:UIControlStateNormal];
+        [tagBtn setBackgroundColor:[UIColor whiteColor]];
+        tagBtn.layer.masksToBounds = YES;
+        tagBtn.layer.cornerRadius = 2;//PingFangSC-Regular
+        //[tagBtn.titleLabel setFont:];
+        tagBtn.titleLabel.font =[UIFont fontWithName:@"PingFang-SC-Regular" size:16];
+    }
+}
+
+-(void)tagPress:(NSString*)text
+{
+    NSLog(@"%@",text);
+}
+
+//随机颜色
+-(UIColor*)randomColor
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+//#pragma - mark - tableviewDelegate
+//
+//-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//
+//    return m_tagSuperView;
+//}
+//
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    return 2;
+//}
+//
+//-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString* Celled = @"searchCell";
+//    SearchCell* cell = [tableView dequeueReusableCellWithIdentifier:Celled];
+//    if (cell==nil) {
+//        cell = [[SearchCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Celled];
+//    }
+//    return cell;
+//    
+//}
+//
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{}
+//
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 200;
+//}
+@end

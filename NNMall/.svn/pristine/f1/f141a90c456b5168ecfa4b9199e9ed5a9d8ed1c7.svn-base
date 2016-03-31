@@ -1,0 +1,140 @@
+//
+//  NNLoginView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/18.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNLoginView.h"
+
+#define NUMBERS @"0123456789"
+@interface NNLoginView()<UITextFieldDelegate>
+{
+    UITextField* m_textField;
+    NSString* m_code;
+    NSString* m_phone;
+}
+@property(nonatomic,strong) IBOutlet UITextField* p_textField;
+@property(nonatomic,strong) NSString* p_code;
+@property(nonatomic,strong) NSString* p_phone;
+-(IBAction)login:(id)sender;
+-(IBAction)sender:(id)sender;
+-(IBAction)back:(id)sender;
+@end
+@implementation NNLoginView
+@synthesize p_NNLoginViewDelegate = m_NNLoginViewDelegate;
+@synthesize p_textField = m_textField;
+@synthesize p_loginBtn = m_loginBtn;
+@synthesize p_mobile = m_mobile;
+@synthesize p_sendBtn = m_sendBtn;
+@synthesize p_code = m_code;
+@synthesize p_phone = m_phone;
+-(void)dealloc
+{}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+
+    }
+    return self;
+}
+
+-(void)refreshLoginView
+{
+    self.p_mobile.leftView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"account"]];
+    self.p_mobile.leftViewMode = UITextFieldViewModeAlways;
+    
+    self.p_textField.leftView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lock"]];;
+    self.p_textField.leftViewMode = UITextFieldViewModeAlways;
+}
+
+-(IBAction)login:(id)sender
+{
+    
+    if ([m_phone length] == 11&&[m_code length] == 4) {
+        if (m_NNLoginViewDelegate&&[m_NNLoginViewDelegate respondsToSelector:@selector(loginDelegate:andPassW:)])
+        {
+            [m_NNLoginViewDelegate loginDelegate:m_phone andPassW:m_code];
+        }
+    }else
+    {
+        [[YBProgressShow defaultProgress] showText:@"手机号或验证码输入有误"
+                                            InMode:MBProgressHUDModeText
+                             OriginViewEnableTouch:NO
+                                HideAfterDelayTime:1.0f];
+    }
+    }
+
+-(IBAction)sender:(id)sender
+{
+    if ([m_phone length] == 11) {
+        if (m_NNLoginViewDelegate&&[m_NNLoginViewDelegate respondsToSelector:@selector(sender:)])
+        {
+            [m_NNLoginViewDelegate sender:m_phone];
+        }
+        
+    }else
+    {
+        [[YBProgressShow defaultProgress] showText:@"手机号输入有误"
+                                            InMode:MBProgressHUDModeText
+                             OriginViewEnableTouch:NO
+                                HideAfterDelayTime:1.0f];
+    }
+}
+
+-(IBAction)back:(id)sender
+{
+    if (m_NNLoginViewDelegate &&[m_NNLoginViewDelegate respondsToSelector:@selector(loginBackDelegate)]) {
+        [m_NNLoginViewDelegate loginBackDelegate];
+    }
+}
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField.tag == 1) {
+        m_phone = textField.text;
+        NSLog(@"%@",m_phone);
+    }else
+    {
+        m_code = textField.text;
+        NSLog(@"%@",m_code);
+    }
+    return YES;
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+
+    NSCharacterSet*cs;
+    cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
+    NSString*filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    BOOL basicTest = [string isEqualToString:filtered];
+    if(!basicTest) {
+        return NO;
+    }
+    if (textField.tag == 1) {
+        m_phone = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    }else
+    {
+        m_code = [NSString stringWithFormat:@"%@%@",textField.text,string];
+        NSLog(@"%@",m_code);
+    }
+    return YES;
+}
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.p_mobile resignFirstResponder];
+    [self.p_textField resignFirstResponder];
+}
+@end

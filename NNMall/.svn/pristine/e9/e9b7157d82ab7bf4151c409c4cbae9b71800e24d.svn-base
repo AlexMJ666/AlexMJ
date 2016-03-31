@@ -1,0 +1,36 @@
+//
+//  NNShopCartCollect.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartCollect.h"
+
+@implementation NNShopCartCollect
+@synthesize p_cartImageView = m_cartImageView;
+@synthesize p_cartNameLbl = m_cartNameLbl;
+@synthesize p_cartPriceLbl = m_cartPriceLbl;
+@synthesize p_cartSelectBtn = m_cartSelectBtn;
+@synthesize p_ajustBtn = m_adjustBtn;
+
+-(void)addAjustButton:(ProductModel *)productM
+{
+    HJCAjustNumButton *btn = [[HJCAjustNumButton alloc] init];
+    btn.frame = CGRectMake(0, 0, 118 , 34);
+    btn.lineColor = Linecolor;
+    btn.callBack = ^(NSString *currentNum){
+        NSLog(@"%@", currentNum);
+        if (currentNum.integerValue > productM.m_currentBuyCount) {
+            productM.m_currentBuyCount++;
+        }
+        else if (currentNum.integerValue < productM.m_currentBuyCount){
+            productM.m_currentBuyCount--;
+        }
+    };
+    btn.currentNum = [NSString stringWithFormat:@"%ld",(long)productM.m_currentBuyCount];
+    [m_adjustBtn addSubview:btn];
+}
+
+@end

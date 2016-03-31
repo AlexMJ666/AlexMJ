@@ -1,0 +1,70 @@
+//
+//  NNSearchViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchViewController.h"
+#import "NNSearchView.h"
+
+#define kSearchWidth    kMainScreen_Width-124
+@interface NNSearchViewController ()<NNSearchViewDelegate>
+{
+    NNSearchView *m_nnSearchView;
+    
+}
+@property (nonatomic,strong) IBOutlet NNSearchView *p_nnSearchView;
+- (IBAction)ShowSearchResultSegue:(id)sender;
+@end
+
+@implementation NNSearchViewController
+@synthesize p_nnSearchView = m_nnSearchView;
+
+-(void)dealloc
+{
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.p_nnSearchView.p_NNSearchViewDelegate = self;
+    [self.p_nnSearchView refreshNNSearchView];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)ShowSearchResultSegue:(id)sender {
+    [self performSegueWithIdentifier:@"SearchSegue" sender:nil];
+}
+
+- (IBAction)touchSearchIco:(id)sender {
+    [self performSegueWithIdentifier:@"SearchSegue" sender:nil];
+}
+
+-(void)tagPressDelegate:(NSString *)searchKey
+{
+    [self performSegueWithIdentifier:@"SearchSegue" sender:searchKey];
+}
+
+
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+     if([segue.identifier isEqualToString:@"SearchSegue"]&&sender)
+     {
+         id theSegue = segue.destinationViewController;
+         [theSegue setValue:sender forKey:@"searchKey"];
+     }
+     
+ }
+ 
+@end

@@ -1,0 +1,92 @@
+//
+//  NNMyOrderView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/17.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMyOrderView.h"
+#import "OrderModel.h"
+#import "NNMyOrderCell.h"
+@interface NNMyOrderView()<UITableViewDataSource,UITableViewDelegate,NNMyOrderCellDelegate>
+{
+    NSMutableArray* m_orderMArr;
+    UITableView* m_tableView;
+}
+
+@property(nonatomic,strong) NSMutableArray* p_orderMArr;
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@end
+
+@implementation NNMyOrderView
+@synthesize p_NNMyOrderViewDelegate = m_NNMyOrderViewDelegate;
+@synthesize p_orderMArr = m_orderMArr;
+@synthesize p_tableView = m_tableView;
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.p_orderMArr = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(void)refreshNNMyOrderView:(NSMutableArray *)orderMArr
+{
+    m_orderMArr = orderMArr;
+}
+
+
+#pragma mark - MyOrder TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 4;
+    }
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 5;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==0&&indexPath.row == 0) {
+        return 64.0f;
+    }
+    return 44.0f;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *myOrderCell = @"MyOrderCell";
+    NNMyOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:myOrderCell];
+    
+    if (!cell) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell = [[NNMyOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:myOrderCell];
+    }
+
+    return cell;
+}
+
+@end

@@ -1,0 +1,192 @@
+//
+//  NNMeViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMeViewController.h"
+#import "NNMeView.h"
+#import "NNOrderApply.h"
+#import "NNCommentApply.h"
+@interface NNMeViewController ()<NNMeViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+{
+    NNMeView *m_nnMeView;
+    UIButton* headerCopy;
+    NNOrderAllViewController* m_NNOrderAllVC;
+    NNOrderWaitEvaluateViewController* m_NNOrderWaitEvaluateVC;
+    NNOrderWaitGetViewController* m_NNOrderWaitGetVC;
+    NNOrderWaitPayViewController* m_NNOrderWaitPayVC;
+    NNOrderWaitSendViewController* m_NNOrderWaitSendVC;
+}
+@property (nonatomic,strong) IBOutlet NNMeView *p_nnMeView;
+@property(nonatomic,strong) UIButton* headerCopy;
+@property(nonatomic,strong) NNOrderAllViewController* p_NNOrderAllVC;
+@property(nonatomic,strong) NNOrderWaitEvaluateViewController* p_NNOrderWaitEvaluateVC;
+@property(nonatomic,strong) NNOrderWaitGetViewController* p_NNOrderWaitGetVC;
+@property(nonatomic,strong) NNOrderWaitPayViewController* p_NNOrderWaitPayVC;
+@property(nonatomic,strong) NNOrderWaitSendViewController* p_NNOrderWaitSendVC;
+@end
+
+@implementation NNMeViewController
+@synthesize p_nnMeView = m_nnMeView;
+@synthesize headerCopy;
+@synthesize p_NNOrderAllVC = m_NNOrderAllVC;
+@synthesize p_NNOrderWaitEvaluateVC = m_NNOrderWaitEvaluateVC;
+@synthesize p_NNOrderWaitGetVC = m_NNOrderWaitGetVC;
+@synthesize p_NNOrderWaitPayVC = m_NNOrderWaitPayVC;
+@synthesize p_NNOrderWaitSendVC = m_NNOrderWaitSendVC;
+
+-(void)dealloc
+{
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.p_nnMeView.p_nnMeViewDelegate = self;
+    [self.p_nnMeView refreshMeViewData:[[UserModel alloc]init]];
+    [self getOrderreport];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)getOrderreport
+{
+    [[NNOrderApply shareInstanceManager]requestOrderReport:nil andSucReturn:^(id content) {
+        [self.p_nnMeView refreshMeViewData:content];
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        
+    }];
+}
+
+#pragma mark - MeViewDelegate
+-(void)pushToMyBill
+{
+    [self performSegueWithIdentifier:@"ShowOrderSegue" sender:nil];
+}
+
+-(void)changeHeaderDelegate:(UIButton *)sender
+{
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if (cookiesdata.length > 0) {
+        headerCopy = sender;
+        UIActionSheet *sheet;
+        
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            sheet  = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照", @"从相册选择", nil];
+        }
+        else {
+            sheet = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
+        }
+        
+        sheet.tag = 255;
+        
+        [sheet showInView:self.view];
+
+    }else
+    {
+        [self performSegueWithIdentifier:@"MeToLoginSegue" sender:nil];
+    }
+}
+
+#pragma mark - action sheet delegte
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 255) {
+        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            switch (buttonIndex) {
+                case 0:
+                    return;
+                case 1: //相机
+                    sourceType = UIImagePickerControllerSourceTypeCamera;
+                    break;
+                case 2: //相册
+                    sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    break;
+            }
+        }
+        else {
+            if (buttonIndex == 0) {
+                return;
+            } else {
+                sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+            }
+        }
+        // 跳转到相机或相册页面
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.sourceType = sourceType;
+        
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+    }
+}
+
+#pragma mark - MeDelegate
+-(void)statusBtnPressDelegate:(UIButton *)sender
+{
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if (cookiesdata.length > 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        self.p_NNOrderAllVC = [storyboard instantiateViewControllerWithIdentifier:@"NNOrderAll"];
+        m_NNOrderAllVC.title = @"全部订单";
+        self.p_NNOrderWaitPayVC = [storyboard instantiateViewControllerWithIdentifier:@"NNOrderWaitPay"];
+        m_NNOrderWaitPayVC.title = @"待付款";
+        self.p_NNOrderWaitSendVC = [storyboard instantiateViewControllerWithIdentifier:@"NNOrderWaitSend"];
+        m_NNOrderWaitSendVC.title = @"待发货";
+        self.p_NNOrderWaitGetVC = [storyboard instantiateViewControllerWithIdentifier:@"NNOrderWaitGet"];
+        m_NNOrderWaitGetVC.title = @"待收货";
+        self.p_NNOrderWaitEvaluateVC = [storyboard instantiateViewControllerWithIdentifier:@"NNOrderWaitEvaluate"];
+        m_NNOrderWaitEvaluateVC.title = @"待评价";
+        
+        JYSlideSegmentController *slideSegmentControl = [[JYSlideSegmentController alloc]initWithViewControllers:@[m_NNOrderAllVC,m_NNOrderWaitPayVC,m_NNOrderWaitSendVC,m_NNOrderWaitGetVC,m_NNOrderWaitEvaluateVC]];
+        slideSegmentControl.view.backgroundColor = [UIColor whiteColor];
+        slideSegmentControl.title = @"我的订单";
+        slideSegmentControl.indicatorInsets = UIEdgeInsetsMake(0, 8, 0, 8);
+        slideSegmentControl.indicatorColor = Redcolor;
+        if (!sender) {
+            slideSegmentControl.selectedIndex = 0;
+        }else
+        {
+            slideSegmentControl.selectedIndex = sender.tag+1;
+        }
+        [self.navigationController pushViewController:slideSegmentControl animated:YES];
+    
+        
+    }else
+    {
+        [self performSegueWithIdentifier:@"MeToLoginSegue" sender:nil];
+    }
+}
+
+#pragma mark - image picker delegte
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    [headerCopy setImage:image forState:UIControlStateNormal];
+}
+#pragma mark - ViewDelegate
+-(void)viewGotoAccountDelegate:(UIButton *)sender
+{
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if (cookiesdata.length > 0) {
+        [self performSegueWithIdentifier:@"MeToAccountSegue" sender:nil];
+    }else
+    {
+        [self performSegueWithIdentifier:@"MeToLoginSegue" sender:nil];
+    }
+    
+}
+
+@end

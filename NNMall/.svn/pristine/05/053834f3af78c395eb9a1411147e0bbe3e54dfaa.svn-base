@@ -1,0 +1,43 @@
+//
+//  NNUserApply.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBaseApply.h"
+
+@interface NNUserApply : NNBaseApply
+
+/*!单例模式获取NNUserApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNUserApply对象
+ */
++ (NNUserApply *)shareInstanceManager;
+
+/*! 释放取NNUserApply对象
+ *\param    param:          无
+ *\returns  returns:        返回NNUserApply对象
+ */
+- (void)dismissUserApply;
+
+/*! 发送验证码
+ *\param    param:          telNumber(手机号)
+ *\returns  returns:        返回NNUserApply对象
+ */
+- (void)sendMessageVerifyCode:(NSString *)telNumber
+                 andSucReturn:(ReturnBlockContent)returnBlock_
+               andFaildReturn:(FaildReturnBlock)returnFaild_;
+
+/*! 登录
+ *\param    param:          telNumber(手机号)
+ *\param    param:          code(验证码)
+ *\returns  returns:        返回NNUserApply对象
+ */
+- (void)loginNNMall:(NSString *)telNumber
+            andCode:(NSString *)code
+       andSucReturn:(ReturnBlockContent)returnBlock_
+     andFaildReturn:(FaildReturnBlock)returnFaild_;
+
+@end

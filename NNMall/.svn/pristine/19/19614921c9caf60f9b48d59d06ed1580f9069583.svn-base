@@ -1,0 +1,133 @@
+//
+//  NNOrderApply.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/19.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNOrderApply.h"
+
+static NNOrderApply *g_orderApply;
+
+@implementation NNOrderApply
+
++ (NNOrderApply *)shareInstanceManager
+{
+    @synchronized(self)
+    {
+        if (!g_orderApply)
+        {
+            g_orderApply = [[NNOrderApply alloc] init];
+        }
+    }
+    return g_orderApply;
+}
+
+- (void)dismissOrderApply
+{
+    g_orderApply = nil;
+}
+
+- (void)requestSubmitOrder:(NSString *)addressId
+             andProdcutIds:(NSString *)ids
+            andExpressCode:(NSString *)codeId
+            andRequirement:(NSString *)requirement
+              andSucReturn:(ReturnBlockContent)returnBlock_
+            andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/order/pay",NNHttpServiceUrl];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+    [NNCommonDeal setSafetyObject:addressId forKey:@"selectAddressID" andDic:dic];
+    [NNCommonDeal setSafetyObject:codeId forKey:@"expressCode" andDic:dic];
+    [NNCommonDeal setSafetyObject:requirement forKey:@"otherRequirement" andDic:dic];
+    [NNCommonDeal setSafetyObject:ids forKey:@"products" andDic:dic];
+    [requst requestWithPostData:dic andQueryStr:url andSuccessBlock:^(id backJson) {
+        returnBlock_(backJson);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+- (void)requestOrderDetail:(NSString *)orderid
+              andSucReturn:(ReturnBlockContent)returnBlock_
+            andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/order/detail/%@",NNHttpServiceUrl,orderid];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        NSDictionary *backDic = (NSDictionary *)backJson;
+        OrderModel *orderM = [[OrderModel alloc] parseFromDic:[backDic valueForKeyPath:@"data"]];
+        returnBlock_(orderM);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+
+- (void)requestOrderList:(NSString *)page
+            andSucReturn:(ReturnBlockContent)returnBlock_
+          andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/account/order_list?currentpage=%@",NNHttpServiceUrl,page];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        NSDictionary *backDic = (NSDictionary *)backJson;
+        NSArray *list = [[backDic valueForKeyPath:@"data"] valueForKeyPath:@"list"];
+        
+        NSMutableArray *orderList = [[NSMutableArray alloc]init];
+        for (NSDictionary *dic in list) {
+            OrderModel *orderM = [[OrderModel alloc]parseFromDic:dic];
+            [orderList addObject:orderM];
+        }
+        returnBlock_(orderList);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+- (void)requestOrderReport:(NSString *)report
+              andSucReturn:(ReturnBlockContent)returnBlock_
+            andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/account/order_report",NNHttpServiceUrl];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        NSDictionary *backDic = (NSDictionary *)backJson;
+        NSDictionary *dataDic = [backDic valueForKeyPath:@"data"];
+        UserModel *userM = AppManage.p_currentUserM;
+        if (![NNCommonDeal jugementStringIsNil:[dataDic valueForKeyPath:@"orderCancelCount"]]) {
+            userM.m_waitPayCount = [NSString stringWithFormat:@"%@",[dataDic valueForKeyPath:@"orderWaitPayCount"]];
+            userM.m_waitSendCount = [NSString stringWithFormat:@"%@",[dataDic valueForKeyPath:@"orderPassCount"]];
+            userM.m_waitReceiveCount = [NSString stringWithFormat:@"%@",[dataDic valueForKeyPath:@"orderSendCount"]];
+            userM.m_waitCommentCount = [NSString stringWithFormat:@"%@",[dataDic valueForKeyPath:@"orderUnCommentCount"]];
+        }
+        returnBlock_(userM);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+- (void)requestOrderFast:(ReturnBlockContent)returnBlock_
+          andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/order/express",NNHttpServiceUrl];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        NSDictionary *backDic = (NSDictionary *)backJson;
+        NSArray *express = [backDic valueForKeyPath:@"data"];
+        
+        NSMutableArray *fastArr = [[NSMutableArray alloc]init];
+        for (NSDictionary *dic in express) {
+            FastModel *fastModel = [[FastModel alloc] parseFromDic:dic];
+            [fastArr addObject:fastModel];
+        }
+        
+        returnBlock_(fastArr);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+@end

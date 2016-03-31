@@ -1,0 +1,45 @@
+//
+//  OrderModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "OrderModel.h"
+
+@implementation OrderModel
+@synthesize m_orderCost;
+@synthesize m_orderCoupons;
+@synthesize m_orderFast;
+@synthesize m_orderId;
+@synthesize m_orderPrice;
+@synthesize m_orderProArray;
+@synthesize m_orderUserM;
+@synthesize m_shipAddModel;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_orderId  = @"";
+        m_orderPrice = @"";
+        m_orderCost  = @"";
+        m_orderCoupons  = @"";
+        m_orderFast  = @"";
+        
+        m_orderProArray = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+        
+    }
+    return self;
+}
+
+
+@end

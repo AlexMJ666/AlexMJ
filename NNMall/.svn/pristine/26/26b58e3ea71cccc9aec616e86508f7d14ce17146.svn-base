@@ -1,0 +1,59 @@
+//
+//  SizeModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/17.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "SizeModel.h"
+
+@implementation SizeModel
+@synthesize m_sizeId;
+@synthesize m_specColor;
+@synthesize m_specPrice;
+@synthesize m_specSize;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_sizeId = @"";
+        m_specColor = @"";
+        m_specPrice = @"";
+        m_specSize = @"";
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"id"]]) {
+            self.m_sizeId = @"";
+        }else{
+            self.m_sizeId = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"id"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"specColor"]]) {
+            self.m_specColor = @"";
+        }else{
+            self.m_specColor = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"specColor"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"specSize"]]) {
+            self.m_specSize = @"";
+        }else{
+            self.m_specSize = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"specSize"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"specPrice"]]) {
+            self.m_specPrice = @"";
+        }else{
+            self.m_specPrice = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"specPrice"]];
+        }
+    }
+    return self;
+}
+
+@end

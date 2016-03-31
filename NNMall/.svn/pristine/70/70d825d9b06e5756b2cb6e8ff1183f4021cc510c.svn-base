@@ -1,0 +1,13 @@
+//
+//  NNFastListViewController.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/23.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "OrderModel.h"
+@interface NNFastListViewController : UIViewController
+
+@end

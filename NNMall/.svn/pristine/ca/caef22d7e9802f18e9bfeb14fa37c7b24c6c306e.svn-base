@@ -1,0 +1,21 @@
+//
+//  NNBaseApply.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "NNHttpRequest.h"
+
+#import "NNErrorModel.h"
+#import "ProductModel.h"
+#import "MallModel.h"
+
+typedef void(^ReturnBlockContent)(id content);                    //方法的回调的数据
+typedef void(^FaildReturnBlock) (NNErrorModel *errorM);           //错误信息回调
+
+@interface NNBaseApply : NSObject
+
+@end

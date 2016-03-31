@@ -1,0 +1,20 @@
+//
+//  NNShopCartCollect.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface NNShopCartCollect : UICollectionViewCell
+{
+    UIImageView *m_cartImageView;
+    UILabel     *m_cartNameLbl;
+    UILabel     *m_cartPriceLbl;
+}
+@property (nonatomic,strong) IBOutlet UIImageView *p_cartImageView;
+@property (nonatomic,strong) IBOutlet UILabel     *p_cartNameLbl;
+@property (nonatomic,strong) IBOutlet UILabel     *p_cartPriceLbl;
+@end

@@ -1,0 +1,64 @@
+//
+//  NNMeViewCell.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMeViewCell.h"
+
+@implementation NNMeViewCell
+@synthesize p_accountBtn = m_accountBtn;
+@synthesize p_billBtn = m_billBtn;
+@synthesize p_YHBtn = m_YHBtn;
+@synthesize p_NNMeCellDelegate = m_NNMeCellDelegate;
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+-(void)refreshMeCell:(NSIndexPath *)indexPath
+{
+    [m_billBtn setImage:[UIImage imageNamed:@"bill"] forState:UIControlStateNormal];
+    [m_billBtn addTarget:self action:@selector(goToBill:) forControlEvents:UIControlEventTouchUpInside];
+    [m_billBtn setTitleEdgeInsets:UIEdgeInsetsMake(85, -55, 0, 0)];
+    [m_billBtn setImageEdgeInsets:UIEdgeInsetsMake(0,5, 0, -25)];
+    
+    [m_YHBtn setImage:[UIImage imageNamed:@"coupon"] forState:UIControlStateNormal];
+    [m_YHBtn addTarget:self action:@selector(goToYH:) forControlEvents:UIControlEventTouchUpInside];
+    [m_YHBtn setTitleEdgeInsets:UIEdgeInsetsMake(85, -58, 0, 0)];
+    [m_YHBtn setImageEdgeInsets:UIEdgeInsetsMake(0,5, 0, -35)];
+    
+    [m_accountBtn setImage:[UIImage imageNamed:@"account"] forState:UIControlStateNormal];
+    [m_accountBtn addTarget:self action:@selector(goToAccount:) forControlEvents:UIControlEventTouchUpInside];
+    [m_accountBtn setTitleEdgeInsets:UIEdgeInsetsMake(85, -55, 0, 0)];
+    [m_accountBtn setImageEdgeInsets:UIEdgeInsetsMake(0,5, 0, -20)];
+    
+    
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(void)goToBill:(UIButton*)sender
+{
+    if (m_NNMeCellDelegate && [m_NNMeCellDelegate respondsToSelector:@selector(goToAccountDelegate:)]) {
+        [m_NNMeCellDelegate goToBillDelegate:sender];
+    }
+}
+-(void)goToYH:(UIButton*)sender
+{
+    if (m_NNMeCellDelegate && [m_NNMeCellDelegate respondsToSelector:@selector(goToAccountDelegate:)]) {
+        [m_NNMeCellDelegate goToBillDelegate:sender];
+    }
+}
+-(void)goToAccount:(UIButton*)sender
+{
+    if (m_NNMeCellDelegate && [m_NNMeCellDelegate respondsToSelector:@selector(goToAccountDelegate:)]) {
+        [m_NNMeCellDelegate goToBillDelegate:sender];
+    }
+}
+@end

@@ -1,0 +1,313 @@
+//
+//  NNShopCartView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartView.h"
+#import "CollectionReusableView.h"
+#import "NNShopCartCollect.h"
+#import "NNLikeCollect.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
+@interface NNShopCartView ()<UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    UICollectionView *m_shopCartCollectionView;
+    UIButton    *m_selectAllBtn;
+    UIButton    *m_payBtn;
+    UILabel     *m_costLbl;
+    UILabel     *m_allcostLbl;
+    NSMutableArray *m_cartListArray;
+    NSMutableArray *m_likeListArray;
+    
+    NSMutableArray *m_selectListArray;
+    
+}
+@property (nonatomic,strong) IBOutlet UICollectionView *p_shopCartCollectionView;
+@property (nonatomic,strong) IBOutlet UIButton    *p_selectAllBtn;
+@property (nonatomic,strong) IBOutlet UIButton    *p_payBtn;
+@property (nonatomic,strong) IBOutlet UILabel     *p_costLbl;
+@property (nonatomic,strong) IBOutlet UILabel     *p_allcostLbl;
+@property (nonatomic,strong) NSMutableArray *p_cartListArray;
+@property (nonatomic,strong) NSMutableArray *p_likeListArray;
+@property (nonatomic,strong) NSMutableArray *p_selectListArray;
+@end
+
+@implementation NNShopCartView
+@synthesize p_shopCartCollectionView = m_shopCartCollectionView;
+@synthesize p_selectAllBtn = m_selectAllBtn;
+@synthesize p_payBtn = m_payBtn;
+@synthesize p_costLbl = m_costLbl;
+@synthesize p_allcostLbl = m_allcostLbl;
+@synthesize p_cartListArray = m_cartListArray;
+@synthesize p_likeListArray = m_likeListArray;
+@synthesize p_selectListArray = m_selectListArray;
+@synthesize p_nnShopCartDelegate = m_nnShopCartDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.p_selectListArray = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(void)layoutShopCartView
+{
+    m_payBtn.layer.masksToBounds = YES;
+    m_payBtn.layer.cornerRadius  = 5;
+}
+
+-(void)refrshShoppingCartData:(NSMutableArray *)cartList
+                      andLike:(NSMutableArray *)likeList
+{
+    self.p_cartListArray = cartList;
+    self.p_likeListArray = likeList;
+    [m_shopCartCollectionView reloadData];
+}
+
+-(void)editModel:(BOOL)isEdit
+{
+    if (isEdit) {
+        [m_payBtn setTitle:@"删除" forState:UIControlStateNormal];
+        m_costLbl.hidden = YES;
+        m_allcostLbl.hidden = YES;
+    }
+    else{
+        [m_payBtn setTitle:@"去结算" forState:UIControlStateNormal];
+        m_costLbl.hidden = NO;
+        m_allcostLbl.hidden = NO;
+    }
+}
+
+#pragma mark - Private methods
+
+-(IBAction)selectAllBtnClick:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    btn.selected = !btn.selected;
+    for (ProductModel *productM in m_cartListArray) {
+        if (btn.selected) {
+            [m_selectListArray addObject:productM];
+        }
+        else{
+            [m_selectListArray removeObject:productM];
+        }
+        productM.m_currentSelect = btn.selected;
+    }
+    //计算当前价格
+    [self calculatePrice];
+    [m_shopCartCollectionView reloadData];
+}
+
+-(IBAction)payBtnClick:(id)sender
+{
+    //生成临时订单，用于填写订单信息确认
+    //0.判断是否有选中商品，若无return并提示
+//    if (m_selectListArray.count == 0) {
+//        [[YBProgressShow defaultProgress] showText:@"您还没有选择商品"
+//                                            InMode:MBProgressHUDModeText
+//                             OriginViewEnableTouch:NO
+//                                HideAfterDelayTime:1.0f];
+//        return;
+//    }
+    //1.确认选中的商品，获取单价和数量，计算总价TODO
+    OrderModel *orderM = [[OrderModel alloc]init];
+    orderM.m_orderId = @"1";
+    orderM.m_orderPrice = @"99999999";
+    orderM.m_orderFast = @"10";
+    
+    ShippingAddressModel *shipAddModel = [[ShippingAddressModel alloc]init];
+    shipAddModel.m_shippingPhone = @"13788888888";
+    shipAddModel.m_shippingName = @"睡觉睡觉睡觉";
+    shipAddModel.m_shippingAddress = @"浙江省杭州市拱墅区长阳路灯彩街路口红 杉雅园1-219";
+    orderM.m_shipAddModel = shipAddModel;
+    
+    if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(gotoOrder:)]) {
+        [m_nnShopCartDelegate gotoOrder:orderM];
+    }
+}
+
+-(void)productSelect:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    ProductModel *selectPro = [m_cartListArray objectAtIndex:btn.tag];
+    selectPro.m_currentSelect = !selectPro.m_currentSelect;
+    if (selectPro.m_currentSelect) {
+        btn.selected = YES;
+        [m_selectListArray addObject:selectPro];
+    }
+    else{
+        btn.selected = NO;
+        [m_selectListArray removeObject:selectPro];
+    }
+    //计算当前价格
+    [self calculatePrice];
+}
+
+#pragma mark - Price
+-(void)calculatePrice
+{
+    //计算当前价格
+    double price = 0.0;
+    for (ProductModel *product in m_selectListArray) {
+        price = product.m_productCost.doubleValue + price;
+    }
+    m_costLbl.text = [NSString stringWithFormat:@"合计：¥%.1f",price];
+    m_allcostLbl.text = [NSString stringWithFormat:@"总额：¥%.1f",price];
+    //判断是否全选
+    if (m_selectListArray.count == m_cartListArray.count) {
+        m_selectAllBtn.selected = YES;
+    }
+    else{
+        m_selectAllBtn.selected = NO;
+    }
+}
+
+#pragma mark - UICollectionReusableView
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    if (kind == UICollectionElementKindSectionHeader){
+        
+    }
+    if (kind == UICollectionElementKindSectionFooter){
+        CollectionReusableView *footerview = (CollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterCollect" forIndexPath:indexPath];
+        if (indexPath.section == 0) {
+            footerview.p_nameLbl.text = @"猜你喜欢";
+        }
+        else{
+            footerview.p_nameLbl.text = @"";
+        }
+        footerview.p_nameLbl.font = [NNCommonDeal getFont:11];
+        reusableview = footerview;
+    }
+    return reusableview;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    CGSize size={kMainScreen_Width,37};
+    return size;
+}
+
+#pragma mark - collectionView delegate
+//设置分区
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    return 2;
+}
+
+//每个分区上的元素个数
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        if (m_cartListArray.count == 0) {
+            return 1;
+        }
+        return m_cartListArray.count;
+    }
+    return m_likeListArray.count;
+}
+
+//设置元素内容
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && m_cartListArray.count > 0) {
+        static NSString *ShoppingCart = @"ShoppingCartCollect";
+        NNShopCartCollect *cell = (NNShopCartCollect *)[collectionView dequeueReusableCellWithReuseIdentifier:ShoppingCart forIndexPath:indexPath];
+        [cell sizeToFit];
+        ProductModel *productM = [m_cartListArray objectAtIndex:indexPath.item];
+        if (productM.m_currentSelect) {
+            cell.p_cartSelectBtn.selected = YES;
+        }
+        else{
+            cell.p_cartSelectBtn.selected = NO;
+        }
+        
+        [cell.p_cartImageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl] placeholderImage:nil];
+        cell.p_cartNameLbl.text = productM.m_productName;
+        cell.p_cartPriceLbl.text = [NSString stringWithFormat:@"小计：¥%@",productM.m_productCost];
+        cell.p_cartSelectBtn.tag = indexPath.item;
+        [cell.p_cartSelectBtn addTarget:self action:@selector(productSelect:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addAjustButton:productM];
+        
+        return cell;
+    }
+    else if (indexPath.section == 0 && m_cartListArray.count == 0) {
+        static NSString *NoProduct = @"NoProductCollect";
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NoProduct forIndexPath:indexPath];
+        [cell sizeToFit];
+        
+        return cell;
+    }
+    else{
+        static NSString *Like = @"LikeCollect";
+        NNLikeCollect *cell = (NNLikeCollect *)[collectionView dequeueReusableCellWithReuseIdentifier:Like forIndexPath:indexPath];
+        [cell sizeToFit];
+        ProductModel *productM = [m_likeListArray objectAtIndex:indexPath.item];
+        [cell.p_likeImageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl] placeholderImage:nil];
+        cell.p_likeNameLbl.text = productM.m_productName;
+        cell.p_likePriceLbl.text = [NSString stringWithFormat:@"¥%@",productM.m_productCost];
+        return cell;
+    }
+}
+
+//点击元素触发事件
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && m_cartListArray.count > 0) {
+        //进入详情页
+        ProductModel *productM = [m_cartListArray objectAtIndex:indexPath.item];
+        if (m_nnShopCartDelegate && [m_nnShopCartDelegate respondsToSelector:@selector(selectProduct:)]) {
+            [m_nnShopCartDelegate selectProduct:productM];
+        }
+    }
+    else if (indexPath.section == 1){
+    
+    }
+}
+
+#define CartCollectWidth (kMainScreen_Width-24)/3.0f
+
+#pragma mark --UICollectionViewDelegateFlowLayout
+//定义每个UICollectionView 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        if (m_cartListArray.count == 0) {
+            return CGSizeMake(kMainScreen_Width,kMainScreen_Height/3.0f);
+        }
+        return CGSizeMake(kMainScreen_Width, 154);
+    }
+    return CGSizeMake(CartCollectWidth, (19*CartCollectWidth)/13.0f);
+}
+
+//定义每个UICollectionView 的 margin
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    if (section == 0) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    return UIEdgeInsetsMake(0, 6, 6, 6);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10.0f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 0.001f;
+}
+
+@end

@@ -1,0 +1,104 @@
+//
+//  NNSearchView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchView.h"
+#import <SKTagView/SKTagView.h>
+#import <SKTag.h>
+#import <SKTagButton.h>
+#import <Masonry.h>
+#define lineW           10
+#define lineH           10
+#define FrontW          20
+#define headH           124
+@interface NNSearchView()
+{
+    UITableView* m_tableView;
+    SKTagView* m_tagView;
+    UIView* m_tagSuperView;
+}
+@property(nonatomic,strong) UITableView* p_tableView;
+@property(nonatomic,strong) SKTagView* p_tagView;
+@property(nonatomic,strong) UIView* p_tagSuperView;
+
+@end
+@implementation NNSearchView
+@synthesize p_tableView = m_tableView;
+@synthesize p_NNSearchViewDelegate = m_NNSearchViewDelegate;
+@synthesize p_tagView = m_tagView;
+@synthesize p_tagSuperView = m_tagSuperView;
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
+
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self) {
+        self = [super initWithCoder:aDecoder];
+        self.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1];
+    }
+    return self;
+}
+
+-(void)refreshNNSearchView
+{
+    [self setupTagView];
+}
+
+- (void)setupTagView
+{
+    NSArray* arr = [NSArray arrayWithObjects:@"衣服", @"鞋子", @"袜子", @"衬衫", @"外套",@"裤子", @"内衣", nil];
+    UIView* bkView = [[UIView alloc]init];
+    bkView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:bkView];
+    [self sendSubviewToBack:bkView];
+    
+    for (int i = 0; i < arr.count; i++) {
+        UIButton* tagBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        tagBtn.frame = CGRectMake(FrontW+(kMainScreen_Width-60)/3*(i%3)+lineW*(i%3), headH+40*((int)i/3)+lineH*((int)i/3), (kMainScreen_Width-60)/3, 40);
+        tagBtn.tag = i;
+        //NSLog(@"tagBtn.x = %f，tagBtn.y = %f，tagBtn.W = %f，tagBtn.H = %f",tagBtn.frame.origin.x,tagBtn.frame.origin.y,tagBtn.frame.size.width,tagBtn.frame.size.height);
+        [self addSubview:tagBtn];
+        [tagBtn setTitle:[arr objectAtIndex:i] forState:UIControlStateNormal];
+        [tagBtn setTitleColor:[UIColor colorWithRed:119.0f/255.0f green:119.0f/255.0f blue:119.0f/255.0f alpha:1] forState:UIControlStateNormal];
+        [tagBtn setBackgroundColor:[UIColor whiteColor]];
+        tagBtn.layer.borderColor = [[UIColor colorWithRed:226.0f/255.0f green:226.0f/255.0f blue:226.0f/255.0f alpha:1]CGColor];
+        tagBtn.layer.borderWidth = 1;
+        tagBtn.layer.masksToBounds = YES;
+        tagBtn.layer.cornerRadius = 4;//PingFangSC-Regular
+        tagBtn.titleLabel.font = [NNCommonDeal getFont:16.0f];
+        
+        if (i == arr.count-1) {
+            bkView.frame = CGRectMake(0, 0, kMainScreen_Width, tagBtn.frame.origin.y+tagBtn.frame.size.height+30);
+        }
+    }
+}
+
+-(void)tagPress:(NSString*)text
+{
+    NSLog(@"%@",text);
+}
+
+//随机颜色
+-(UIColor*)randomColor
+{
+    CGFloat hue = ( arc4random() % 256 / 256.0 );
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
+    return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+}
+
+
+@end

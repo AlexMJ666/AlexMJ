@@ -1,0 +1,18 @@
+//
+//  NNModifyAccountViewController.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface NNModifyAccountViewController : NNRootViewController
+{
+    NSIndexPath* chooseRow;
+}
+@property (nonatomic, strong) NSIndexPath* chooseRow;
+- (IBAction)modifyComplete:(UIBarButtonItem *)sender;
+
+@end

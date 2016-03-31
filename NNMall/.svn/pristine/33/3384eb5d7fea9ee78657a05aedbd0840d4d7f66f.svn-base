@@ -1,0 +1,39 @@
+//
+//  NNMeViewCell.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMeViewCell.h"
+
+@implementation NNMeViewCell
+@synthesize p_accountBtn = m_accountBtn;
+@synthesize p_billBtn = m_billBtn;
+@synthesize p_YHBtn = m_YHBtn;
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+-(void)refreshMeCell:(NSIndexPath *)indexPath
+{
+    [m_billBtn setImage:[UIImage imageNamed:@"bill"] forState:UIControlStateNormal];
+    [m_billBtn addTarget:self action:@selector(goToBill:) forControlEvents:UIControlEventTouchUpInside];
+    [m_billBtn setTitle:@"订单" forState:UIControlStateNormal];
+    [m_billBtn setTitleEdgeInsets:UIEdgeInsetsMake(40, -40, 0, 0)];
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+-(void)goToBill:(UIButton*)sender
+{}
+-(void)goToYH:(UIButton*)sender
+{}
+-(void)goToAccount:(UIButton*)sender
+{}
+@end

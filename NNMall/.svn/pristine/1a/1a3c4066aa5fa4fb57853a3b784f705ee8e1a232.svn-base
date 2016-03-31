@@ -1,0 +1,22 @@
+//
+//  NNMallCell.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/4.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface NNMallCell : UITableViewCell
+{
+    UIImageView *m_goodsImageView;
+    UILabel     *m_goodsNameLbl;
+    UILabel     *m_goodsPriceLbl;
+    UIButton    *m_buyBtn;
+}
+@property (nonatomic,strong) IBOutlet UIImageView *p_goodsImageView;
+@property (nonatomic,strong) IBOutlet UILabel     *p_goodsNameLbl;
+@property (nonatomic,strong) IBOutlet UILabel     *p_goodsPriceLbl;
+@property (nonatomic,strong) IBOutlet UIButton    *p_buyBtn;
+@end

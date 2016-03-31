@@ -1,0 +1,180 @@
+//
+//  NNProductInfoView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNProductInfoView.h"
+#import "NNProductDetailView.h"
+#import <MJRefresh.h>
+#import <SDCycleScrollView.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+
+@interface NNProductInfoView ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,SDCycleScrollViewDelegate>
+{
+    UIScrollView        *m_productScrollView;
+    UITableView         *m_productTableView;
+    NNProductDetailView *m_productDetailView;
+    SDCycleScrollView   *m_cycleView;
+    
+    ProductModel        *m_productModel;
+}
+@property (nonatomic,strong) IBOutlet UIScrollView  *p_productScrollView;
+@property (nonatomic,strong) IBOutlet UITableView            *p_productTableView;
+@property (nonatomic,strong) NNProductDetailView    *p_productDetailView;
+@property (nonatomic,strong) SDCycleScrollView      *p_cycleView;
+@property (nonatomic,strong) ProductModel           *p_productModel;
+@end
+
+@implementation NNProductInfoView
+@synthesize p_productScrollView = m_productScrollView;
+@synthesize p_productTableView  = m_productTableView;
+@synthesize p_productDetailView = m_productDetailView;
+@synthesize p_cycleView         = m_cycleView;
+@synthesize p_productModel      = m_productModel;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+//        [self initProductTableView];
+        [self initProductDetail];
+    }
+    return self;
+}
+
+-(void)initProductDetail
+{
+    self.p_productDetailView = [[NNProductDetailView alloc]initWithFrame:CGRectMake(0, kMainScreen_Height, kMainScreen_Width, kMainScreen_Height)];
+}
+
+-(void)initProductTableView
+{
+    self.p_productTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kMainScreen_Width, kMainScreen_Height) style:UITableViewStyleGrouped];
+    m_productTableView.delegate = self;
+    m_productTableView.dataSource = self;
+    
+}
+
+-(void)initProduct
+{
+//    [m_productScrollView addSubview:m_productTableView];
+    [m_productScrollView addSubview:m_productDetailView];
+    
+    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        
+        [UIView animateWithDuration:0.5f animations:^{
+            [m_productScrollView setContentOffset:CGPointMake(0, kNAV_HEIGHT) animated:YES];
+            [m_productTableView.footer endRefreshing];
+        }];
+        
+    }];
+    [footer setTitle:@"下拉查看详情" forState:MJRefreshStateIdle];
+    [footer setTitle:@"松开进入详情" forState:MJRefreshStatePulling];
+    [footer setTitle:@"进入详情" forState:MJRefreshStateRefreshing];
+    self.p_productTableView.footer = footer;
+    
+    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [UIView animateWithDuration:0.5f animations:^{
+            [m_productScrollView setContentOffset:CGPointMake(0, -64) animated:YES];
+            [m_productDetailView.p_productDetailTableView.header endRefreshing];
+        }];
+        
+    }];
+    [header setTitle:@"上拉返回" forState:MJRefreshStateIdle];
+    [header setTitle:@"松开返回" forState:MJRefreshStatePulling];
+    [header setTitle:@"返回" forState:MJRefreshStateRefreshing];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    m_productDetailView.p_productDetailTableView.header = header;
+}
+
+#pragma mark - RefreshData
+-(void)refreshProductInfoData:(ProductModel *)productM
+{
+    self.p_productModel = productM;
+    [self createCycleView:@[productM.m_productImgUrl,productM.m_productImgUrl,productM.m_productImgUrl]];
+    [m_productTableView reloadData];
+}
+
+-(void)createCycleView:(NSArray *)imageArray
+{
+    // 网络加载 --- 创建不带标题的图片轮播器
+    if (!self.p_cycleView) {
+        self.p_cycleView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainScreen_Width, kMainScreen_Height/3.0f) imageURLStringsGroup:imageArray];
+        m_cycleView.autoScroll = NO;
+        m_cycleView.delegate = self;
+        m_cycleView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+        m_cycleView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
+    }
+    else{
+        m_cycleView.imageURLStringsGroup = imageArray;
+    }
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    
+}
+
+#pragma mark - WareDetail TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 5;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 330.0f;
+    }
+    return 10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        
+    }
+    return 115.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0 && self.p_cycleView) {
+        return m_cycleView;
+    }
+    return nil;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ProductInfo = @"ProductInfoCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductInfo forIndexPath:indexPath];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProductInfo];
+    }
+    return cell;
+}
+
+
+
+@end

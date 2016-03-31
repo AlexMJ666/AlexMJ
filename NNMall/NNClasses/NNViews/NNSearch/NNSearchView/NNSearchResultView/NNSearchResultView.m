@@ -1,0 +1,156 @@
+//
+//  NNSearchResultView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSearchResultView.h"
+#import "NNMallCell.h"
+#import "ProductModel.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+@interface NNSearchResultView()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+{
+    UITableView* m_tableView;
+    NSMutableArray* m_cacheArr;
+    NSMutableArray* m_productList;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@property(nonatomic,strong) NSMutableArray* p_cacheArr;
+@property(nonatomic,strong) NSMutableArray* p_productList;
+@end
+@implementation NNSearchResultView
+@synthesize p_tableView = m_tableView;
+@synthesize p_searchResultViewDelegate = m_searchResultViewDelegate;
+@synthesize p_cacheArr = m_cacheArr;
+@synthesize p_productList = m_productList;
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+-(void)refreshSearchResultView:(NSMutableArray *)productArr
+{
+    //将上述数据全部存储到NSUserDefaults中
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    //读取数组NSArray类型的数据
+    NSArray *cacheArr = [userDefaults arrayForKey:@"cacheArr"];
+    self.p_cacheArr = (NSMutableArray*)cacheArr;
+    self.p_productList = [NSMutableArray arrayWithArray:productArr];
+    [self.p_tableView reloadData];
+}
+
+#pragma - mark - tableviewDelegate
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (m_productList.count>0) {
+        return m_productList.count;
+    }
+    return m_cacheArr.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.p_productList.count >0) {
+        static NSString *MallDaily = @"MallDailyCell";
+        NNMallCell *cell = (NNMallCell *)[tableView dequeueReusableCellWithIdentifier:MallDaily forIndexPath:indexPath];
+        
+        if (!cell) {
+            cell = [[NNMallCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MallDaily];
+        }
+        ProductModel *productM = [m_productList objectAtIndex:indexPath.row];
+        [cell.p_goodsImageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl]
+                                 placeholderImage:nil];
+        cell.p_goodsNameLbl.text = productM.m_productName;
+        cell.p_goodsPriceLbl.attributedText = [NNCommonDeal getOldPrice:productM.m_productPrice andNewPrice:productM.m_productCost andOldFontSize:16.0f andNewFontSize:30.0f];
+        return cell;
+
+    }else
+    {
+        static NSString* Celled = @"Celled";
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:Celled];
+        if (cell==nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Celled];
+        }
+        cell.textLabel.text = [m_cacheArr objectAtIndex:indexPath.row];
+        return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (m_productList.count>0) {
+        
+    }else
+    {
+        if (m_searchResultViewDelegate &&[m_searchResultViewDelegate respondsToSelector:@selector(selectHistory:)]) {
+            [m_searchResultViewDelegate selectHistory:[m_cacheArr objectAtIndex:indexPath.row]];
+        }
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 44;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (m_productList.count>0) {
+        return [[UIView alloc]init];
+    }else
+    {
+        UIButton* deleteSearch = [UIButton buttonWithType:UIButtonTypeCustom];
+        if (m_cacheArr.count > 0) {
+            [deleteSearch setTitle:@"清除历史记录" forState:UIControlStateNormal];
+        }
+        [deleteSearch setTitleColor:Redcolor forState:UIControlStateNormal];
+        [deleteSearch setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        deleteSearch.titleLabel.font = [NNCommonDeal getFont:12];
+        [deleteSearch addTarget:self action:@selector(deleteSearchRecord:) forControlEvents:UIControlEventTouchUpInside];
+        return deleteSearch;
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate;
+{
+    if (m_searchResultViewDelegate && [m_searchResultViewDelegate respondsToSelector:@selector(touchTheTable)]) {
+        [m_searchResultViewDelegate touchTheTable];
+    }
+}
+
+-(void)deleteSearchRecord:(UIButton*)sender
+{
+    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"确认删除历史搜索记录？" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        m_cacheArr = [[NSMutableArray alloc]init];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:m_cacheArr forKey:@"cacheArr"];
+        [self.p_tableView reloadData];
+    }
+}
+@end

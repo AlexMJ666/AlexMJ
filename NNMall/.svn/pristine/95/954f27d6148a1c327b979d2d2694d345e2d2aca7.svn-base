@@ -1,0 +1,101 @@
+//
+//  NNRecommendDailyViewController.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/4.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNRecommendDailyViewController.h"
+#import "NNRecommendDailyView.h"
+#import "NNProductInfoViewController.h"
+
+@interface NNRecommendDailyViewController ()<NNRecommandDailyDelegate>
+{
+    NNRecommendDailyView *m_nnRecommandDailyView;
+}
+@property (nonatomic,strong) IBOutlet NNRecommendDailyView *p_nnRecommandDailyView;
+@end
+
+@implementation NNRecommendDailyViewController
+@synthesize p_nnRecommandDailyView = m_nnRecommandDailyView;
+
+-(void)dealloc
+{
+
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    m_nnRecommandDailyView.p_nnRecommandDailyDelegate = self;
+    [m_nnRecommandDailyView initMJRefreshView];
+    
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    for (int i=0; i<10; i++) {
+        ProductModel *goodM = [[ProductModel alloc]init];
+        goodM.m_productId = [NSString stringWithFormat:@"%d",i];
+        goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+        goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+        goodM.m_productPrice = @"900";
+        goodM.m_productCost = @"666";
+        [arr addObject:goodM];
+    }
+    [m_nnRecommandDailyView refreshRecommandDailyData:arr];
+}
+
+-(void)refreshRecommandGoods:(ReturnBlockSuccess)returnBlock_ andFaild:(ReturnBlockFaild)returnFaild_
+{
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    for (int i=0; i<10; i++) {
+        ProductModel *goodM = [[ProductModel alloc]init];
+        goodM.m_productId = [NSString stringWithFormat:@"%d",i];
+        goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+        goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+        goodM.m_productPrice = @"900";
+        goodM.m_productCost = @"666";
+        [arr addObject:goodM];
+    }
+    returnBlock_(arr);
+}
+
+-(void)loadMoreRecommandGoods:(ReturnBlockSuccess)returnBlock_ andFaild:(ReturnBlockFaild)returnFaild_
+{
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    for (int i=0; i<10; i++) {
+        ProductModel *goodM = [[ProductModel alloc]init];
+        goodM.m_productId = [NSString stringWithFormat:@"%d",i];
+        goodM.m_productName = @"倩碧润肤-清爽型125ml。无油腻啫喱配方，轻盈保湿";
+        goodM.m_productImgUrl = @"http://store.storeimages.cdn-apple.com/8544/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone6s/select/iphone6s-select-2015";
+        goodM.m_productPrice = @"900";
+        goodM.m_productCost = @"666";
+        [arr addObject:goodM];
+    }
+    returnBlock_(arr);
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - NNRecommandDailyDelegate
+-(void)productInfoFromRecommand:(ProductModel *)productM
+{
+    [self performSegueWithIdentifier:@"ProductFromDailySegue" sender:productM];
+}
+
+
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"ProductFromDailySegue"])
+    {
+        ProductModel *proModel = (ProductModel *)sender;
+        NNProductInfoViewController *productInfoVC = segue.destinationViewController;
+        productInfoVC.p_productModel = proModel;
+    }
+}
+
+@end

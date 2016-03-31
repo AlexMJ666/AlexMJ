@@ -1,0 +1,262 @@
+//
+//  NNMainMallView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMainMallView.h"
+#import <SDCycleScrollView.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "NNMallCell.h"
+@interface NNMainMallView ()<UITableViewDataSource,UITableViewDelegate,SDCycleScrollViewDelegate>
+{
+    UITableView         *m_mainTableView;
+    SDCycleScrollView   *m_cycleView;
+    UIView              *m_dailyView;
+    
+    NSMutableArray      *m_productArray;
+    NSMutableArray      *m_dailyBtnArray;
+}
+@property (nonatomic,strong) IBOutlet UITableView *p_mainTableView;
+@property (nonatomic,strong) SDCycleScrollView    *p_cycleView;
+@property (nonatomic,strong) UIView               *p_dailyView;
+@property (nonatomic,strong) NSMutableArray       *p_productArray;
+@property (nonatomic,strong) NSMutableArray       *p_dailyBtnArray;
+@end
+
+@implementation NNMainMallView
+@synthesize p_mainTableView = m_mainTableView;
+@synthesize p_cycleView = m_cycleView;
+@synthesize p_dailyView = m_dailyView;
+@synthesize p_productArray = m_productArray;
+@synthesize p_dailyBtnArray = m_dailyBtnArray;
+@synthesize p_nnMainMallDelegate = m_nnMainMallDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self createDailyView];
+    }
+    return self;
+}
+
+-(void)createCycleView:(NSArray *)imageArray
+{
+    // 网络加载 --- 创建不带标题的图片轮播器
+    //TODO 默认图片
+    if (!self.p_cycleView) {
+        self.p_cycleView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainScreen_Width, kMainScreen_Height/3.0f) imageURLStringsGroup:imageArray];
+        m_cycleView.autoScrollTimeInterval = 3;
+        m_cycleView.infiniteLoop = YES;
+        m_cycleView.delegate = self;
+        m_cycleView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+        m_cycleView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
+    }
+    else{
+        m_cycleView.imageURLStringsGroup = imageArray;
+    }
+}
+
+-(void)createDailyView
+{
+    self.p_dailyView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kMainScreen_Width, kBAR_HEIGHT)];
+    m_dailyView.backgroundColor = LGraycolor;
+    self.p_dailyBtnArray = [[NSMutableArray alloc]init];
+    CGFloat width = (m_dailyView.frame.size.width-6)/2.0f;
+    CGFloat height =(m_dailyView.frame.size.height-12)/3.0f;
+    for (int i=0; i<6; i++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(i%2*(width+6), i/2*(height+6), width, height);
+        btn.tag = i;
+//        btn.imageView.contentMode =  UIViewContentModeScaleAspectFit;
+        [btn addTarget:self action:@selector(dailyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [m_dailyBtnArray addObject:btn];
+        [m_dailyView addSubview:btn];
+    }
+}
+
+-(void)dailyBtnClick:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    ProductModel *productM = [m_productArray objectAtIndex:btn.tag];
+    //ToDO 根据tag选出
+    if (m_nnMainMallDelegate && [m_nnMainMallDelegate respondsToSelector:@selector(productDetail:)]) {
+        [m_nnMainMallDelegate productDetail:productM];
+    }
+}
+
+-(void)moreDailyBtnClick:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == 1) {
+        if (m_nnMainMallDelegate && [m_nnMainMallDelegate respondsToSelector:@selector(showMoreDailyProduct:)]) {
+            [m_nnMainMallDelegate showMoreDailyProduct:nil];
+        }
+    }
+    else if (btn.tag == 2){
+        
+    }
+}
+
+#pragma mark - DataSource
+-(void)refreshMainMallData:(NSMutableArray *)productArray
+{
+    self.p_productArray = productArray;
+    NSMutableArray *imageUrlArr = [[NSMutableArray alloc]init];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    for (int i=0; i<6; i++) {
+        ProductModel *productM = [productArray objectAtIndex:i];
+        if (i<4) {
+            [imageUrlArr addObject:productM.m_productImgUrl];
+        }
+        UIButton *btn = [m_dailyBtnArray objectAtIndex:i];
+        
+        [manager downloadImageWithURL:[NSURL URLWithString:productM.m_productImgUrl]
+                              options:0
+                             progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                 // progression tracking code
+                             }
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                if (image) {
+                                    // do something with image
+                                    [btn setImage:image forState:UIControlStateNormal];
+                                }
+                            }];
+    }
+    
+    [self createCycleView:[NSArray arrayWithArray:imageUrlArr]];
+    [m_mainTableView reloadData];
+}
+
+#pragma mark - WareDetail TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section < 2) {
+        return 1;
+    }
+    return m_productArray.count;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0.001f;
+    }
+    return 30.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return kMainScreen_Height/3.0f;
+    }
+    else if (indexPath.section == 1){
+        return kBAR_HEIGHT;
+    }
+    return 190.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 21.0f;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section >0) {
+        UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kMainScreen_Width, 30.0f)];
+        UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(15, 0, 60, 30)];
+        if (section == 1) {
+            title.text = @"每日必看";
+        }
+        else{
+            title.text = @"每日推荐";
+        }
+        UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        moreBtn.frame = CGRectMake(kMainScreen_Width-50, 0, 50, 30);
+        [moreBtn setTitle:@" 更多 " forState:UIControlStateNormal];
+        moreBtn.titleLabel.font = [NNCommonDeal getFont:12];
+        moreBtn.tag = section;  //1:每日必看&2:每日推荐
+        [moreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [moreBtn addTarget:self action:@selector(moreDailyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [headView addSubview:moreBtn];
+        headView.backgroundColor = Redcolor;
+        title.textColor = [UIColor whiteColor];
+        title.font = [NNCommonDeal getFont:14];
+        [headView addSubview:title];
+        return headView;
+    }
+    return nil;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        static NSString *Cycle = @"CycleCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Cycle forIndexPath:indexPath];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Cycle];
+        }
+        [cell.contentView addSubview:m_cycleView];
+        return cell;
+    }
+    else if (indexPath.section == 1){
+        static NSString *Daily = @"DailyCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Daily forIndexPath:indexPath];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Daily];
+        }
+        [cell.contentView addSubview:m_dailyView];
+        return cell;
+    }
+    else{
+        static NSString *Mall = @"MallCell";
+        NNMallCell *cell = (NNMallCell *)[tableView dequeueReusableCellWithIdentifier:Mall forIndexPath:indexPath];
+        
+        if (!cell) {
+            cell = [[NNMallCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Mall];
+        }
+        ProductModel *productM = [m_productArray objectAtIndex:indexPath.row];
+        [cell.p_goodsImageView sd_setImageWithURL:[NSURL URLWithString:productM.m_productImgUrl]
+                                 placeholderImage:nil];
+        cell.p_goodsNameLbl.text = productM.m_productName;
+        cell.p_goodsPriceLbl.attributedText = [NNCommonDeal getOldPrice:productM.m_productPrice andNewPrice:productM.m_productCost];
+        return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section>1) {
+        ProductModel *productM = [m_productArray objectAtIndex:indexPath.row];
+        if (m_nnMainMallDelegate && [m_nnMainMallDelegate respondsToSelector:@selector(productDetail:)]) {
+            [m_nnMainMallDelegate productDetail:productM];
+        }
+    }
+}
+
+#pragma mark - SDCycleScrollViewDelegate
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"---点击了第%ld张图片", index);
+}
+
+
+@end

@@ -1,0 +1,88 @@
+//
+//  NNSizeCollect.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/21.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNSizeCollect.h"
+
+@interface NNSizeCollect ()
+{
+    ProductModel *m_productM;
+}
+@property (nonatomic,strong) ProductModel *p_productM;
+@end
+
+@implementation NNSizeCollect
+@synthesize p_sizeTitle = m_sizeTitle;
+@synthesize p_productM = m_productM;
+@synthesize p_nnSizeCollectDelegate = m_nnSizeCollectDelegate;
+
+-(void)refreshSizeCollect:(NSString *)title
+                   andKey:(NSString *)keyStr
+              andProductM:(ProductModel *)productM
+                 andWidth:(NSString *)width
+{
+    if (!self.p_sizeTitle) {
+        self.p_productM = productM;
+        self.p_sizeTitle = [UIButton buttonWithType:UIButtonTypeCustom];
+        m_sizeTitle.titleLabel.font = [NNCommonDeal getFont:12];
+        if ([keyStr isEqualToString:@"color"]) {
+            m_sizeTitle.tag = 100;
+        }
+        if ([keyStr isEqualToString:@"size"]) {
+            m_sizeTitle.tag = 101;
+        }
+        
+        m_sizeTitle.frame = CGRectMake(0, 0, 80, self.frame.size.height);
+        [m_sizeTitle setTitle:@"" forState:UIControlStateNormal];
+        [m_sizeTitle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [m_sizeTitle setBackgroundColor:Graycolor];
+        m_sizeTitle.layer.masksToBounds = YES;
+        m_sizeTitle.layer.cornerRadius = 5;
+        [m_sizeTitle addTarget:self action:@selector(sizeClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:m_sizeTitle];
+    }
+    [m_sizeTitle setTitle:title forState:UIControlStateNormal];
+    [self loadBtnColor:keyStr andTitle:title];
+}
+
+
+-(void)loadBtnColor:(NSString *)keyStr andTitle:(NSString *)title
+{
+    if ([keyStr isEqualToString:@"color"]) {
+        if ([m_productM.m_currentColor isEqualToString:title]) {
+            [m_sizeTitle setBackgroundColor:Redcolor];
+        }else{
+            [m_sizeTitle setBackgroundColor:Graycolor];
+        }
+    }
+    else if ([keyStr isEqualToString:@"size"]){
+        if ([m_productM.m_currentSize isEqualToString:title]) {
+            [m_sizeTitle setBackgroundColor:Redcolor];
+        }else{
+            [m_sizeTitle setBackgroundColor:Graycolor];
+        }
+    }
+}
+
+-(void)sizeClick:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == 100) {
+        m_productM.m_currentColor = btn.titleLabel.text;
+        if (m_nnSizeCollectDelegate && [m_nnSizeCollectDelegate respondsToSelector:@selector(selectSizeBtn:)]) {
+            [m_nnSizeCollectDelegate selectSizeBtn:@"color"];
+        }
+    }
+    if (btn.tag == 101) {
+        m_productM.m_currentSize = btn.titleLabel.text;
+        if (m_nnSizeCollectDelegate && [m_nnSizeCollectDelegate respondsToSelector:@selector(selectSizeBtn:)]) {
+            [m_nnSizeCollectDelegate selectSizeBtn:@"size"];
+        }
+    }
+}
+
+@end

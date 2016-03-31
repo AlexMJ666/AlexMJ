@@ -1,0 +1,47 @@
+//
+//  NNCartView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNCartView.h"
+
+@implementation NNCartView
+@synthesize p_nnCartDelegate = m_nnCartDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self createAddShoppingCartButton];
+    }
+    return self;
+}
+
+-(void)createAddShoppingCartButton
+{
+    UIButton *cartBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cartBtn.frame = CGRectMake(kMainScreen_Width-152, 3, 3, 44);
+    [cartBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
+    cartBtn.titleLabel.font = [NNCommonDeal getFont:16];
+    cartBtn.layer.masksToBounds = YES;
+    cartBtn.layer.cornerRadius = 5;
+    [cartBtn addTarget:self action:@selector(addToShoppingCartBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:cartBtn];
+}
+
+-(void)addToShoppingCartBtnClick:(id)sender
+{
+    if (m_nnCartDelegate && [m_nnCartDelegate respondsToSelector:@selector(addProductToShoppingCart:)]) {
+        [m_nnCartDelegate addProductToShoppingCart:nil];
+    }
+}
+
+@end

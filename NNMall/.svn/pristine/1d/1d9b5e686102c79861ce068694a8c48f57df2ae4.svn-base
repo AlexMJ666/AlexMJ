@@ -1,0 +1,32 @@
+//
+//  NNShopCartView.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "ProductModel.h"
+#import "OrderModel.h"
+
+@protocol NNShopCartDelegate <NSObject>
+
+-(void)selectProduct:(ProductModel *)productM;
+
+-(void)gotoOrder:(OrderModel *)orderM;
+
+@end
+
+@interface NNShopCartView : UIView
+{
+    __weak id<NNShopCartDelegate> m_nnShopCartDelegate;
+}
+@property (nonatomic,weak) id<NNShopCartDelegate> p_nnShopCartDelegate;
+
+-(void)layoutShopCartView;
+
+-(void)refrshShoppingCartData:(NSMutableArray *)cartList
+                      andLike:(NSMutableArray *)likeList;
+
+@end

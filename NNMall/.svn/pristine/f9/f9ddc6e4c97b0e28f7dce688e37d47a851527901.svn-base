@@ -1,0 +1,57 @@
+//
+//  ProductModel.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBasicModel.h"
+
+@interface ProductModel : NNBasicModel
+{
+    NSString *m_productId;        //商品id
+    NSString *m_productName;      //商品名称
+    NSString *m_productImgUrl;    //商品图片url（main）
+    NSString *m_productPrice;     //商品原价
+    NSString *m_productCost;      //商品现价
+    
+    BOOL     m_isProductsale;     //是否特价
+    BOOL     m_isNewProduct;      //是否新产品
+    
+    //TODO
+    NSMutableArray *m_colorArray;   //颜色数组
+    NSMutableArray *m_sizeArray;    //尺寸数组
+    NSMutableArray *m_allPicUrlArray;//所有图片地址
+    NSString *m_saleCount;          //售出总数
+    NSString *m_detailUrl;          //详情url
+    
+    //用于生成订单
+    NSString *m_currentColor;       //选中颜色
+    NSString *m_currentSize;        //选中尺码
+    NSInteger m_currentBuyCount;    //购买数量
+    BOOL      m_currentSelect;      //是否被选中购买
+    
+}
+@property (nonatomic,strong) NSString *m_productId;
+@property (nonatomic,strong) NSString *m_productName;
+@property (nonatomic,strong) NSString *m_productImgUrl;
+@property (nonatomic,strong) NSString *m_productPrice;
+@property (nonatomic,strong) NSString *m_productCost;
+@property (nonatomic,assign) BOOL     m_isProductsale;
+@property (nonatomic,assign) BOOL     m_isNewProduct;
+
+@property (nonatomic,strong) NSMutableArray *m_colorArray;
+@property (nonatomic,strong) NSMutableArray *m_sizeArray;
+@property (nonatomic,strong) NSMutableArray *m_allPicUrlArray;
+@property (nonatomic,strong) NSString *m_saleCount;
+@property (nonatomic,strong) NSString *m_detailUrl;
+
+@property (nonatomic,strong) NSString *m_currentColor;
+@property (nonatomic,strong) NSString *m_currentSize;
+@property (nonatomic) NSInteger m_currentBuyCount;
+@property (nonatomic,assign) BOOL      m_currentSelect;
+
+-(id)parseFromDic:(NSDictionary *)dic;
+
+@end

@@ -1,0 +1,99 @@
+//
+//  ProductModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "ProductModel.h"
+
+@implementation ProductModel
+@synthesize m_productCost;
+@synthesize m_productId;
+@synthesize m_productImgUrl;
+@synthesize m_productName;
+@synthesize m_productPrice;
+@synthesize m_colorArray;
+@synthesize m_isNewProduct;
+@synthesize m_isProductsale;
+@synthesize m_sizeArray;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_productId  = @"";
+        m_productName  = @"";
+        m_productCost  = @"";
+        m_productImgUrl  = @"";
+        m_productPrice  = @"";
+        
+        m_colorArray = [[NSMutableArray alloc]init];
+        m_sizeArray = [[NSMutableArray alloc]init];
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"id"]]) {
+            self.m_productId = @"";
+        }else{
+            self.m_productId = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"id"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"name"]]) {
+            self.m_productName = @"";
+        }else{
+            self.m_productName = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"name"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"price"]]) {
+            self.m_productPrice = @"";
+        }else{
+            self.m_productPrice = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"price"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"nowPrice"]]) {
+            self.m_productCost = @"";
+        }else{
+            self.m_productCost = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"nowPrice"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"picture"]]) {
+            self.m_productImgUrl = @"";
+        }else{
+            self.m_productImgUrl = [NSString stringWithFormat:@"%@%@",NNHttpServiceUrl,[dic valueForKeyPath:@"picture"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"isnew"]]) {
+            self.m_isNewProduct = NO;
+        }else{
+            NSString *isNew = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"isnew"]];
+            if ([isNew isEqualToString:@"y"]) {
+                self.m_isNewProduct = YES;
+            }
+            else{
+                self.m_isNewProduct = NO;
+            }
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"sale"]]) {
+            self.m_isProductsale = NO;
+        }else{
+            NSString *isNew = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"sale"]];
+            if ([isNew isEqualToString:@"y"]) {
+                self.m_isProductsale = YES;
+            }
+            else{
+                self.m_isProductsale = NO;
+            }
+        }
+        
+    }
+    return self;
+}
+
+@end

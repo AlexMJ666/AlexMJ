@@ -1,0 +1,190 @@
+//
+//  NNShopCartView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNShopCartView.h"
+#import "CollectionReusableView.h"
+#import "NNShopCartCollect.h"
+#import "NNLikeCollect.h"
+@interface NNShopCartView ()<UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    UICollectionView *m_shopCartCollectionView;
+    UIButton    *m_selectAllBtn;
+    UIButton    *m_payBtn;
+    UILabel     *m_costLbl;
+    UILabel     *m_allcostLbl;
+    NSMutableArray *m_cartListArray;
+    NSMutableArray *m_likeListArray;
+}
+@property (nonatomic,strong) IBOutlet UICollectionView *p_shopCartCollectionView;
+@property (nonatomic,strong) IBOutlet UIButton    *p_selectAllBtn;
+@property (nonatomic,strong) IBOutlet UIButton    *p_payBtn;
+@property (nonatomic,strong) IBOutlet UILabel     *p_costLbl;
+@property (nonatomic,strong) IBOutlet UILabel     *p_allcostLbl;
+@property (nonatomic,strong) NSMutableArray *p_cartListArray;
+@property (nonatomic,strong) NSMutableArray *p_likeListArray;
+@end
+
+@implementation NNShopCartView
+@synthesize p_shopCartCollectionView = m_shopCartCollectionView;
+@synthesize p_selectAllBtn = m_selectAllBtn;
+@synthesize p_payBtn = m_payBtn;
+@synthesize p_costLbl = m_costLbl;
+@synthesize p_allcostLbl = m_allcostLbl;
+@synthesize p_cartListArray = m_cartListArray;
+@synthesize p_likeListArray = m_likeListArray;
+@synthesize p_nnShopCartDelegate = m_nnShopCartDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+-(void)refrshShoppingCartData:(NSMutableArray *)cartList
+                      andLike:(NSMutableArray *)likeList
+{
+    self.p_cartListArray = cartList;
+    self.p_likeListArray = likeList;
+    [m_shopCartCollectionView reloadData];
+}
+
+-(IBAction)selectAllBtnClick:(id)sender
+{
+    
+}
+
+-(IBAction)payBtnClick:(id)sender
+{
+
+}
+
+#pragma mark - UICollectionReusableView
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+
+{
+    UICollectionReusableView *reusableview = nil;
+    if (kind == UICollectionElementKindSectionHeader){
+        
+    }
+    if (kind == UICollectionElementKindSectionFooter){
+        CollectionReusableView *footerview = (CollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterCollect" forIndexPath:indexPath];
+        if (indexPath.section == 0) {
+            footerview.p_nameLbl.text = @"猜你喜欢";
+        }
+        else{
+            footerview.p_nameLbl.text = @"";
+        }
+        footerview.p_nameLbl.font = [NNCommonDeal getFont:11];
+        reusableview = footerview;
+    }
+    return reusableview;
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    CGSize size={kMainScreen_Width,37};
+    return size;
+}
+
+#pragma mark - collectionView delegate
+//设置分区
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    return 2;
+}
+
+//每个分区上的元素个数
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        if (m_cartListArray.count == 0) {
+            return 1;
+        }
+        return m_cartListArray.count;
+    }
+    return m_likeListArray.count;
+}
+
+//设置元素内容
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && m_cartListArray.count > 0) {
+        static NSString *ShoppingCart = @"ShoppingCartCollect";
+        NNShopCartCollect *cell = (NNShopCartCollect *)[collectionView dequeueReusableCellWithReuseIdentifier:ShoppingCart forIndexPath:indexPath];
+        [cell sizeToFit];
+        return cell;
+    }
+    else if (indexPath.section == 0 && m_cartListArray.count == 0) {
+        static NSString *NoProduct = @"NoProductCollect";
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NoProduct forIndexPath:indexPath];
+        [cell sizeToFit];
+        
+        return cell;
+    }
+    else{
+        static NSString *Like = @"LikeCollect";
+        NNLikeCollect *cell = (NNLikeCollect *)[collectionView dequeueReusableCellWithReuseIdentifier:Like forIndexPath:indexPath];
+        [cell sizeToFit];
+        return cell;
+    }
+}
+
+//点击元素触发事件
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && m_cartListArray.count > 0) {
+        
+    }
+    else if (indexPath.section == 1){
+    
+    }
+}
+
+#define CartCollectWidth (kMainScreen_Width-24)/3.0f
+
+#pragma mark --UICollectionViewDelegateFlowLayout
+//定义每个UICollectionView 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        if (m_cartListArray.count == 0) {
+            return CGSizeMake(kMainScreen_Width,kMainScreen_Height/3.0f);
+        }
+        return CGSizeMake(kMainScreen_Width, 140);
+    }
+    return CGSizeMake(CartCollectWidth, (19*CartCollectWidth)/13.0f);
+}
+
+//定义每个UICollectionView 的 margin
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    if (section == 0) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    return UIEdgeInsetsMake(0, 6, 6, 6);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 10.0f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 0.001f;
+}
+
+@end

@@ -1,0 +1,22 @@
+//
+//  NNSearchResultView.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol NNSearchResultViewDelegate <NSObject>
+-(void)touchTheTable;
+
+@end
+@interface NNSearchResultView : UIView
+{
+    __weak id<NNSearchResultViewDelegate> m_searchResultViewDelegate;
+}
+@property (nonatomic, weak) id<NNSearchResultViewDelegate> p_searchResultViewDelegate;
+
+-(void)refreshSearchResultView;
+@end

@@ -1,0 +1,48 @@
+//
+//  NNAppManage.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/16.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNAppManage.h"
+static NNAppManage *g_appManager = nil;
+@implementation NNAppManage
+@synthesize p_currentUserM = m_currentUserM;
+
++ (NNAppManage *)shareInstanceManager
+{
+    @synchronized(self)
+    {
+        if (!g_appManager)
+        {
+            g_appManager = [[NNAppManage alloc] init];
+        }
+    }
+    return g_appManager;
+}
+
+-(void)initUser
+{
+    self.p_currentUserM = [[UserModel alloc]init];
+}
+
+-(BOOL)isLogin
+{
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if (cookiesdata.length > 0) {
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
+
+-(UIImage *)getDefaultImage:(NSString *)imageName
+{
+    NSString *imageStr = [NSString stringWithFormat:@"back%@.png",imageName];
+    return [UIImage imageNamed:imageStr];
+}
+
+@end

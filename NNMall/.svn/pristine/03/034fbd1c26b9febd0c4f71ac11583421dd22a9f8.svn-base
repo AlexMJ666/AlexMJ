@@ -1,0 +1,27 @@
+//
+//  MySearchBar.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol MySearchBarDelegate <NSObject>
+
+
+@end
+@interface MySearchBar : UIView
+{
+    __weak id<MySearchBarDelegate> m_mySearchBarDelegate;
+    UIImageView* m_searchImgView;
+    UITextField* m_searchTextFiled;
+    UIButton* m_searchButton;
+}
+@property (nonatomic, weak) id<MySearchBarDelegate> p_mySearchBarDelegate;
+@property (nonatomic, strong) IBOutlet UIImageView* p_searchImgView;
+@property (nonatomic, strong) IBOutlet UITextField* p_searchTextFiled;
+@property (nonatomic, strong) IBOutlet UIButton* p_searchButton;
+
+@end

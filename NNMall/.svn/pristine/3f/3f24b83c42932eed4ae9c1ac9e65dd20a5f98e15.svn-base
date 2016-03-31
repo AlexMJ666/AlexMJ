@@ -1,0 +1,280 @@
+//
+//  NNMeView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNMeView.h"
+#import "NNMeButton.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
+#import <QuartzCore/QuartzCore.h>
+#define kStatusBtnW         (kMainScreen_Width-20*2-10*3)/4
+
+#define HeadTempH    250
+
+@interface NNMeView()<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView* m_tableView;
+    UserModel* m_meUserM;
+    NNMeButton* m_waitPayBtn;
+    NNMeButton* m_waitSendBtn;
+    NNMeButton* m_waitRecive;
+    NNMeButton* m_waitPingjiaBtn;
+    UIView      *m_headView;
+    
+    UIButton    *m_headBtn;
+    UILabel     *m_nameLbl;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@property(nonatomic,strong) UserModel* p_meUserM;
+@property(nonatomic,strong) NNMeButton* p_waitPayBtn;
+@property(nonatomic,strong) NNMeButton* p_waitSendBtn;
+@property(nonatomic,strong) NNMeButton* p_waitRecive;
+@property(nonatomic,strong) NNMeButton* p_waitPingjiaBtn;
+@property(nonatomic,strong) UIView      *p_headView;
+@property(nonatomic,strong) UIButton    *p_headBtn;
+@property(nonatomic,strong) UILabel     *p_nameLbl;
+@end
+@implementation NNMeView
+@synthesize p_nnMeViewDelegate = m_nnMeViewDelegate;
+@synthesize p_tableView = m_tableView;
+@synthesize p_meUserM = m_meUserM;
+@synthesize p_waitPayBtn = m_waitPayBtn;
+@synthesize p_waitPingjiaBtn = m_waitPingjiaBtn;
+@synthesize p_waitRecive = m_waitRecive;
+@synthesize p_waitSendBtn = m_waitSendBtn;
+@synthesize p_headView = m_headView;
+@synthesize p_headBtn = m_headBtn;
+@synthesize p_nameLbl = m_nameLbl;
+
+-(void)dealloc
+{
+    
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+
+    }
+    return self;
+}
+
+-(void)refreshMeViewData:(UserModel*)userM;
+{
+    //TODO 刷新时针对头像、名字和待付款单独刷新
+    self.p_meUserM = userM;
+    m_tableView.contentInset = UIEdgeInsetsMake(HeadTempH, 0, 0, 0);
+    if (!self.p_headView) {
+        self.p_headView = [[UIView alloc]initWithFrame:CGRectMake(0, -HeadTempH, kMainScreen_Width, HeadTempH)];
+        m_headView.backgroundColor = Redcolor;
+        [self setHeadValue:m_headView];
+        [m_tableView addSubview:m_headView];
+    }
+    else{
+        [m_headBtn sd_setImageWithURL:[NSURL URLWithString:m_meUserM.m_uHeaderIMG] forState:UIControlStateNormal placeholderImage:[AppManage getDefaultImage:@"100"]];
+        m_nameLbl.text = m_meUserM.m_uName;
+    }
+    [m_tableView reloadData];
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat y = scrollView.contentOffset.y;
+    if (y<-HeadTempH) {
+        CGRect frame = m_headView.frame;
+        frame.origin.y = y;
+        frame.size.height = -y;
+        m_headView.frame = frame;
+        m_headBtn.frame = CGRectMake((kMainScreen_Width-90)/2, m_headView.frame.size.height-170, 90, 90);
+        m_nameLbl.frame = CGRectMake(0, m_headView.frame.size.height-60, kMainScreen_Width, 18.5f);
+    }
+}
+
+#pragma mark - Me TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section==0) {
+        return 2;
+    }
+    return 4;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 0.001f;
+    }
+    return 5;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==1&&indexPath.section==0) {
+        return 80;
+    }
+    return 44.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 5;
+    }
+    return 143;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *Me = @"Celled";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Me];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:Me];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    cell.textLabel.font = [NNCommonDeal getFont:16];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (indexPath.section==0&&indexPath.row==0) {
+        cell.textLabel.text = @"我的订单";
+        cell.detailTextLabel.text = @"查看全部订单";
+        cell.detailTextLabel.font = [NNCommonDeal getFont:12];
+    }else if (indexPath.section == 0&&indexPath.row == 1)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [self addOrderStatueBtnToCell:cell];
+    }else if (indexPath.section == 1&&indexPath.row == 0)
+    {
+        cell.textLabel.text = @"账户管理";
+    }else if (indexPath.section == 1&&indexPath.row == 1)
+    {
+        cell.textLabel.text = @"用户反馈";
+    }else if (indexPath.section == 1&&indexPath.row == 2)
+    {
+        cell.textLabel.text = @"清除缓存";
+    }else if (indexPath.section == 1&&indexPath.row == 3)
+    {
+        cell.textLabel.text = @"关于我们";
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==1&&indexPath.row==0) {
+        if (m_nnMeViewDelegate&& [m_nnMeViewDelegate respondsToSelector:@selector(viewGotoAccountDelegate:)]) {
+            [m_nnMeViewDelegate viewGotoAccountDelegate:nil];
+        }
+    }
+    if (indexPath.section==0&&indexPath.row==0) {
+        if (m_nnMeViewDelegate &&[m_nnMeViewDelegate respondsToSelector:@selector(statusBtnPressDelegate:)]) {
+            [m_nnMeViewDelegate statusBtnPressDelegate:nil];
+        }
+    }
+}
+
+-(void)setHeadValue:(UIView*)header
+{
+    //头像
+    if (!self.p_headBtn) {
+        self.p_headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        m_headBtn.frame = CGRectMake((kMainScreen_Width-90)/2, header.frame.size.height-170, 90, 90);
+        [m_headBtn addTarget:self action:@selector(changeHeader:) forControlEvents:UIControlEventTouchUpInside];
+        m_headBtn.layer.masksToBounds = YES;
+        m_headBtn.layer.cornerRadius = m_headBtn.bounds.size.width/2;
+    }
+    [m_headBtn sd_setImageWithURL:[NSURL URLWithString:m_meUserM.m_uHeaderIMG] forState:UIControlStateNormal placeholderImage:[AppManage getDefaultImage:@"100"]];
+    //昵称
+    if (!self.p_nameLbl) {
+        self.p_nameLbl = [[UILabel alloc]initWithFrame:CGRectMake(0, m_headBtn.frame.origin.y+110, kMainScreen_Width, 18.5f)];
+        m_nameLbl.textAlignment = NSTextAlignmentCenter;
+        m_nameLbl.textColor = [UIColor whiteColor];
+        m_nameLbl.font = [NNCommonDeal getFont:14];
+    }
+    m_nameLbl.text = m_meUserM.m_uName;
+    
+    [header addSubview:m_headBtn];
+    [header addSubview:m_nameLbl];
+}
+
+//添加订单状态按钮
+-(void)addOrderStatueBtnToCell:(UITableViewCell*)cell
+{
+    if (!self.p_waitPayBtn) {
+        self.p_waitPayBtn = [NNMeButton buttonWithType:UIButtonTypeCustom];
+        [self initStatusBtn:self.p_waitPayBtn andIndex:0 andCell:cell];
+    }
+    if (!self.p_waitSendBtn) {
+        self.p_waitSendBtn = [NNMeButton buttonWithType:UIButtonTypeCustom];
+        [self initStatusBtn:self.p_waitSendBtn andIndex:1 andCell:cell];
+    }
+    if (!self.p_waitRecive) {
+        self.p_waitRecive = [NNMeButton buttonWithType:UIButtonTypeCustom];
+        [self initStatusBtn:self.p_waitRecive andIndex:2 andCell:cell];
+    }
+    if (!self.p_waitPingjiaBtn) {
+        self.p_waitPingjiaBtn = [NNMeButton buttonWithType:UIButtonTypeCustom];
+        [self initStatusBtn:self.p_waitPingjiaBtn andIndex:3 andCell:cell];
+    }
+    //TODO 待收货和待发货确定返回值正确
+    m_waitPayBtn.redPot.text = [self getCount:m_meUserM.m_waitPayCount andBtn:m_waitPayBtn];
+    m_waitSendBtn.redPot.text = [self getCount:m_meUserM.m_waitSendCount andBtn:m_waitSendBtn];
+    m_waitRecive.redPot.text = [self getCount:m_meUserM.m_waitReceiveCount andBtn:m_waitRecive];
+    m_waitPingjiaBtn.redPot.text = [self getCount:m_meUserM.m_waitSendCount andBtn:m_waitPingjiaBtn];
+}
+
+-(NSString *)getCount:(NSString *)count andBtn:(NNMeButton *)btn
+{
+    if (count.integerValue>0) {
+        btn.redPot.hidden = NO;
+        return count;
+    }
+    else{
+        btn.redPot.hidden = YES;
+        return @"";
+    }
+}
+
+-(void)initStatusBtn:(NNMeButton*)statusBtn andIndex:(NSInteger)i andCell:(UITableViewCell*)cell
+{
+    NSArray* titleTextArr = [NSArray arrayWithObjects:@"待付款",@"待发货",@"待收货",@"待评价",nil];
+    statusBtn.frame = CGRectMake(20+10*i+kStatusBtnW*i, 0, kStatusBtnW, kStatusBtnW);
+    statusBtn.titleLabel.font = [NNCommonDeal getFont:12];
+    [statusBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    [statusBtn setTitle:[titleTextArr objectAtIndex:i] forState:UIControlStateNormal];
+    [statusBtn setImage:[UIImage imageNamed:[NSString stringWithFormat:@"meStatus-%ld",i+1]] forState:UIControlStateNormal];
+    
+    [statusBtn setTitleEdgeInsets:UIEdgeInsetsMake(40, -35/76.5*statusBtn.frame.size.width, 0, 0)];
+    [statusBtn setImageEdgeInsets:UIEdgeInsetsMake(-20, 10/76.5*statusBtn.frame.size.width, 0, 0)];
+    
+    [statusBtn addTarget:self action:@selector(statusBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+    statusBtn.tag = i;
+    [cell addSubview:statusBtn];
+    [statusBtn initRedPot];
+}
+
+-(void)changeHeader:(UIButton*)sender
+{
+    if (m_nnMeViewDelegate&&[m_nnMeViewDelegate respondsToSelector:@selector(changeHeaderDelegate:)]) {
+        [m_nnMeViewDelegate changeHeaderDelegate:sender];
+    }
+}
+
+-(void)statusBtnPress:(UIButton*)sender
+{
+    if (m_nnMeViewDelegate &&[m_nnMeViewDelegate respondsToSelector:@selector(statusBtnPressDelegate:)]) {
+        [m_nnMeViewDelegate statusBtnPressDelegate:sender];
+    }
+}
+@end

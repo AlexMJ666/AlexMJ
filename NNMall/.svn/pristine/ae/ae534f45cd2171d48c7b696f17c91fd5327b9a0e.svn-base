@@ -1,0 +1,20 @@
+//
+//  NNProductDetailView.h
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface NNProductDetailView : UIView<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *m_productDetailTableView;
+}
+@property (nonatomic,strong) UITableView *p_productDetailTableView;
+
+
+-(void)loadProductDetailUrl:(NSString *)urlStr;
+
+@end

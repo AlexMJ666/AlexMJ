@@ -1,0 +1,28 @@
+//
+//  AdreessModel.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNBasicModel.h"
+
+@interface AdreessModel : NNBasicModel
+{
+    NSString* m_name;               //姓名
+    NSString* m_contact;            //联系方式
+    NSString* m_area;               //所在地区
+    NSString* m_street;             //街道
+    NSString* m_detailAdreess;      //详细地址
+}
+
+@property (nonatomic,strong) NSString *m_name;
+@property (nonatomic,strong) NSString *m_contact;
+@property (nonatomic,strong) NSString *m_area;
+@property (nonatomic,strong) NSString *m_street;
+@property (nonatomic,strong) NSString *m_detailAdreess;
+
+-(id)parseFromDic:(NSDictionary *)dic;
+
+@end

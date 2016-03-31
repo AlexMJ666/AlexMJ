@@ -1,0 +1,77 @@
+//
+//  NNAccountView.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/12.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNAccountView.h"
+
+@interface NNAccountView()<UITableViewDataSource,UITableViewDelegate>
+{
+    UITableView* m_tableView;
+}
+@property(nonatomic,strong) IBOutlet UITableView* p_tableView;
+@end
+@implementation NNAccountView
+@synthesize p_NNAccountViewDelegate = m_NNAccountViewDelegate;
+
+-(void)dealloc
+{
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+    }
+    return self;
+}
+
+-(void)refreshAccountView
+{
+    [self.p_tableView reloadData];
+}
+
+#pragma mark - Me TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 6;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 20;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 130.0f;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *Me = @"accountCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Me];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:Me];
+    }
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section==0&&indexPath.row==1) {
+
+    }
+}
+@end

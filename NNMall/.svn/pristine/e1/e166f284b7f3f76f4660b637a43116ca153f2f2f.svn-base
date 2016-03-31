@@ -1,0 +1,79 @@
+//
+//  NNOrderAllViewController.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/18.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNOrderAllViewController.h"
+
+@interface NNOrderAllViewController ()
+
+@end
+
+@implementation NNOrderAllViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 88.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.001f;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *allcell = @"NNOrderAllViewCell";
+    NNMyOrderCell *cell = (NNMyOrderCell *)[tableView dequeueReusableCellWithIdentifier:allcell];
+    if (!cell) {
+        cell = [[NNMyOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:allcell];
+    }
+    cell.textLabel.text = @"0";
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

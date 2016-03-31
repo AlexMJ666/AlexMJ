@@ -1,0 +1,171 @@
+//
+//  NNHttpRequest.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/3.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNHttpRequest.h"
+
+@implementation NNHttpRequest
+
+-(void)requestWithPostData:(NSMutableDictionary *)dic
+               andQueryStr:(NSString *)queryStr
+           andSuccessBlock:(SuccessBlock)sucBlock_
+            andFailedBlock:(FailedBlock)failedBlock_
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    // 设置请求格式
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    [manager.requestSerializer setTimeoutInterval:10.0f];
+    // 设置返回格式
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/plain", nil];
+    
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if([cookiesdata length]) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
+        NSHTTPCookie *cookie;
+        for (cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+    [manager POST:queryStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject){
+        //JSON 解析
+        NSArray *cookies = [NSHTTPCookie cookiesWithResponseHeaderFields:[operation.response allHeaderFields] forURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/",NNHttpServiceUrl]]];
+//        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: [NSURL URLWithString:[NSString stringWithFormat:@"%@",NNHttpServiceUrl]]];
+        if (cookies.count>0) {
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cookies];
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:NNUserDefaultsCookie];
+        }
+        
+        if (responseObject) {
+            NSString *status = [NSString stringWithFormat:@"%@",[responseObject valueForKeyPath:@"status"]];
+            if ([status isEqualToString:@"1"]) {
+                sucBlock_(responseObject);
+            }
+            else{
+                NNErrorModel *errorM = [[NNErrorModel alloc] init];
+                errorM.m_state = 102;
+                errorM.m_message = [NSString stringWithFormat:@"%@",[responseObject valueForKeyPath:@"message"]];
+                failedBlock_(errorM);
+            }
+        }
+        else{
+            NNErrorModel *errorM = [[NNErrorModel alloc] init];
+            errorM.m_state = 101;
+            errorM.m_message = @"JSON格式错误";
+            failedBlock_(errorM);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NNErrorModel *errorM = [[NNErrorModel alloc] init];
+        errorM.m_state = (int)error.code;
+        errorM.m_message = @"请求失败";
+        failedBlock_(errorM);
+    }];
+}
+
+
+-(void)requestWithGetData:(NSMutableDictionary *)dic
+                andUrlStr:(NSString *)UrlStr
+          andSuccessBlock:(SuccessBlock)sucBlock_
+           andFailedBlock:(FailedBlock)failedBlock_
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/plain", nil];
+//    [manager.requestSerializer setTimeoutInterval:10.0f];
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if([cookiesdata length]) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
+        NSHTTPCookie *cookie;
+        for (cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+    
+    [manager GET:UrlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject) {
+            NSDictionary *json = (NSDictionary *)responseObject;
+            NSString *status = [NSString stringWithFormat:@"%@",[responseObject valueForKeyPath:@"status"]];
+            if ([status isEqualToString:@"1"]) {
+                sucBlock_(json);
+            }
+            else{
+                NSString *errorMsg = [NSString stringWithFormat:@"%@",[responseObject valueForKeyPath:@"message"]];
+                NNErrorModel *errorM = [[NNErrorModel alloc] init];
+                errorM.m_state = 102;
+                if (errorMsg.length>0) {
+                    errorM.m_message = errorMsg;
+                }
+                else{
+                    errorM.m_message = @"数据库无匹配数据";
+                }
+                failedBlock_(errorM);
+            }
+        }
+        else{
+            NNErrorModel *errorM = [[NNErrorModel alloc] init];
+            errorM.m_state = 101;
+            errorM.m_message = @"JSON格式错误";
+            failedBlock_(errorM);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NNErrorModel *errorM = [[NNErrorModel alloc] init];
+        errorM.m_state = (int)error.code;
+        errorM.m_message = @"请求失败";
+        failedBlock_(errorM);
+    }];
+}
+
+-(void)requestWithDEL:(NSMutableDictionary *)dic
+            andUrlStr:(NSString *)UrlStr
+      andSuccessBlock:(SuccessBlock)sucBlock_
+       andFailedBlock:(FailedBlock)failedBlock_
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/plain", nil];
+    NSData *cookiesdata = [[NSUserDefaults standardUserDefaults] objectForKey:NNUserDefaultsCookie];
+    if([cookiesdata length]) {
+        NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData:cookiesdata];
+        NSHTTPCookie *cookie;
+        for (cookie in cookies) {
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+        }
+    }
+    [manager DELETE:UrlStr parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject) {
+            NSDictionary *json = (NSDictionary *)responseObject;
+            NSString *status = [[json valueForKeyPath:@"status"]stringValue];
+            if ([status isEqualToString:@"1"]) {
+                sucBlock_(json);
+            }
+            else{
+                NNErrorModel *errorM = [[NNErrorModel alloc] init];
+                errorM.m_state = 102;
+                errorM.m_message = [json valueForKeyPath:@"message"];
+                failedBlock_(errorM);
+            }
+        }
+        else{
+            NNErrorModel *errorM = [[NNErrorModel alloc] init];
+            errorM.m_state = 101;
+            errorM.m_message = @"JSON格式错误";
+            failedBlock_(errorM);
+        }  
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NNErrorModel *errorM = [[NNErrorModel alloc] init];
+        errorM.m_state = (int)error.code;
+        errorM.m_message = @"请求失败";
+        failedBlock_(errorM);
+    }];
+}
+
+
+@end

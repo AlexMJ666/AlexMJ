@@ -1,0 +1,23 @@
+//
+//  NNProductCell.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/6.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNProductCell.h"
+
+@implementation NNProductCell
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
+}
+
+@end

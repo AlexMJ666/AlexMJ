@@ -1,0 +1,18 @@
+//
+//  ProductModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "ProductModel.h"
+
+@implementation ProductModel
+@synthesize m_productCost;
+@synthesize m_productId;
+@synthesize m_productImgUrl;
+@synthesize m_productName;
+@synthesize m_productPrice;
+
+@end

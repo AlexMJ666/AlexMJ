@@ -1,0 +1,269 @@
+//
+//  NNProductInfoView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNProductInfoView.h"
+#import "NNProductDetailView.h"
+#import <MJRefresh.h>
+#import <SDCycleScrollView.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "NNProductCell.h"
+@interface NNProductInfoView ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,SDCycleScrollViewDelegate>
+{
+    UIScrollView        *m_productScrollView;
+    UITableView         *m_productTableView;
+    NNProductDetailView *m_productDetailView;
+    SDCycleScrollView   *m_cycleView;
+    
+    ProductModel        *m_productModel;
+}
+@property (nonatomic,strong) IBOutlet UIScrollView  *p_productScrollView;
+@property (nonatomic,strong) UITableView            *p_productTableView;
+@property (nonatomic,strong) NNProductDetailView    *p_productDetailView;
+@property (nonatomic,strong) SDCycleScrollView      *p_cycleView;
+@property (nonatomic,strong) ProductModel           *p_productModel;
+@end
+
+@implementation NNProductInfoView
+@synthesize p_productScrollView = m_productScrollView;
+@synthesize p_productTableView  = m_productTableView;
+@synthesize p_productDetailView = m_productDetailView;
+@synthesize p_cycleView         = m_cycleView;
+@synthesize p_productModel      = m_productModel;
+@synthesize p_nnProductInfoDelegate = m_nnProductInfoDelegate;
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
+
+-(void)initProductDetail
+{
+    self.p_productDetailView = [[NNProductDetailView alloc]initWithFrame:CGRectMake(0, kNAV_HEIGHT, kMainScreen_Width, kNAV_HEIGHT)];
+    [m_productScrollView addSubview:m_productDetailView];
+}
+
+-(void)initProductTableView
+{
+    self.p_productTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kMainScreen_Width, kNAV_HEIGHT) style:UITableViewStyleGrouped];
+    m_productTableView.delegate = self;
+    m_productTableView.dataSource = self;
+    [m_productScrollView addSubview:m_productTableView];
+}
+
+-(void)initProduct
+{
+    [self initProductTableView];
+    [self initProductDetail];
+    
+    MJRefreshBackStateFooter *footer = [MJRefreshBackStateFooter footerWithRefreshingBlock:^{
+        [UIView animateWithDuration:0.01f animations:^{
+            [m_productScrollView setContentOffset:CGPointMake(0, kNAV_HEIGHT) animated:YES];
+            [m_productTableView.footer endRefreshing];
+        }];
+    }];
+    [footer setTitle:@"" forState:MJRefreshStateIdle];
+    [footer setTitle:@"" forState:MJRefreshStatePulling];
+    [footer setTitle:@"" forState:MJRefreshStateRefreshing];
+    footer.stateLabel.font = [NNCommonDeal getFont:12];
+    self.p_productTableView.footer = footer;
+    
+    MJRefreshStateHeader *header = [MJRefreshStateHeader headerWithRefreshingBlock:^{
+        [UIView animateWithDuration:0.01f animations:^{
+            [m_productScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+            [m_productDetailView.p_productDetailTableView.header endRefreshing];
+        }];
+    }];
+    [header setTitle:@"下拉，返回商品简介" forState:MJRefreshStateIdle];
+    [header setTitle:@"松开，返回商品简介" forState:MJRefreshStatePulling];
+    [header setTitle:@"松开，返回商品简介" forState:MJRefreshStateRefreshing];
+    header.stateLabel.font = [NNCommonDeal getFont:12];
+    header.lastUpdatedTimeLabel.hidden = YES;
+    m_productDetailView.p_productDetailTableView.header = header;
+}
+
+#pragma mark - RefreshData
+-(void)refreshProductInfoData:(ProductModel *)productM
+{
+    self.p_productModel = productM;
+
+    [m_productDetailView loadProductDetailUrl:productM.m_detailUrl];
+    [self createCycleView:@[productM.m_productImgUrl,productM.m_productImgUrl,productM.m_productImgUrl]];
+    [m_productTableView reloadData];
+}
+
+-(void)createCycleView:(NSArray *)imageArray
+{
+    // 网络加载 --- 创建不带标题的图片轮播器
+    if (!self.p_cycleView) {
+        self.p_cycleView = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, kMainScreen_Width, kMainScreen_Height/3.0f) imageURLStringsGroup:imageArray];
+        m_cycleView.autoScroll = NO;
+        m_cycleView.delegate = self;
+        m_cycleView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+        m_cycleView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
+        m_cycleView.dotColor = [UIColor blackColor];
+    }
+    else{
+        m_cycleView.imageURLStringsGroup = imageArray;
+    }
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    
+}
+
+#pragma mark - WareDetail TableView
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 330.0f;
+    }
+    return 10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        CGFloat height = [NNCommonDeal getTextHeight:m_productModel.m_productName andWidth:kMainScreen_Width-30 andFontSize:16];
+        if (height>42.0f) {
+            return 124.0f+height;
+        }
+        return 180.0f;
+    }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        return 50.0f;
+    }
+    //计算商品简介高度min:60
+    CGFloat height = [NNCommonDeal getTextHeight:[NSString stringWithFormat:@"%@%@%@",m_productModel.m_productName,m_productModel.m_productName,m_productModel.m_productName] andWidth:kMainScreen_Width-30 andFontSize:14];
+    if (height<=50) {
+        height = 50.0f;
+    }
+    return height+10.0f;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 2) {
+        return 49.0f;
+    }
+    return 0.001f;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 0 && self.p_cycleView) {
+        return m_cycleView;
+    }
+    return nil;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 2) {
+        UILabel *lbl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kMainScreen_Width, 49.0f)];
+        lbl.text = @"继续拖动，查看图文详情";
+        lbl.textColor = [UIColor grayColor];
+        lbl.textAlignment = NSTextAlignmentCenter;
+        lbl.font = [NNCommonDeal getFont:12.0f];
+        return lbl;
+    }
+    return nil;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        static NSString *ProductInfo = @"ProductInfoCell";
+        NNProductCell *cell = (NNProductCell *)[tableView dequeueReusableCellWithIdentifier:ProductInfo];
+        if (!cell) {
+            cell = [[NNProductCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ProductInfo];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        CGFloat height = [NNCommonDeal getTextHeight:m_productModel.m_productName andWidth:kMainScreen_Width-30 andFontSize:16];
+        [cell createProductCellView:m_productModel andNameHeight:height];
+        return cell;
+    }
+    else{
+        static NSString *ProductOther = @"ProductOtherCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ProductOther];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ProductOther];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        if (indexPath.section == 1){
+            cell.textLabel.text = @"选择 规格";
+            cell.textLabel.font = [NNCommonDeal getFont:16];
+            NSString *str = @"";
+            if (m_productModel.m_currentColor.length>0 && m_productModel.m_currentSize.length>0) {
+                str = [NSString stringWithFormat:@"%@ , %@",m_productModel.m_currentColor,m_productModel.m_currentSize];
+            }
+            else if (m_productModel.m_currentColor.length>0 && m_productModel.m_currentSize.length==0){
+                str = m_productModel.m_currentColor;
+            }
+            else if (m_productModel.m_currentColor.length==0 && m_productModel.m_currentSize.length>0){
+                str = m_productModel.m_currentSize;
+            }
+            else{
+                str = [NSString stringWithFormat:@"x%ld",(long)m_productModel.m_currentBuyCount];
+            }
+            cell.detailTextLabel.text = str;
+        }
+        else if (indexPath.section == 2){
+            cell.textLabel.text = @"商品简介：";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@%@",m_productModel.m_productName,m_productModel.m_productName,m_productModel.m_productName];
+            cell.detailTextLabel.numberOfLines = 0;
+            cell.detailTextLabel.lineBreakMode = NSLineBreakByCharWrapping;
+            cell.detailTextLabel.textColor = Graycolor;
+        }
+        return cell;
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        if (m_nnProductInfoDelegate && [m_nnProductInfoDelegate respondsToSelector:@selector(chooseSizeWithProduct:)]) {
+            [m_nnProductInfoDelegate chooseSizeWithProduct:nil];
+        }
+    }
+}
+
+- (NSMutableAttributedString *)getProductDetailInfo:(NSString *)str
+{
+    NSUInteger length = 0;
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc]initWithString:str];
+    [attr addAttribute:NSFontAttributeName value:[NNCommonDeal getFont:14] range:NSMakeRange(length, str.length-length)];
+    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(length, str.length-length)];
+    [attr addAttribute:NSFontAttributeName value:[NNCommonDeal getFont:16] range:NSMakeRange(0, length)];
+    [attr addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, length)];
+    return attr;
+}
+
+
+@end

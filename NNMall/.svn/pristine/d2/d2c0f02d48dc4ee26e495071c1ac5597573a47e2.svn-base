@@ -1,0 +1,35 @@
+//
+//  AdreessModel.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/13.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "AdreessModel.h"
+
+@implementation AdreessModel
+@synthesize m_name;               //姓名
+@synthesize m_contact;            //联系方式
+
+@synthesize m_detailAdreess;      //详细地址
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_name  = @"阿斯达";
+        m_contact  = @"3133131";
+        m_detailAdreess  = @"士大夫广告";
+    }
+    return self;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+    }
+    return self;
+}
+
+@end

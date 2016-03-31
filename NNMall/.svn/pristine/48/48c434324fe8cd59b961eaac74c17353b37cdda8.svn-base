@@ -1,0 +1,65 @@
+//
+//  NNProductApply.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/10.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNProductApply.h"
+
+static NNProductApply *g_productApply;
+
+@implementation NNProductApply
+
++ (NNProductApply *)shareInstanceManager
+{
+    @synchronized(self)
+    {
+        if (!g_productApply)
+        {
+            g_productApply = [[NNProductApply alloc] init];
+        }
+    }
+    return g_productApply;
+}
+
+- (void)dismissProductApply
+{
+    g_productApply = nil;
+}
+
+-(void)requestProductList:(ReturnBlockContent)returnBlock_
+           andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/product/list",NNHttpServiceUrl];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        NSDictionary *backDic = (NSDictionary *)backJson;
+        NSArray *list = [backDic valueForKeyPath:@"data"];
+        
+        NSMutableArray *listMall = [[NSMutableArray alloc]init];
+        for (int i=0; i<list.count; i++) {
+            MallModel *mallM = [[MallModel alloc] parseFromDic:[list objectAtIndex:i]];
+            [listMall addObject:mallM];
+        }
+        returnBlock_(listMall);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+
+-(void)requestMoreProductListWithType:(NSString *)type
+                              andPage:(NSString *)page
+                         andSucReturn:(ReturnBlockContent)returnBlock_
+                       andFaildReturn:(FaildReturnBlock)returnFaild_
+{
+    NNHttpRequest *requst = [[NNHttpRequest alloc]init];
+    NSString *url = [NSString stringWithFormat:@"%@/jeeshop/api/product/pagelist?type=%@&currentpage=%@",NNHttpServiceUrl,type,page];
+    [requst requestWithGetData:nil andUrlStr:url andSuccessBlock:^(id backJson) {
+        returnBlock_(backJson);
+    } andFailedBlock:^(NNErrorModel *errorM) {
+        returnFaild_(errorM);
+    }];
+}
+@end

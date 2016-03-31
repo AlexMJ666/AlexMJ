@@ -1,0 +1,60 @@
+//
+//  NNLoginViewController.m
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/18.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNLoginViewController.h"
+#import "NNLoginView.h"
+#import "NNUserApply.h"
+@interface NNLoginViewController ()<NNLoginViewDelegate>
+{
+    NNLoginView* m_loginView;
+}
+@property(nonatomic,strong) IBOutlet NNLoginView* p_loginView;
+@end
+
+@implementation NNLoginViewController
+@synthesize p_loginView = m_loginView;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.p_loginView.p_NNLoginViewDelegate = self;
+    [m_loginView refreshLoginView];
+    // Do any additional setup after loading the view.
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void)loginDelegate:(NSString *)account andPassW:(NSString *)passWord
+{
+    [[NNUserApply shareInstanceManager]loginNNMall:account andCode:passWord andSucReturn:^(id content) {
+        NSLog(@"success:%@",content);
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        
+    }];
+}
+
+-(void)sender:(NSString *)account
+{
+    [[NNUserApply shareInstanceManager]sendMessageVerifyCode:account andSucReturn:^(id content) {
+        NSLog(@"success:%@",content);
+    } andFaildReturn:^(NNErrorModel *errorM) {
+        
+    }];
+}
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

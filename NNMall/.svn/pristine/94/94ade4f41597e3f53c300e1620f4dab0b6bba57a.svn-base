@@ -1,0 +1,188 @@
+//
+//  ProductModel.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/5.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "ProductModel.h"
+
+@implementation ProductModel
+@synthesize m_productCost;
+@synthesize m_productId;
+@synthesize m_productImgUrl;
+@synthesize m_productName;
+@synthesize m_productPrice;
+@synthesize m_allPicUrlArray;
+@synthesize m_isNewProduct;
+@synthesize m_isProductsale;
+@synthesize m_saleCount;
+@synthesize m_detailUrl;
+@synthesize m_currentBuyCount;
+@synthesize m_currentColor;
+@synthesize m_currentSize;
+@synthesize m_currentSelect;
+@synthesize m_sizeListArr;
+@synthesize m_currentSizeArr;
+@synthesize m_currentPrice;
+@synthesize m_currentId;
+@synthesize m_sizeDictionary;
+@synthesize m_buyCount;
+@synthesize m_specInfo;
+
+-(id)init
+{
+    self = [super init];
+    if (self) {
+        m_productId  = @"";
+        m_productName  = @"";
+        m_productCost  = @"";
+        m_productImgUrl  = @"";
+        m_productPrice  = @"";
+        m_buyCount = @"";
+        m_saleCount = @"0";
+        m_detailUrl = @"";
+        
+        m_currentBuyCount  = 1;
+        m_currentColor  = @"";
+        m_currentSize  = @"";
+        m_currentId = @"";
+        m_sizeDictionary = [[NSMutableDictionary alloc]init];
+    }
+    return self;
+}
+
+- (NSArray *)dictionaryWithJsonString:(NSString *)jsonString {
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    id object = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingMutableContainers
+                                                          error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    if ([object isKindOfClass:[NSArray class]]) {
+        return object;
+    }
+    return nil;
+}
+
+-(id)parseFromDic:(NSDictionary *)dic
+{
+    if ([self init]) {
+        if (![NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"specJsonString"]]) {
+            self.m_sizeListArr = [self dictionaryWithJsonString:[dic valueForKeyPath:@"specJsonString"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"id"]]) {
+            self.m_productId = @"";
+        }else{
+            self.m_productId = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"id"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"name"]]) {
+            self.m_productName = @"";
+        }else{
+            self.m_productName = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"name"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"price"]]) {
+            self.m_productPrice = @"";
+        }else{
+            self.m_productPrice = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"price"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"nowPrice"]]) {
+            self.m_productCost = @"";
+        }else{
+            self.m_productCost = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"nowPrice"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"buyCount"]]) {
+            self.m_buyCount = @"";
+        }else{
+            self.m_buyCount = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"buyCount"]];
+        }
+        
+        if ([NNCommonDeal jugementDicIsNil:[dic valueForKeyPath:@"buySpecInfo"]]) {
+            self.m_specInfo = nil;
+        }else{
+            self.m_specInfo = [dic valueForKeyPath:@"buySpecInfo"];
+        }
+        
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"picture"]]) {
+            self.m_productImgUrl = @"";
+        }else{
+            self.m_productImgUrl = [NSString stringWithFormat:@"%@%@",NNHttpServiceUrl,[dic valueForKeyPath:@"picture"]];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"isnew"]]) {
+            self.m_isNewProduct = NO;
+        }else{
+            NSString *isNew = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"isnew"]];
+            if ([isNew isEqualToString:@"y"]) {
+                self.m_isNewProduct = YES;
+            }
+            else{
+                self.m_isNewProduct = NO;
+            }
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"sale"]]) {
+            self.m_isProductsale = NO;
+        }else{
+            NSString *isNew = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"sale"]];
+            if ([isNew isEqualToString:@"y"]) {
+                self.m_isProductsale = YES;
+            }
+            else{
+                self.m_isProductsale = NO;
+            }
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"sellcount"]]) {
+            self.m_saleCount = @"0";
+        }else{
+            self.m_saleCount = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"sellcount"]];
+        }
+        
+        if (![NNCommonDeal jugementArrIsNil:[dic valueForKeyPath:@"specColor"]]) {
+            NSArray *colors = [dic valueForKeyPath:@"specColor"];
+            [self.m_sizeDictionary setObject:colors forKey:@"color"];
+        }
+        if (![NNCommonDeal jugementArrIsNil:[dic valueForKeyPath:@"specSize"]]) {
+            NSArray *sizes = [dic valueForKeyPath:@"specSize"];
+            [self.m_sizeDictionary setObject:sizes forKey:@"size"];
+        }
+        
+        if ([NNCommonDeal jugementStringIsNil:[dic valueForKeyPath:@"productHTML"]]) {
+            self.m_detailUrl = @"";
+        }else{
+            self.m_detailUrl = [NSString stringWithFormat:@"%@",[dic valueForKeyPath:@"productHTML"]];
+        }
+        
+        if ([NNCommonDeal jugementArrIsNil:[dic valueForKeyPath:@"images"]]) {
+            self.m_allPicUrlArray = [[NSMutableArray alloc]init];
+        }else{
+            self.m_allPicUrlArray = [[NSMutableArray alloc]init];
+            NSString *images = [dic valueForKeyPath:@"images"];
+            NSArray *imaList = [images componentsSeparatedByString:@","];
+            for (int i=0; i<imaList.count; i++) {
+                NSString *imageUrl = [NSString stringWithFormat:@"%@%@",NNHttpServiceUrl,imaList[i]];
+                [m_allPicUrlArray addObject:imageUrl];
+            }
+        }
+        
+        
+    }
+    return self;
+}
+
+@end

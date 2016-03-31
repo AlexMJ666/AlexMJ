@@ -1,0 +1,16 @@
+//
+//  SearchCell.h
+//  NNMall
+//
+//  Created by 马家俊 on 15/11/6.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface SearchCell : UITableViewCell
+@property (nonatomic, strong) IBOutlet UIImageView* pImg;
+@property (nonatomic, strong) IBOutlet UILabel* pContent;
+@property (nonatomic, strong) IBOutlet UILabel* pPrice;
+
+@end

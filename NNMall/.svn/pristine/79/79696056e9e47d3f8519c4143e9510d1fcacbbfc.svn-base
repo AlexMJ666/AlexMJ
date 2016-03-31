@@ -1,0 +1,14 @@
+//
+//  NNReusableView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/21.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNReusableView.h"
+
+@implementation NNReusableView
+@synthesize p_titleLbl = m_titleLbl;
+
+@end

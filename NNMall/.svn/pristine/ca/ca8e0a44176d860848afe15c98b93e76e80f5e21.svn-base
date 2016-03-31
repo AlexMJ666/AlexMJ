@@ -1,0 +1,197 @@
+//
+//  NNChooseSizeView.m
+//  NNMall
+//
+//  Created by shaoxu on 15/11/21.
+//  Copyright © 2015年 shaoxu. All rights reserved.
+//
+
+#import "NNChooseSizeView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "HJCAjustNumButton.h"
+#import "NNReusableView.h"
+#import "NNSizeCollectCell.h"
+@interface NNChooseSizeView ()<UICollectionViewDataSource,UICollectionViewDelegate>
+{
+    UIImageView *m_proImageView;
+    UILabel *m_proNameLbl;
+    UILabel *m_proPriceLbl;
+    UICollectionView *m_sizeCollectionView;
+    UIView *m_ajustBtn;
+    
+    ProductModel *m_sizePM;
+    NSMutableArray *m_keyArray;
+}
+@property (nonatomic,strong) IBOutlet UIImageView *p_proImageView;
+@property (nonatomic,strong) IBOutlet UILabel *p_proNameLbl;
+@property (nonatomic,strong) IBOutlet UILabel *p_proPriceLbl;
+@property (nonatomic,strong) IBOutlet UICollectionView *p_sizeCollectionView;
+@property (nonatomic,strong) IBOutlet UIView *p_ajustBtn;
+
+@property (nonatomic,strong) ProductModel *p_sizePM;
+@property (nonatomic,strong) NSMutableArray *p_keyArray;
+@end
+
+@implementation NNChooseSizeView
+@synthesize p_ajustBtn = m_ajustBtn;
+@synthesize p_proImageView = m_proImageView;
+@synthesize p_proNameLbl = m_proNameLbl;
+@synthesize p_proPriceLbl = m_proPriceLbl;
+@synthesize p_sizePM = m_sizePM;
+@synthesize p_sizeCollectionView = m_sizeCollectionView;
+@synthesize p_keyArray = m_keyArray;
+@synthesize p_nnChooseSizeDelegate = m_nnChooseSizeDelegate;
+
+
+-(void)dealloc
+{
+
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+
+    }
+    return self;
+}
+
+-(HJCAjustNumButton *)getNumberCount
+{
+    HJCAjustNumButton *btn = [[HJCAjustNumButton alloc] init];
+    btn.frame = CGRectMake(67, 15, 118 , 30);
+    btn.lineColor = Linecolor;
+    btn.callBack = ^(NSString *currentNum){
+        if (currentNum.integerValue > m_sizePM.m_currentBuyCount) {
+            m_sizePM.m_currentBuyCount++;
+        }
+        else if (currentNum.integerValue < m_sizePM.m_currentBuyCount){
+            m_sizePM.m_currentBuyCount--;
+        }
+    };
+    if (m_sizePM.m_currentBuyCount>0) {
+        btn.currentNum = [NSString stringWithFormat:@"%ld",(long)m_sizePM.m_currentBuyCount];
+    }
+    else{
+        btn.currentNum = @"1";
+    }
+    return btn;
+}
+
+-(void)refreshSizeData:(ProductModel *)productM
+{
+    //1
+    self.p_sizePM = productM;
+    m_ajustBtn = [self getNumberCount];
+    //2
+    self.p_keyArray = [[NSMutableArray alloc]init];
+    for (NSString *key in productM.m_sizeDictionary.allKeys) {
+        [m_keyArray addObject:key];
+    }
+    //3
+    
+    
+}
+
+#pragma mark - click methods
+-(void)trueBtnClick:(id)sender
+{
+    for (NSDictionary *dic in m_sizePM.m_currentSizeArr) {
+        NSString *sizeId = [dic objectForKey:@"id"];
+        m_sizePM.m_currentId = sizeId;
+    }
+    
+    //1.关闭尺寸选择
+    if (m_nnChooseSizeDelegate && [m_nnChooseSizeDelegate respondsToSelector:@selector(chooseProductSize:)]) {
+        [m_nnChooseSizeDelegate chooseProductSize:m_sizePM];
+    }
+}
+
+#pragma mark - collectionView delegate
+//设置分区
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+    return m_keyArray.count;
+}
+
+//每个分区上的元素个数
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    NSString *key = [m_keyArray objectAtIndex:section];
+    return [[m_sizePM.m_sizeDictionary objectForKey:key]count];
+}
+
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    CGSize size={kMainScreen_Width,20};
+    return size;
+}
+
+- (UICollectionReusableView *) collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    if (kind == UICollectionElementKindSectionHeader)
+    {
+        NNReusableView *headerView = (NNReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"SizeHeader" forIndexPath:indexPath];
+        
+        //绘制规格按钮
+        NSString *key = [m_keyArray objectAtIndex:indexPath.section];
+        if ([key isEqualToString:@"color"]) {
+            headerView.p_titleLbl.text = @"颜色";
+        }
+        if ([key isEqualToString:@"size"]) {
+            headerView.p_titleLbl.text = @"尺码";
+        }
+        return headerView;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
+//设置元素内容
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *SizeCollectCell = @"SizeCollectCell";
+    NNSizeCollectCell *cell = (NNSizeCollectCell *)[collectionView dequeueReusableCellWithReuseIdentifier:SizeCollectCell forIndexPath:indexPath];
+    //    [cell sizeToFit];
+    //绘制规格按钮
+    NSString *key = [m_keyArray objectAtIndex:indexPath.section];
+    NSArray *titleArr = [m_sizePM.m_sizeDictionary objectForKey:key];
+    [cell.p_sizeBtn setTitle:[titleArr objectAtIndex:indexPath.item] forState:UIControlStateNormal];
+    cell.layer.borderColor = [[UIColor blackColor]CGColor];
+    cell.layer.borderWidth = 1;
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+#pragma mark --UICollectionViewDelegateFlowLayout
+//定义每个UICollectionView 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+//    NSString *width = [[m_sizeArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.item];
+    return CGSizeMake(80, 34);
+}
+
+//定义每个UICollectionView 的 margin
+-(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    return UIEdgeInsetsMake(5, 15, 5, 15);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 5;
+}
+
+@end
